@@ -40,13 +40,15 @@
                           <Component id="btnRegistroItinerarios" min="-2" pref="163" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                           <Component id="btnRegistroHabitat" min="-2" pref="160" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                          <Component id="btnQueja" min="-2" pref="155" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="419" max="-2" attributes="0"/>
                           <Component id="lblTituloPrincipal" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="459" max="32767" attributes="0"/>
+                  <EmptySpace pref="279" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -57,8 +59,11 @@
                   <Component id="lblTituloPrincipal" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="197" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnRegistroItinerarios" max="32767" attributes="0"/>
-                      <Component id="btnRegistroHabitat" pref="80" max="32767" attributes="0"/>
+                      <Component id="btnQueja" pref="80" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnRegistroItinerarios" max="32767" attributes="0"/>
+                          <Component id="btnRegistroHabitat" pref="80" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace pref="188" max="32767" attributes="0"/>
               </Group>
@@ -88,6 +93,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistroItinerariosActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnQueja">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Registrar Queja"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQuejaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

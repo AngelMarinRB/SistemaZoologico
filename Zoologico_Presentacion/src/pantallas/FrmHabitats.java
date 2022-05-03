@@ -102,7 +102,7 @@ public class FrmHabitats extends javax.swing.JPanel {
     }
     
     public boolean verificarFormulario(){        
-        if(txtClimaDatos.getText().isBlank() || txtContinentesDatos.getText().isBlank() || txtVegetacionDatos.getText().isBlank()){
+        if(txtClimaDatos.getText().isEmpty() || txtContinentesDatos.getText().isEmpty() || txtVegetacionDatos.getText().isEmpty()){
             return false;
         }
         

@@ -40,6 +40,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblTituloPrincipal = new javax.swing.JLabel();
         btnRegistroHabitat = new javax.swing.JButton();
         btnRegistroItinerarios = new javax.swing.JButton();
+        btnQueja = new javax.swing.JButton();
         pnlApp = new javax.swing.JPanel();
         pnlContenido = new javax.swing.JPanel();
 
@@ -63,6 +64,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnQueja.setText("Registrar Queja");
+        btnQueja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuejaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlMenuPrincipalLayout = new javax.swing.GroupLayout(pnlMenuPrincipal);
         pnlMenuPrincipal.setLayout(pnlMenuPrincipalLayout);
         pnlMenuPrincipalLayout.setHorizontalGroup(
@@ -73,11 +81,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addGap(218, 218, 218)
                         .addComponent(btnRegistroItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(70, 70, 70)
-                        .addComponent(btnRegistroHabitat, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRegistroHabitat, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)
+                        .addComponent(btnQueja, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlMenuPrincipalLayout.createSequentialGroup()
                         .addGap(419, 419, 419)
                         .addComponent(lblTituloPrincipal)))
-                .addContainerGap(459, Short.MAX_VALUE))
+                .addContainerGap(279, Short.MAX_VALUE))
         );
         pnlMenuPrincipalLayout.setVerticalGroup(
             pnlMenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,8 +96,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addComponent(lblTituloPrincipal)
                 .addGap(197, 197, 197)
                 .addGroup(pnlMenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnRegistroItinerarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRegistroHabitat, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                    .addComponent(btnQueja, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                    .addGroup(pnlMenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnRegistroItinerarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegistroHabitat, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))
                 .addContainerGap(188, Short.MAX_VALUE))
         );
 
@@ -130,8 +142,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
         cl.show(pnlContenido, "Itinerarios");
     }//GEN-LAST:event_btnRegistroItinerariosActionPerformed
 
+    private void btnQuejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuejaActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl = (CardLayout)(this.getContentPane().getLayout());
+        cl.show(this.getContentPane(), "App");
+        
+        cl = (CardLayout)(pnlContenido.getLayout());
+        cl.show(pnlContenido, "Quejas");
+    }//GEN-LAST:event_btnQuejaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnQueja;
     private javax.swing.JButton btnRegistroHabitat;
     private javax.swing.JButton btnRegistroItinerarios;
     private javax.swing.JLabel lblTituloPrincipal;
