@@ -30,4 +30,12 @@ public class FabricaDAO {
     public ClimasDAO crearClimasDAO(){
         return new ClimasDAO(conexion);
     }
+    
+    public ItinerariosDAO crearItinerariosDAO(){
+        return new ItinerariosDAO(conexion);
+    }
+    
+    public ZonasDAO crearZonasDAO(){
+        return new ZonasDAO(conexion);
+    }
 }

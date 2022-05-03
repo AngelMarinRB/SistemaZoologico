@@ -31,4 +31,12 @@ public class FabricaControles {
     public ControlVegetaciones crearControlVegetaciones(){
         return new ControlVegetaciones(datos);
     }
+    
+    public ControlItinerarios crearControlItinerarios(){
+        return new ControlItinerarios(datos);
+    }
+    
+    public ControlZonas crearControlZonas(){
+        return new ControlZonas(datos);
+    }
 }
