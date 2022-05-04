@@ -144,11 +144,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void btnQuejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuejaActionPerformed
         // TODO add your handling code here:
-        CardLayout cl = (CardLayout)(this.getContentPane().getLayout());
-        cl.show(this.getContentPane(), "App");
-        
-        cl = (CardLayout)(pnlContenido.getLayout());
-        cl.show(pnlContenido, "Quejas");
+        this.setVisible(false);
+        new FrmAtencionVisitantes().setVisible(true);
     }//GEN-LAST:event_btnQuejaActionPerformed
 
 
