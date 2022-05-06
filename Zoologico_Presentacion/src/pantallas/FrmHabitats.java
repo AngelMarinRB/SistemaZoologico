@@ -102,11 +102,7 @@ public class FrmHabitats extends javax.swing.JPanel {
     }
     
     public boolean verificarFormulario(){        
-        if(txtClimaDatos.getText().isBlank() || txtContinentesDatos.getText().isBlank() || txtVegetacionDatos.getText().isBlank()){
-            return false;
-        }
-        
-        return true;
+        return !(txtClimaDatos.getText().isBlank() || txtContinentesDatos.getText().isBlank() || txtVegetacionDatos.getText().isBlank());
     }
     
     private void llenarTablaClimas(List<Clima> climas) {
@@ -801,6 +797,8 @@ public class FrmHabitats extends javax.swing.JPanel {
     }//GEN-LAST:event_tblVegetacionesMouseClicked
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        
+        desactivarFormulario();
         
         Container frame = this.getParent().getParent().getParent();
         

@@ -68,14 +68,12 @@
                       </Group>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnGuardar" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="lblDatos" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnGuardar" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="lblDatos" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -351,10 +349,7 @@
                   <Component id="lblClimas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="103" max="32767" attributes="0"/>
               </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="spnlClimas" min="-2" pref="240" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              </Group>
+              <Component id="spnlClimas" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
