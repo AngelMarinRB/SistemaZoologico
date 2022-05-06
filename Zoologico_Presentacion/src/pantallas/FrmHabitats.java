@@ -102,15 +102,7 @@ public class FrmHabitats extends javax.swing.JPanel {
     }
     
     public boolean verificarFormulario(){        
-<<<<<<< HEAD
-        return !(txtClimaDatos.getText().isBlank() || txtContinentesDatos.getText().isBlank() || txtVegetacionDatos.getText().isBlank());
-=======
-        if(txtClimaDatos.getText().isEmpty() || txtContinentesDatos.getText().isEmpty() || txtVegetacionDatos.getText().isEmpty()){
-            return false;
-        }
-        
-        return true;
->>>>>>> dca176d0dbcb9b776305f893ff00d442176c534f
+        return !(txtClimaDatos.getText().isEmpty()|| txtContinentesDatos.getText().isEmpty() || txtVegetacionDatos.getText().isEmpty());
     }
     
     private void llenarTablaClimas(List<Clima> climas) {
