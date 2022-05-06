@@ -3,12 +3,16 @@ package fachada;
 import controles.ControlClimas;
 import controles.ControlContinentes;
 import controles.ControlHabitats;
+import controles.ControlItinerarios;
 import controles.ControlVegetaciones;
+import controles.ControlZonas;
 import controles.FabricaControles;
 import entidades.Clima;
 import entidades.Continente;
 import entidades.Habitat;
+import entidades.Itinerario;
 import entidades.Vegetacion;
+import entidades.Zona;
 import interfaces.INegocio;
 import java.util.List;
 
@@ -23,6 +27,8 @@ public class FacadeNegocio implements INegocio{
     private ControlClimas climas;
     private ControlContinentes continentes;
     private ControlVegetaciones vegetaciones;
+    private ControlItinerarios itinerarios;
+    private ControlZonas zonas;
     
     public FacadeNegocio(){
         FabricaControles controles = new FabricaControles();
@@ -31,6 +37,8 @@ public class FacadeNegocio implements INegocio{
         this.climas = controles.crearControlClimas();
         this.continentes = controles.crearControlContinentes();
         this.vegetaciones = controles.crearControlVegetaciones();
+        this.itinerarios = controles.crearControlItinerarios();
+        this.zonas = controles.crearControlZonas();
     }
     
     @Override
@@ -56,6 +64,21 @@ public class FacadeNegocio implements INegocio{
     @Override
     public List<Clima> consultarClimas() {
         return climas.consultarClimas();
+    }
+
+    @Override
+    public boolean guardarItinerario(Itinerario itinerario) {
+        return itinerarios.guardarItinerario(itinerario);
+    }
+
+    @Override
+    public Itinerario verificarExistenciaItinerario(String nombre) {
+        return itinerarios.verificarExistenciaItinerario(nombre);
+    }
+
+    @Override
+    public List<Zona> consultarZonas() {
+        return zonas.consultarZonas();
     }
     
 }

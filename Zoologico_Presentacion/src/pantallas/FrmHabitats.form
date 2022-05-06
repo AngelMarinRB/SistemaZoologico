@@ -470,7 +470,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
                           <Component id="lblListaContinentes" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="202" max="32767" attributes="0"/>
+                          <EmptySpace pref="199" max="32767" attributes="0"/>
                           <Component id="lblContinentesSeleccionados" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
                       </Group>
@@ -494,7 +494,7 @@
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="spnlVegetaciones1" pref="218" max="32767" attributes="0"/>
+                      <Component id="spnlVegetaciones1" pref="215" max="32767" attributes="0"/>
                       <Component id="spnlVegetaciones2" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>

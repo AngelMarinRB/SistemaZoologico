@@ -102,7 +102,15 @@ public class FrmHabitats extends javax.swing.JPanel {
     }
     
     public boolean verificarFormulario(){        
+<<<<<<< HEAD
         return !(txtClimaDatos.getText().isBlank() || txtContinentesDatos.getText().isBlank() || txtVegetacionDatos.getText().isBlank());
+=======
+        if(txtClimaDatos.getText().isEmpty() || txtContinentesDatos.getText().isEmpty() || txtVegetacionDatos.getText().isEmpty()){
+            return false;
+        }
+        
+        return true;
+>>>>>>> dca176d0dbcb9b776305f893ff00d442176c534f
     }
     
     private void llenarTablaClimas(List<Clima> climas) {
@@ -472,9 +480,7 @@ public class FrmHabitats extends javax.swing.JPanel {
                 .addGap(94, 94, 94)
                 .addComponent(lblClimas)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnlClimasLayout.createSequentialGroup()
-                .addComponent(spnlClimas, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(spnlClimas, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         pnlClimasLayout.setVerticalGroup(
             pnlClimasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -590,7 +596,7 @@ public class FrmHabitats extends javax.swing.JPanel {
                     .addGroup(pnlContinentesLayout.createSequentialGroup()
                         .addGap(89, 89, 89)
                         .addComponent(lblListaContinentes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
                         .addComponent(lblContinentesSeleccionados)
                         .addGap(102, 102, 102))))
             .addGroup(pnlContinentesLayout.createSequentialGroup()
@@ -608,7 +614,7 @@ public class FrmHabitats extends javax.swing.JPanel {
                     .addComponent(lblContinentesSeleccionados))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlContinentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spnlVegetaciones1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                    .addComponent(spnlVegetaciones1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                     .addComponent(spnlVegetaciones2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -656,13 +662,11 @@ public class FrmHabitats extends javax.swing.JPanel {
                                     .addComponent(txtClimaDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtVegetacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(31, 31, 31))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblDatos)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDatos))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addComponent(pnlEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
