@@ -11,6 +11,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private FrmHabitats habitatsFrom;
     private FrmItinerarios itinerariosForm;
+    private FrmEspecies especiesForm;
     
     /**
      * Constructor por defecto
@@ -22,7 +23,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlContenido.add(habitatsFrom , "Habitats");
         
         this.itinerariosForm = new FrmItinerarios();
-        pnlContenido.add(itinerariosForm,"Itinerarios");
+        pnlContenido.add(itinerariosForm , "Itinerarios");
+        
+        this.especiesForm = new FrmEspecies();
+        pnlContenido.add(especiesForm , "Especies");
         
         
     }
@@ -40,7 +44,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblTituloPrincipal = new javax.swing.JLabel();
         btnRegistroHabitat = new javax.swing.JButton();
         btnRegistroItinerarios = new javax.swing.JButton();
-        btnQueja = new javax.swing.JButton();
+        btnRegistrarQueja = new javax.swing.JButton();
+        btnRegistrarEspecie = new javax.swing.JButton();
         pnlApp = new javax.swing.JPanel();
         pnlContenido = new javax.swing.JPanel();
 
@@ -60,14 +65,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnRegistroItinerarios.setText("Registro Itinerarios");
         btnRegistroItinerarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistroItinerariosActionPerformed(evt);
+                clickBtnRegistroItinerariosActionPerformed(evt);
             }
         });
 
-        btnQueja.setText("Registrar Queja");
-        btnQueja.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrarQueja.setText("Registrar Queja");
+        btnRegistrarQueja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuejaActionPerformed(evt);
+                clickBtnRegistrarQueja(evt);
+            }
+        });
+
+        btnRegistrarEspecie.setText("Registrar Especie");
+        btnRegistrarEspecie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickBtnRegistrarEspecie(evt);
             }
         });
 
@@ -78,16 +90,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
             .addGroup(pnlMenuPrincipalLayout.createSequentialGroup()
                 .addGroup(pnlMenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMenuPrincipalLayout.createSequentialGroup()
-                        .addGap(218, 218, 218)
+                        .addGap(134, 134, 134)
                         .addComponent(btnRegistroItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
+                        .addGap(78, 78, 78)
                         .addComponent(btnRegistroHabitat, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
-                        .addComponent(btnQueja, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49)
+                        .addComponent(btnRegistrarQueja, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(btnRegistrarEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlMenuPrincipalLayout.createSequentialGroup()
                         .addGap(419, 419, 419)
                         .addComponent(lblTituloPrincipal)))
-                .addContainerGap(279, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
         pnlMenuPrincipalLayout.setVerticalGroup(
             pnlMenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,12 +109,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGap(57, 57, 57)
                 .addComponent(lblTituloPrincipal)
                 .addGap(197, 197, 197)
-                .addGroup(pnlMenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnQueja, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                    .addGroup(pnlMenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnRegistroItinerarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRegistroHabitat, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addGroup(pnlMenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(btnRegistroHabitat, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistroItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistrarQueja, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistrarEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(222, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnlMenuPrincipal, "Menu");
@@ -133,24 +147,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_clickBtnRegistroHabitats
 
-    private void btnRegistroItinerariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroItinerariosActionPerformed
-        // TODO add your handling code here:
+    private void clickBtnRegistroItinerariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnRegistroItinerariosActionPerformed
         CardLayout cl = (CardLayout)(this.getContentPane().getLayout());
         cl.show(this.getContentPane(), "App");
         
         cl = (CardLayout)(pnlContenido.getLayout());
         cl.show(pnlContenido, "Itinerarios");
-    }//GEN-LAST:event_btnRegistroItinerariosActionPerformed
+    }//GEN-LAST:event_clickBtnRegistroItinerariosActionPerformed
 
-    private void btnQuejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuejaActionPerformed
+    private void clickBtnRegistrarQueja(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnRegistrarQueja
         // TODO add your handling code here:
         this.setVisible(false);
         new FrmAtencionVisitantes().setVisible(true);
-    }//GEN-LAST:event_btnQuejaActionPerformed
+    }//GEN-LAST:event_clickBtnRegistrarQueja
+
+    private void clickBtnRegistrarEspecie(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnRegistrarEspecie
+        CardLayout cl = (CardLayout) (this.getContentPane().getLayout());
+        cl.show(this.getContentPane(), "App");
+
+        cl = (CardLayout) (pnlContenido.getLayout());
+        cl.show(pnlContenido, "Especies");
+    }//GEN-LAST:event_clickBtnRegistrarEspecie
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnQueja;
+    private javax.swing.JButton btnRegistrarEspecie;
+    private javax.swing.JButton btnRegistrarQueja;
     private javax.swing.JButton btnRegistroHabitat;
     private javax.swing.JButton btnRegistroItinerarios;
     private javax.swing.JLabel lblTituloPrincipal;

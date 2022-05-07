@@ -1,8 +1,8 @@
 package controles;
 
 import entidades.Habitat;
-import fachada.FacadeDatos;
 import interfaces.IDatos;
+import java.util.List;
 
 /**
  * Clase de control para los objetos de tipo Habitat.
@@ -33,5 +33,13 @@ public class ControlHabitats {
      */
     public Habitat verificarExistencia(String nombre){
         return datos.consultarHabitatNombre(nombre);
+    }
+    
+    /**
+     * Devuelve una lista de todos los habitats registrados en el sistema.
+     * @return Lista de habitats registrados.
+     */
+    public List<Habitat> consultarHabitats(){
+        return datos.consultarHabitats();
     }
 }

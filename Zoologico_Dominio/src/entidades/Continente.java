@@ -76,7 +76,7 @@ public class Continente {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.nombre);
         return hash;
     }
 
@@ -92,7 +92,7 @@ public class Continente {
             return false;
         }
         final Continente other = (Continente) obj;
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.nombre, other.nombre);
     }
 
     @Override

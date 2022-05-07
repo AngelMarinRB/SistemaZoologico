@@ -1,5 +1,6 @@
 package fachada;
 
+import controles.ControlCuidadores;
 import controles.ControlClimas;
 import controles.ControlContinentes;
 import controles.ControlHabitats;
@@ -9,6 +10,7 @@ import controles.ControlZonas;
 import controles.FabricaControles;
 import entidades.Clima;
 import entidades.Continente;
+import entidades.Cuidador;
 import entidades.Habitat;
 import entidades.Itinerario;
 import entidades.Vegetacion;
@@ -29,6 +31,7 @@ public class FacadeNegocio implements INegocio{
     private ControlVegetaciones vegetaciones;
     private ControlItinerarios itinerarios;
     private ControlZonas zonas;
+    private ControlCuidadores cuidadores;
     
     public FacadeNegocio(){
         FabricaControles controles = new FabricaControles();
@@ -39,6 +42,7 @@ public class FacadeNegocio implements INegocio{
         this.vegetaciones = controles.crearControlVegetaciones();
         this.itinerarios = controles.crearControlItinerarios();
         this.zonas = controles.crearControlZonas();
+        this.cuidadores = controles.crearControlAnimales();
     }
     
     @Override
@@ -79,6 +83,16 @@ public class FacadeNegocio implements INegocio{
     @Override
     public List<Zona> consultarZonas() {
         return zonas.consultarZonas();
+    }
+
+    @Override
+    public List<Habitat> consultarHabitats() {
+        return habitats.consultarHabitats();
+    }
+
+    @Override
+    public List<Cuidador> consultarCuidadores() {
+        return cuidadores.consultarCuidadores();
     }
     
 }

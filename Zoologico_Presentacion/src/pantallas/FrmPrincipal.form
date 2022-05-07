@@ -36,19 +36,21 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="218" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
                           <Component id="btnRegistroItinerarios" min="-2" pref="163" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                           <Component id="btnRegistroHabitat" min="-2" pref="160" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                          <Component id="btnQueja" min="-2" pref="155" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                          <Component id="btnRegistrarQueja" min="-2" pref="155" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                          <Component id="btnRegistrarEspecie" min="-2" pref="155" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="419" max="-2" attributes="0"/>
                           <Component id="lblTituloPrincipal" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="279" max="32767" attributes="0"/>
+                  <EmptySpace pref="141" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -58,14 +60,13 @@
                   <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                   <Component id="lblTituloPrincipal" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="197" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnQueja" pref="80" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnRegistroItinerarios" max="32767" attributes="0"/>
-                          <Component id="btnRegistroHabitat" pref="80" max="32767" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" max="-2" attributes="0">
+                      <Component id="btnRegistroHabitat" alignment="3" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Component id="btnRegistroItinerarios" alignment="3" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Component id="btnRegistrarQueja" alignment="3" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Component id="btnRegistrarEspecie" alignment="3" min="-2" pref="80" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="188" max="32767" attributes="0"/>
+                  <EmptySpace pref="222" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -92,15 +93,23 @@
             <Property name="text" type="java.lang.String" value="Registro Itinerarios"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistroItinerariosActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clickBtnRegistroItinerariosActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnQueja">
+        <Component class="javax.swing.JButton" name="btnRegistrarQueja">
           <Properties>
             <Property name="text" type="java.lang.String" value="Registrar Queja"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQuejaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clickBtnRegistrarQueja"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnRegistrarEspecie">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Registrar Especie"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clickBtnRegistrarEspecie"/>
           </Events>
         </Component>
       </SubComponents>

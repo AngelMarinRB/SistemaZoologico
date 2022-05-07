@@ -99,6 +99,8 @@ public class FrmHabitats extends javax.swing.JPanel {
         txtContinentesDatos.setText("");
         txtNombreDatos.setText("");
         txtVegetacionDatos.setText("");
+        DefaultTableModel tablaContinentesSeleccionados = (DefaultTableModel) this.tblContinentesSeleccionados.getModel();
+        tablaContinentesSeleccionados.setRowCount(0);
     }
     
     public boolean verificarFormulario(){        

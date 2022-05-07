@@ -2,6 +2,7 @@ package fachada;
 
 import daos.ClimasDAO;
 import daos.ContinentesDAO;
+import daos.CuidadoresDAO;
 import daos.FabricaDAO;
 import daos.HabitatsDAO;
 import daos.ItinerariosDAO;
@@ -9,6 +10,7 @@ import daos.VegetacionesDAO;
 import daos.ZonasDAO;
 import entidades.Clima;
 import entidades.Continente;
+import entidades.Cuidador;
 import entidades.Habitat;
 import entidades.Itinerario;
 import entidades.Vegetacion;
@@ -23,22 +25,26 @@ import java.util.List;
  */
 public class FacadeDatos implements IDatos{
     
+    private FabricaDAO fabrica;
     private ClimasDAO climas;
     private ContinentesDAO continentes;
     private VegetacionesDAO vegetaciones;
     private HabitatsDAO habitats;
     private ItinerariosDAO itinerarios;
     private ZonasDAO zonas;
+    private CuidadoresDAO cuidadores;
     
     public FacadeDatos(){
-        FabricaDAO fabrica = new FabricaDAO();
+        fabrica = new FabricaDAO();
         
         this.climas = fabrica.crearClimasDAO();
+        this.continentes = fabrica.crearContinentesDAO();
         this.continentes = fabrica.crearContinentesDAO();
         this.vegetaciones = fabrica.crearVegetacionesDAO();
         this.habitats = fabrica.crearHabitatsDAO();
         this.itinerarios = fabrica.crearItinerariosDAO();
         this.zonas = fabrica.crearZonasDAO();
+        this.cuidadores = fabrica.crearCuidadoresDAO();
     }
 
     @Override
@@ -125,6 +131,28 @@ public class FacadeDatos implements IDatos{
         
         try{
             return zonas.consultarTodos();
+        }catch(Exception e){
+            System.err.print(e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Habitat> consultarHabitats() {
+        
+        try{
+            return habitats.consultarTodos();
+        }catch(Exception e){
+            System.err.print(e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Cuidador> consultarCuidadores() {
+        
+        try{
+            return cuidadores.consultarTodos();
         }catch(Exception e){
             System.err.print(e);
             return null;

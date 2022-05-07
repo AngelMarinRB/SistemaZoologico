@@ -5,9 +5,10 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import entidades.Habitat;
 import interfaces.IConexionBD;
-import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 
 /**
@@ -43,6 +44,19 @@ public class HabitatsDAO {
         
         MongoCollection<Habitat> coleccion = this.getColeccion();
         coleccion.insertOne(habitat);
+    }
+    
+    public List<Habitat> consultarTodos(){
+        
+        FindIterable<Habitat> registros = this.getColeccion().find();
+        
+        List<Habitat> listaHabitats = new ArrayList<>();
+        
+        registros.forEach((Consumer<Habitat>) (Habitat habitat) -> {
+            listaHabitats.add(habitat);
+        });
+        
+        return listaHabitats;
     }
     
     public Habitat consultarNombre(String nombre){

@@ -24,7 +24,7 @@ public class FabricaDAO {
     }
     
     public ContinentesDAO crearContinentesDAO(){
-        return new ContinentesDAO(conexion);
+        return new ContinentesDAO();
     }
     
     public ClimasDAO crearClimasDAO(){
@@ -37,5 +37,9 @@ public class FabricaDAO {
     
     public ZonasDAO crearZonasDAO(){
         return new ZonasDAO(conexion);
+    }
+    
+    public CuidadoresDAO crearCuidadoresDAO(){
+        return new CuidadoresDAO(conexion);
     }
 }

@@ -2,6 +2,7 @@ package interfaces;
 
 import entidades.Clima;
 import entidades.Continente;
+import entidades.Cuidador;
 import entidades.Habitat;
 import entidades.Itinerario;
 import entidades.Vegetacion;
@@ -30,5 +31,17 @@ public interface INegocio {
     Itinerario verificarExistenciaItinerario(String nombre);
     
     List<Zona> consultarZonas();
+    
+    /**
+     * Devuelve una lista de todos los habitats registrados en el sistema.
+     * @return Lista de habitats.
+     */
+    List<Habitat> consultarHabitats();
+    
+    /**
+     * Devuelve una lista de todos los cuidadores registrados en el sistema.
+     * @return Lista de cuidadores.
+     */
+    List<Cuidador> consultarCuidadores();
     
 }

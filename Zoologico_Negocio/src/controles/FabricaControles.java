@@ -39,4 +39,8 @@ public class FabricaControles {
     public ControlZonas crearControlZonas(){
         return new ControlZonas(datos);
     }
+    
+    public ControlCuidadores crearControlAnimales(){
+        return new ControlCuidadores(datos);
+    }
 }
