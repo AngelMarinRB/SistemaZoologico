@@ -1,16 +1,20 @@
 package fachada;
 
+import daos.AnimalesDAO;
 import daos.ClimasDAO;
 import daos.ContinentesDAO;
 import daos.CuidadoresDAO;
+import daos.EspeciesDAO;
 import daos.FabricaDAO;
 import daos.HabitatsDAO;
 import daos.ItinerariosDAO;
 import daos.VegetacionesDAO;
 import daos.ZonasDAO;
+import entidades.Animal;
 import entidades.Clima;
 import entidades.Continente;
 import entidades.Cuidador;
+import entidades.Especie;
 import entidades.Habitat;
 import entidades.Itinerario;
 import entidades.Vegetacion;
@@ -33,6 +37,8 @@ public class FacadeDatos implements IDatos{
     private ItinerariosDAO itinerarios;
     private ZonasDAO zonas;
     private CuidadoresDAO cuidadores;
+    private AnimalesDAO animales;
+    private EspeciesDAO especies;
     
     public FacadeDatos(){
         fabrica = new FabricaDAO();
@@ -45,6 +51,8 @@ public class FacadeDatos implements IDatos{
         this.itinerarios = fabrica.crearItinerariosDAO();
         this.zonas = fabrica.crearZonasDAO();
         this.cuidadores = fabrica.crearCuidadoresDAO();
+        this.animales = fabrica.crearAnimalesDAO();
+        this.especies = fabrica.crearEspeciesDAO();
     }
 
     @Override
@@ -153,6 +161,72 @@ public class FacadeDatos implements IDatos{
         
         try{
             return cuidadores.consultarTodos();
+        }catch(Exception e){
+            System.err.print(e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Animal> consultarAnimalesEspecie(Especie especie) {
+        
+        try{
+            return animales.consultarPorEspecie(especie);
+        }catch(Exception e){
+            System.err.print(e);
+            return null;
+        }
+    }
+
+    @Override
+    public boolean guardarAnimal(Animal animal) {
+        
+        try{
+            return animales.guardar(animal);
+        }catch(Exception e){
+            System.err.print(e);
+            return false;
+        }
+    }
+
+    @Override
+    public Especie consultarEspecieNombre(String nombre) {
+        
+        try{
+            return especies.consultarNombre(nombre);
+        }catch(Exception e){
+            System.err.print(e);
+            return null;
+        }
+    }
+
+    @Override
+    public Especie consultarEspecieNombreCientifico(String nombre) {
+
+        try{
+            return especies.consultarNombreCientifico(nombre);
+        }catch(Exception e){
+            System.err.print(e);
+            return null;
+        }
+    }
+
+    @Override
+    public boolean guardarEspecie(Especie especie) {
+
+        try{
+            return especies.guardar(especie);
+        }catch(Exception e){
+            System.err.print(e);
+            return false;
+        }
+    }
+
+    @Override
+    public List<Especie> consultarEspecies() {
+        
+        try{
+            return especies.consultarTodos();
         }catch(Exception e){
             System.err.print(e);
             return null;

@@ -707,6 +707,8 @@ public class FrmItinerarios extends javax.swing.JPanel {
         lblNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblNombre.setText("Nombre:");
 
+        txtNombre.setEditable(false);
+
         javax.swing.GroupLayout pnlFormPrincipalLayout = new javax.swing.GroupLayout(pnlFormPrincipal);
         pnlFormPrincipal.setLayout(pnlFormPrincipalLayout);
         pnlFormPrincipalLayout.setHorizontalGroup(

@@ -42,4 +42,12 @@ public class FabricaDAO {
     public CuidadoresDAO crearCuidadoresDAO(){
         return new CuidadoresDAO(conexion);
     }
+    
+    public AnimalesDAO crearAnimalesDAO(){
+        return new AnimalesDAO(conexion);
+    }
+    
+    public EspeciesDAO crearEspeciesDAO(){
+        return new EspeciesDAO(conexion);
+    }
 }

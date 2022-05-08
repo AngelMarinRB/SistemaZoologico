@@ -1,8 +1,10 @@
 package interfaces;
 
+import entidades.Animal;
 import entidades.Clima;
 import entidades.Continente;
 import entidades.Cuidador;
+import entidades.Especie;
 import entidades.Habitat;
 import entidades.Itinerario;
 import entidades.Vegetacion;
@@ -82,4 +84,47 @@ public interface IDatos {
      */
     List<Cuidador> consultarCuidadores();
     
+    /**
+     * Almacena el Animal dado como parámetro.
+     * @param animal Animal a guardar.
+     * @return True en caso de guardarse correctamente, Flase en caso contrario.
+     */
+    boolean guardarAnimal(Animal animal);
+    
+    /**
+     * Devuelve la lista de todos los Animales que pertenezcan a la especie dada
+     * como parámetro.
+     * @return Lista de Animales con la misma especie.
+     */
+    List<Animal> consultarAnimalesEspecie(Especie especie);
+    
+    /**
+     * Devuelve la Especie que tenga el nombre vulgar igual al dado como parámetro
+     * si existe.
+     * @param nombre Nombre a buscar
+     * @return Especie con nombre idéntico, Null en caso de no haber uno.
+     */
+    Especie consultarEspecieNombre(String nombre);
+    
+    /**
+     * Devuelve la Especie que tenga el nombre científico igual al dado como parámetro
+     * si existe.
+     * @param nombre Nombre a buscar.
+     * @return Especie con nombre científico idéntico, Null en caso de no haber uno.
+     */
+    Especie consultarEspecieNombreCientifico(String nombre);
+    
+    /**
+     * Almacena la especie dada como parámetro.
+     * 
+     * @param especie Especie a almacenar.
+     * @return True si se guarda correctamente, False en caso contrario.
+     */
+    boolean guardarEspecie(Especie especie);
+    
+    /**
+     * Devuelve una lista de todas las Especies registradas en el sistema.
+     * @return Lista de Especies registradas.
+     */
+    List<Especie> consultarEspecies();
 }

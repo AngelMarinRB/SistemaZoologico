@@ -40,10 +40,15 @@ public class HabitatsDAO {
      * 
      * @param habitat Habitat a guardar. 
      */
-    public void guardar(Habitat habitat){
-        
-        MongoCollection<Habitat> coleccion = this.getColeccion();
-        coleccion.insertOne(habitat);
+    public boolean guardar(Habitat habitat) {
+        try {
+            MongoCollection<Habitat> coleccion = this.getColeccion();
+            coleccion.insertOne(habitat);
+            return true;
+        } catch (Exception e) {
+            System.err.println(e);
+            return false;
+        }
     }
     
     public List<Habitat> consultarTodos(){

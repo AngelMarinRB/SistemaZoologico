@@ -40,7 +40,15 @@ public class FabricaControles {
         return new ControlZonas(datos);
     }
     
-    public ControlCuidadores crearControlAnimales(){
+    public ControlCuidadores crearControlCuidadores(){
         return new ControlCuidadores(datos);
+    }
+    
+    public ControlAnimales crearControlAnimales(){
+        return new ControlAnimales(datos);
+    }
+    
+    public ControlEspecies crearControlEspecies(){
+        return new ControlEspecies(datos);
     }
 }

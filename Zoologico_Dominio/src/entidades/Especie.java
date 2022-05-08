@@ -1,5 +1,6 @@
 package entidades;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import org.bson.types.ObjectId;
 
@@ -13,26 +14,26 @@ public class Especie {
     private String nombreVulgar;
     private String nombreCientifico;
     private String descripcion;
-    private Habitat habitat;
+    private ArrayList<Habitat> habitats;
     private Zona zona;
 
     public Especie() {
     }
 
-    public Especie(String nombreVulgar, String nombreCientifico, String descripcion, Habitat habitat, Zona zona) {
+    public Especie(String nombreVulgar, String nombreCientifico, String descripcion, ArrayList<Habitat> habitats, Zona zona) {
         this.nombreVulgar = nombreVulgar;
         this.nombreCientifico = nombreCientifico;
         this.descripcion = descripcion;
-        this.habitat = habitat;
+        this.habitats = habitats;
         this.zona = zona;
     }
 
-    public Especie(ObjectId id, String nombreVulgar, String nombreCientifico, String descripcion, Habitat habitat, Zona zona) {
+    public Especie(ObjectId id, String nombreVulgar, String nombreCientifico, String descripcion, ArrayList<Habitat> habitats, Zona zona) {
         this.id = id;
         this.nombreVulgar = nombreVulgar;
         this.nombreCientifico = nombreCientifico;
         this.descripcion = descripcion;
-        this.habitat = habitat;
+        this.habitats = habitats;
         this.zona = zona;
     }
 
@@ -68,12 +69,12 @@ public class Especie {
         this.descripcion = descripcion;
     }
 
-    public Habitat getHabitat() {
-        return habitat;
+    public ArrayList<Habitat> getHabitat() {
+        return habitats;
     }
 
-    public void setHabitat(Habitat habitat) {
-        this.habitat = habitat;
+    public void setHabitat(ArrayList<Habitat> habitats) {
+        this.habitats = habitats;
     }
 
     public Zona getZona() {
@@ -108,7 +109,7 @@ public class Especie {
 
     @Override
     public String toString() {
-        return "Especie{" + "id=" + id + ", nombreVulgar=" + nombreVulgar + ", nombreCientifico=" + nombreCientifico + ", descripcion=" + descripcion + ", habitat=" + habitat + ", zona=" + zona + '}';
+        return "Especie{" + "id=" + id + ", nombreVulgar=" + nombreVulgar + ", nombreCientifico=" + nombreCientifico + ", descripcion=" + descripcion + ", habitat=" + habitats + ", zona=" + zona + '}';
     }
     
     

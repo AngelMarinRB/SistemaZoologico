@@ -1,7 +1,16 @@
 package pantallas;
 
+import entidades.Cuidador;
+import entidades.Especie;
+import entidades.Habitat;
+import entidades.Zona;
+import fachada.FacadeNegocio;
+import interfaces.INegocio;
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  * Interfáz gráfica de usuario para el registro de Especies en el sistema.
@@ -10,13 +19,107 @@ import java.awt.Container;
  */
 public class FrmEspecies extends javax.swing.JPanel {
 
+    private INegocio negocio;
+    private List<Habitat> habitats;
+    private List<Cuidador> cuidadores;
+    private List<Zona> zonas;
+    
+    private DefaultComboBoxModel listaHabitats;
+    private DefaultComboBoxModel listaCuidadores;
+    private DefaultComboBoxModel listaZonas;
+    
     /**
      * Creates new form frmEspecies
      */
     public FrmEspecies() {
         initComponents();
+        
+        this.negocio = new FacadeNegocio();
+        
+        tblAnimales.getTableHeader().setReorderingAllowed(false);
+        
+        desactivarFormulario();
+        
+        cargarRecursos();
     }
 
+    public void cargarRecursos(){
+        habitats = negocio.consultarHabitats();
+        cuidadores = negocio.consultarCuidadores();
+        zonas = negocio.consultarZonas();
+    }
+    
+    public void mostrarRecursos(List<Habitat> habitats, List<Cuidador> cuidador){
+        llenarCBoxHabitats(habitats);
+        llenarCBoxCuidadores(cuidadores);
+        llenarCBoxZonas(zonas);
+    }
+    
+    public void activarFormulario(){
+        pnlAnimales.setVisible(true);
+        pnlDatos.setVisible(true);
+    }
+    
+    public void llenarFormulario(Especie especie){
+        
+    }
+    
+    public void llenarCBoxHabitats(List<Habitat> habitats){
+        if (listaHabitats == null) {
+            listaHabitats = new DefaultComboBoxModel();
+        }else{
+            listaHabitats.removeAllElements();
+        }
+        
+        for(int i = 0 ; i < habitats.size() ; i++){
+            listaHabitats.addElement(habitats.get(i));
+        }
+    }
+    
+    private void llenarCBoxCuidadores(List<Cuidador> cuidadores){
+        if (listaCuidadores == null) {
+            listaCuidadores = new DefaultComboBoxModel();
+        }else{
+            listaCuidadores.removeAllElements();
+        }
+        
+        for(int i = 0 ; i < cuidadores.size() ; i++){
+            listaCuidadores.addElement(cuidadores.get(i));
+        }
+    }
+    
+    private void llenarCBoxZonas(List<Zona> zonas){
+        if (listaZonas == null) {
+            listaZonas = new DefaultComboBoxModel();
+        }else{
+            listaZonas.removeAllElements();
+        }
+        
+        for(int i = 0 ; i < zonas.size() ; i++){
+            listaZonas.addElement(zonas.get(i));
+        }
+    }
+    
+    public void desactivarFormulario(){
+        pnlAnimales.setVisible(false);
+        pnlDatos.setVisible(false);
+        limpiarFormulario();
+    }
+    
+    public void limpiarFormulario(){
+        
+        txtNombreEspecie.setText("");
+        txtDescripcion.setText("");
+        txtEdadAnimal.setText("");
+        txtNombreAnimal.setText("");
+        txtNombreCientifico.setText("");
+        txtNombreEspaniol.setText("");
+    }
+    
+    private void mostrarError(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje , "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,6 +132,43 @@ public class FrmEspecies extends javax.swing.JPanel {
         pnlEncabezado = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         btnMenu = new javax.swing.JButton();
+        txtNombreEspecie = new javax.swing.JTextField();
+        lblNombreEspecie = new javax.swing.JLabel();
+        btnValidarEspecie = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        pnlAnimales = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAnimales = new javax.swing.JTable();
+        lblAnimales = new javax.swing.JLabel();
+        btnEditarAnimales = new javax.swing.JButton();
+        pnlDatos = new javax.swing.JPanel();
+        pnlRegistroAnimales = new javax.swing.JPanel();
+        lblRegistroAnimal = new javax.swing.JLabel();
+        lblNombreAnimal = new javax.swing.JLabel();
+        txtNombreAnimal = new javax.swing.JTextField();
+        lblEdadAnimal = new javax.swing.JLabel();
+        txtEdadAnimal = new javax.swing.JTextField();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        lblSexoAnimal = new javax.swing.JLabel();
+        btnConfirmacionAnimal = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
+        pnlRegistroEspecie = new javax.swing.JPanel();
+        lblHabitat = new javax.swing.JLabel();
+        lblCuidador = new javax.swing.JLabel();
+        cboxCuidadores = new javax.swing.JComboBox<>();
+        txtDescripcion = new javax.swing.JTextField();
+        lblDescripcion = new javax.swing.JLabel();
+        lblNombreCientifico = new javax.swing.JLabel();
+        txtNombreCientifico = new javax.swing.JTextField();
+        txtNombreEspaniol = new javax.swing.JTextField();
+        lblNombreEspaniol = new javax.swing.JLabel();
+        cboxHabitats = new javax.swing.JComboBox<>();
+        lblRegistro = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JButton();
+        lblZona = new javax.swing.JLabel();
+        cboxZonas = new javax.swing.JComboBox<>();
 
         pnlEncabezado.setBackground(new java.awt.Color(33, 47, 69));
 
@@ -50,9 +190,9 @@ public class FrmEspecies extends javax.swing.JPanel {
             pnlEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEncabezadoLayout.createSequentialGroup()
                 .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlEncabezadoLayout.setVerticalGroup(
             pnlEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -63,17 +203,302 @@ public class FrmEspecies extends javax.swing.JPanel {
             .addComponent(btnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        lblNombreEspecie.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblNombreEspecie.setText("Nombre de la Especie");
+
+        btnValidarEspecie.setText("Verificar");
+        btnValidarEspecie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickBtnValidarEspecie(evt);
+            }
+        });
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        tblAnimales.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Especie", "Nombre", "Edad", "Sexo"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblAnimales);
+
+        lblAnimales.setText("Animales Registrados");
+
+        btnEditarAnimales.setText("Editar Animales");
+
+        javax.swing.GroupLayout pnlAnimalesLayout = new javax.swing.GroupLayout(pnlAnimales);
+        pnlAnimales.setLayout(pnlAnimalesLayout);
+        pnlAnimalesLayout.setHorizontalGroup(
+            pnlAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAnimalesLayout.createSequentialGroup()
+                .addGroup(pnlAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAnimalesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(pnlAnimalesLayout.createSequentialGroup()
+                        .addGap(144, 144, 144)
+                        .addComponent(lblAnimales)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(pnlAnimalesLayout.createSequentialGroup()
+                .addGap(154, 154, 154)
+                .addComponent(btnEditarAnimales)
+                .addContainerGap(159, Short.MAX_VALUE))
+        );
+        pnlAnimalesLayout.setVerticalGroup(
+            pnlAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAnimalesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblAnimales)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEditarAnimales)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnlDatos.setLayout(new java.awt.CardLayout());
+
+        lblRegistroAnimal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblRegistroAnimal.setText("Registro de Animal");
+
+        lblNombreAnimal.setText("Nombre");
+
+        lblEdadAnimal.setText("Edad");
+
+        jRadioButton1.setText("Macho");
+
+        jRadioButton2.setText("Hembra");
+
+        lblSexoAnimal.setText("Sexo:");
+
+        btnConfirmacionAnimal.setText("Agregar");
+
+        btnRegresar.setText("Regresar");
+
+        javax.swing.GroupLayout pnlRegistroAnimalesLayout = new javax.swing.GroupLayout(pnlRegistroAnimales);
+        pnlRegistroAnimales.setLayout(pnlRegistroAnimalesLayout);
+        pnlRegistroAnimalesLayout.setHorizontalGroup(
+            pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
+                .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblNombreAnimal)
+                            .addComponent(lblEdadAnimal)
+                            .addComponent(lblSexoAnimal))
+                        .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombreAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEdadAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(jRadioButton1)
+                                .addGap(56, 56, 56)
+                                .addComponent(jRadioButton2))))
+                    .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
+                        .addGap(244, 244, 244)
+                        .addComponent(lblRegistroAnimal))
+                    .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
+                        .addGap(260, 260, 260)
+                        .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnRegresar)
+                            .addComponent(btnConfirmacionAnimal))))
+                .addContainerGap(166, Short.MAX_VALUE))
+        );
+        pnlRegistroAnimalesLayout.setVerticalGroup(
+            pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(lblRegistroAnimal)
+                .addGap(44, 44, 44)
+                .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreAnimal)
+                    .addComponent(txtNombreAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEdadAnimal)
+                    .addComponent(txtEdadAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2)
+                    .addComponent(lblSexoAnimal))
+                .addGap(55, 55, 55)
+                .addComponent(btnConfirmacionAnimal)
+                .addGap(75, 75, 75)
+                .addComponent(btnRegresar)
+                .addContainerGap(132, Short.MAX_VALUE))
+        );
+
+        pnlDatos.add(pnlRegistroAnimales, "Animales");
+
+        lblHabitat.setText("Hábitat");
+
+        lblCuidador.setText("Cuidador");
+
+        cboxCuidadores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblDescripcion.setText("Descripción");
+
+        lblNombreCientifico.setText("Nombre Científico");
+
+        txtNombreEspaniol.setEditable(false);
+
+        lblNombreEspaniol.setText("Nombre en Español");
+
+        cboxHabitats.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblRegistro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblRegistro.setText("Registro");
+
+        btnGuardar.setText("Guardar");
+
+        lblZona.setText("Zona");
+
+        cboxZonas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout pnlRegistroEspecieLayout = new javax.swing.GroupLayout(pnlRegistroEspecie);
+        pnlRegistroEspecie.setLayout(pnlRegistroEspecieLayout);
+        pnlRegistroEspecieLayout.setHorizontalGroup(
+            pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistroEspecieLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardar)
+                .addGap(276, 276, 276))
+            .addGroup(pnlRegistroEspecieLayout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRegistroEspecieLayout.createSequentialGroup()
+                        .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblNombreCientifico)
+                            .addComponent(lblNombreEspaniol)
+                            .addComponent(lblDescripcion)
+                            .addComponent(lblCuidador)
+                            .addComponent(lblHabitat)
+                            .addComponent(lblZona))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNombreCientifico)
+                            .addComponent(txtDescripcion)
+                            .addComponent(cboxCuidadores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNombreEspaniol, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboxHabitats, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboxZonas, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlRegistroEspecieLayout.createSequentialGroup()
+                        .addGap(233, 233, 233)
+                        .addComponent(lblRegistro)))
+                .addContainerGap(143, Short.MAX_VALUE))
+        );
+        pnlRegistroEspecieLayout.setVerticalGroup(
+            pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRegistroEspecieLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(lblRegistro)
+                .addGap(36, 36, 36)
+                .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNombreEspaniol)
+                    .addComponent(txtNombreEspaniol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreCientifico)
+                    .addComponent(txtNombreCientifico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDescripcion)
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCuidador)
+                    .addComponent(cboxCuidadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHabitat)
+                    .addComponent(cboxHabitats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblZona)
+                    .addComponent(cboxZonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addComponent(btnGuardar)
+                .addContainerGap(162, Short.MAX_VALUE))
+        );
+
+        pnlDatos.add(pnlRegistroEspecie, "Especie");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator2)
+                            .addComponent(txtNombreEspecie, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(175, 175, 175)
+                        .addComponent(btnValidarEspecie))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(lblNombreEspecie)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 536, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNombreEspecie)
+                                .addGap(33, 33, 33)
+                                .addComponent(txtNombreEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(btnValidarEspecie)
+                                .addGap(44, 44, 44)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pnlAnimales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(pnlDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -87,10 +512,65 @@ public class FrmEspecies extends javax.swing.JPanel {
         cl.show(frame, "Menu");
     }//GEN-LAST:event_btnMenuActionPerformed
 
+    private void clickBtnValidarEspecie(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnValidarEspecie
+        String nombreEspecie = txtNombreEspaniol.getText();
+        
+        if(nombreEspecie.isEmpty()){
+            mostrarError("Ingrese un nombre de la especie");
+            return;
+        }
+        
+        Especie especie = negocio.verificarEspecieNombre(nombreEspecie);
+        
+        if(especie != null){
+            mostrarError("Ya existe una especie con ese nombre.");
+            llenarFormulario(especie);
+        } else {
+            activarFormulario();
+        }
+    }//GEN-LAST:event_clickBtnValidarEspecie
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConfirmacionAnimal;
+    private javax.swing.JButton btnEditarAnimales;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnMenu;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnValidarEspecie;
+    private javax.swing.JComboBox<String> cboxCuidadores;
+    private javax.swing.JComboBox<String> cboxHabitats;
+    private javax.swing.JComboBox<String> cboxZonas;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblAnimales;
+    private javax.swing.JLabel lblCuidador;
+    private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblEdadAnimal;
+    private javax.swing.JLabel lblHabitat;
+    private javax.swing.JLabel lblNombreAnimal;
+    private javax.swing.JLabel lblNombreCientifico;
+    private javax.swing.JLabel lblNombreEspaniol;
+    private javax.swing.JLabel lblNombreEspecie;
+    private javax.swing.JLabel lblRegistro;
+    private javax.swing.JLabel lblRegistroAnimal;
+    private javax.swing.JLabel lblSexoAnimal;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblZona;
+    private javax.swing.JPanel pnlAnimales;
+    private javax.swing.JPanel pnlDatos;
     private javax.swing.JPanel pnlEncabezado;
+    private javax.swing.JPanel pnlRegistroAnimales;
+    private javax.swing.JPanel pnlRegistroEspecie;
+    private javax.swing.JTable tblAnimales;
+    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtEdadAnimal;
+    private javax.swing.JTextField txtNombreAnimal;
+    private javax.swing.JTextField txtNombreCientifico;
+    private javax.swing.JTextField txtNombreEspaniol;
+    private javax.swing.JTextField txtNombreEspecie;
     // End of variables declaration//GEN-END:variables
 }
