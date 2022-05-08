@@ -4,6 +4,7 @@
  */
 package pantallas;
 
+import entidades.DiasHorario;
 import entidades.Itinerario;
 import entidades.Vegetacion;
 import entidades.Zona;
@@ -27,6 +28,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
     private INegocio negocio;
     private List<Zona> zonas;
     private List<String> zonatblSeleccionada;
+    private ArrayList<DiasHorario> dhArray;
     /**
      * Creates new form FrmItinerarios
      */
@@ -38,6 +40,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
         this.btnGuardar.setVisible(false);
         this.txtHorarioAviso.setVisible(false);
         this.btnLimpiar.setVisible(false);
+        this.lblFormatoHoras.setVisible(false);
         
         this.negocio = new FacadeNegocio();
         
@@ -141,6 +144,8 @@ public class FrmItinerarios extends javax.swing.JPanel {
         this.checkSabado.setEnabled(false);
         this.checkViernes.setEnabled(false);
         this.checkDomingo.setEnabled(false);
+        
+        this.lblFormatoHoras.setVisible(true);
         
         
 
@@ -262,6 +267,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
        this.llenarTablaZonas(zonas);
        this.llenarTablaZonasSeleccionadas();
        
+       this.lblFormatoHoras.setVisible(false);
        this.cargarRecursos();
     }
     
@@ -299,10 +305,8 @@ public class FrmItinerarios extends javax.swing.JPanel {
     public void guardarItinerario(){
         Itinerario itinerario = new Itinerario();
         itinerario.setNombre(this.txtNombre.getText());
-        itinerario.setDias("LMaMi");
         itinerario.setDuracion(Integer.valueOf(this.txtDuracion.getText()));
-        itinerario.setHoras("20:00");
-        itinerario.setNumeroEspecies(2);
+        itinerario.setDiasHorario(this.dhArray);
         itinerario.setLongitud(Float.valueOf(this.txtDisponibilidad.getText()));
         itinerario.setVisitantesMaximos(Integer.valueOf(this.txtDisponibilidad.getText()));
         itinerario.setRecorrido(this.buscarZonasSeleccionadas());
@@ -330,62 +334,180 @@ public class FrmItinerarios extends javax.swing.JPanel {
     
     public boolean verificarHora(){
         //verifica campo de las horas
+        
         Pattern patron = Pattern.compile("\\d\\d\\:\\d\\d");
         Matcher matcher; 
+        this.dhArray = new ArrayList();
         
         if(this.checkLunes.isSelected()){
-            matcher = patron.matcher(this.txtLunes.getText());
-            if(!matcher.matches()){
+            String[] split = this.txtLunes.getText().split(",");
+            DiasHorario dh = new DiasHorario("Lunes");
+            
+            for (int i = 0; i < split.length; i++) {
+                
+                if(!this.verificarValorHora(split[i])){
+                    return false;
+                }
+                
+                matcher = patron.matcher(split[i]);
+                if(!matcher.matches()){
                 this.mostrarError("Formato de hora incorrecto");
                 return false;
-            }
+                }
+                dh.agregarHora(split[i]);
+            }  
+            dhArray.add(dh);
         }
         if(this.checkMartes.isSelected()){
-            matcher = patron.matcher(this.txtMartes.getText());
-            if(!matcher.matches()){
+            String[] split = this.txtMartes.getText().split(",");
+            DiasHorario dh = new DiasHorario("Martes");
+            
+            for (int i = 0; i < split.length; i++) {
+                
+                if(!this.verificarValorHora(split[i])){
+                    return false;
+                }
+                
+                matcher = patron.matcher(split[i]);
+                if(!matcher.matches()){
                 this.mostrarError("Formato de hora incorrecto");
                 return false;
-            }
+                }
+                dh.agregarHora(split[i]);
+            }  
+            dhArray.add(dh);
         }
         if(this.checkMiercoles.isSelected()){
-            matcher = patron.matcher(this.txtMiercoles.getText());
-            if(!matcher.matches()){
+            String[] split = this.txtMiercoles.getText().split(",");
+            DiasHorario dh = new DiasHorario("Miercoles");
+            
+            for (int i = 0; i < split.length; i++) {
+                
+                if(!this.verificarValorHora(split[i])){
+                    return false;
+                }
+                
+                matcher = patron.matcher(split[i]);
+                if(!matcher.matches()){
                 this.mostrarError("Formato de hora incorrecto");
                 return false;
-            }
+                }
+                dh.agregarHora(split[i]);
+            }  
+            dhArray.add(dh);
         }
         if(this.checkJueves.isSelected()){
-            matcher = patron.matcher(this.txtJueves.getText());
-            if(!matcher.matches()){
+            String[] split = this.txtJueves.getText().split(",");
+            DiasHorario dh = new DiasHorario("Jueves");
+            
+            for (int i = 0; i < split.length; i++) {
+                
+                if(!this.verificarValorHora(split[i])){
+                   return false;
+                }
+                
+                matcher = patron.matcher(split[i]);
+                if(!matcher.matches()){
                 this.mostrarError("Formato de hora incorrecto");
                 return false;
-            }
+                }
+                dh.agregarHora(split[i]);
+            }  
+            dhArray.add(dh);
         }
         if(this.checkViernes.isSelected()){
-            matcher = patron.matcher(this.txtViernes.getText());
-            if(!matcher.matches()){
+            String[] split = this.txtViernes.getText().split(",");
+            DiasHorario dh = new DiasHorario("Viernes");
+            
+            for (int i = 0; i < split.length; i++) {
+                
+                if(!this.verificarValorHora(split[i])){
+                    return false;
+                }
+                
+                matcher = patron.matcher(split[i]);
+                if(!matcher.matches()){
                 this.mostrarError("Formato de hora incorrecto");
                 return false;
-            }
+                }
+                dh.agregarHora(split[i]);
+            }  
+            dhArray.add(dh);
         }
         if(this.checkSabado.isSelected()){
-            matcher = patron.matcher(this.txtSabado.getText());
-            if(!matcher.matches()){
+            String[] split = this.txtSabado.getText().split(",");
+            DiasHorario dh = new DiasHorario("Sabado");
+            
+            for (int i = 0; i < split.length; i++) {
+                
+                if(!this.verificarValorHora(split[i])){
+                    return false;
+                }
+                
+                matcher = patron.matcher(split[i]);
+                if(!matcher.matches()){
                 this.mostrarError("Formato de hora incorrecto");
                 return false;
-            }
+                }
+                dh.agregarHora(split[i]);
+            }  
+            dhArray.add(dh);
         }
         if(this.checkDomingo.isSelected()){
-            matcher = patron.matcher(this.txtDomingo.getText());
-            if(!matcher.matches()){
+            String[] split = this.txtDomingo.getText().split(",");
+            DiasHorario dh = new DiasHorario("Domingo");
+            
+            for (int i = 0; i < split.length; i++) {
+                
+                if(!this.verificarValorHora(split[i])){
+                    return false;
+                }
+                
+                matcher = patron.matcher(split[i]);
+                if(!matcher.matches()){
                 this.mostrarError("Formato de hora incorrecto");
                 return false;
-            }
+                }
+                dh.agregarHora(split[i]);
+            }  
+            dhArray.add(dh);
         }
+        
         
         return true;
     }
     
+    /**
+     * metodo que verifica si la hora tiene un formato correcto, y si 
+     * tiene un valor correcto vease que no esten fuera de los rangos como
+     * 24 am o 59 minutos
+     * @param verificar
+     * @return 
+     */
+    public boolean verificarValorHora(String verificar){
+        String[] split = new String[2];
+        
+        
+        try{
+            
+        split[0]= verificar.substring(0, 1);
+        split[1]= verificar.substring(3, 4);    
+            
+        if(Integer.valueOf(split[0])>23 || Integer.valueOf(split[1])>59 ||
+                Integer.valueOf(split[0])<0 || Integer.valueOf(split[1])<0 ){
+            this.mostrarError("valor de la hora invalido");
+            return false;
+        }
+        
+        }catch(Exception e){
+            this.mostrarError("Una o varias horas no tienen el formato correcto"
+                    + "por favor introducir hora como 01:00 o 01:00,20:00");
+            return false;
+        }
+        
+        return true;
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -448,8 +570,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
         btnGuardar = new javax.swing.JButton();
         txtHorarioAviso = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
-
-        setPreferredSize(new java.awt.Dimension(1100, 605));
+        lblFormatoHoras = new javax.swing.JLabel();
 
         btnRegresarMenu.setText("Menú");
         btnRegresarMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -894,7 +1015,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
         });
 
         txtHorarioAviso.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtHorarioAviso.setText("hh:mm");
+        txtHorarioAviso.setText("hh:mm,hh:mm");
 
         btnLimpiar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnLimpiar.setText("Limpiar");
@@ -903,6 +1024,9 @@ public class FrmItinerarios extends javax.swing.JPanel {
                 btnLimpiarActionPerformed(evt);
             }
         });
+
+        lblFormatoHoras.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblFormatoHoras.setText("Formato de horas:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -917,23 +1041,24 @@ public class FrmItinerarios extends javax.swing.JPanel {
                             .addComponent(pnlVerNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(pnlHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(26, 26, 26)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblFormatoHoras)
+                                            .addComponent(txtHorarioAviso))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(pnlHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(txtHorarioAviso)
-                                        .addGap(43, 43, 43))))
+                                        .addGap(10, 10, 10)
+                                        .addComponent(btnGuardar))
+                                    .addComponent(pnlZonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addComponent(btnLimpiar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(btnGuardar))
-                            .addComponent(pnlZonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(54, 54, 54)
+                                .addComponent(btnLimpiar))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnRegresarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -954,14 +1079,16 @@ public class FrmItinerarios extends javax.swing.JPanel {
                         .addComponent(pnlFormPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtHorarioAviso))
+                        .addGap(7, 7, 7)
+                        .addComponent(lblFormatoHoras)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtHorarioAviso)
+                        .addGap(96, 96, 96)
+                        .addComponent(btnLimpiar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlZonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnGuardar)
-                            .addComponent(btnLimpiar))))
+                        .addComponent(btnGuardar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -1052,6 +1179,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
     private javax.swing.JLabel lblDomingo;
     private javax.swing.JLabel lblDuracion;
     private javax.swing.JLabel lblEncabezado;
+    private javax.swing.JLabel lblFormatoHoras;
     private javax.swing.JLabel lblHorario;
     private javax.swing.JLabel lblJueves;
     private javax.swing.JLabel lblLongitud;

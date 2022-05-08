@@ -4,6 +4,7 @@
  */
 package entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.bson.types.ObjectId;
@@ -19,34 +20,34 @@ public class Itinerario {
     private int duracion;
     private float longitud;
     private int visitantesMaximos;
-    private int numeroEspecies;
-    private String dias;
-    private String horas;
+//    private String dias;
+//    private String horas;
+    private ArrayList<DiasHorario> DiasHorario;
 
     public Itinerario() {
     }
 
-    public Itinerario(String nombre, List<Zona> recorrido, int duracion, float longitud, int visitantesMaximos, int numeroEspecies, String dias, String horas) {
+    public Itinerario(String nombre, List<Zona> recorrido, int duracion, float longitud, int visitantesMaximos,ArrayList<DiasHorario> DiasHorario) {
         this.nombre = nombre;
         this.recorrido = recorrido;
         this.duracion = duracion;
         this.longitud = longitud;
         this.visitantesMaximos = visitantesMaximos;
-        this.numeroEspecies = numeroEspecies;
-        this.dias = dias;
-        this.horas = horas;
+        this.DiasHorario = DiasHorario;
+//        this.dias = dias;
+//        this.horas = horas;
     }
 
-    public Itinerario(ObjectId id, String nombre, List<Zona> recorrido, int duracion, float longitud, int visitantesMaximos, int numeroEspecies, String dias, String horas) {
+    public Itinerario(ObjectId id, String nombre, List<Zona> recorrido, int duracion, float longitud, int visitantesMaximos, ArrayList<DiasHorario> DiasHorario) {
         this.id = id;
         this.nombre = nombre;
         this.recorrido = recorrido;
         this.duracion = duracion;
         this.longitud = longitud;
         this.visitantesMaximos = visitantesMaximos;
-        this.numeroEspecies = numeroEspecies;
-        this.dias = dias;
-        this.horas = horas;
+        this.DiasHorario = DiasHorario;
+//        this.dias = dias;
+//        this.horas = horas;
     }
 
     public ObjectId getId() {
@@ -97,29 +98,34 @@ public class Itinerario {
         this.visitantesMaximos = visitantesMaximos;
     }
 
-    public int getNumeroEspecies() {
-        return numeroEspecies;
+    public ArrayList<DiasHorario> getDiasHorario() {
+        return DiasHorario;
     }
 
-    public void setNumeroEspecies(int numeroEspecies) {
-        this.numeroEspecies = numeroEspecies;
+    public void setDiasHorario(ArrayList<DiasHorario> DiasHorario) {
+        this.DiasHorario = DiasHorario;
     }
 
-    public String getDias() {
-        return dias;
-    }
+    
 
-    public void setDias(String dias) {
-        this.dias = dias;
-    }
+//    public String getDias() {
+//        return dias;
+//    }
+//
+//    public void setDias(String dias) {
+//        this.dias = dias;
+//    }
+//
+//    public String getHoras() {
+//        return horas;
+//    }
+//
+//    public void setHoras(String horas) {
+//        this.horas = horas;
+//    }
 
-    public String getHoras() {
-        return horas;
-    }
-
-    public void setHoras(String horas) {
-        this.horas = horas;
-    }
+  
+    
 
     @Override
     public int hashCode() {
@@ -158,8 +164,8 @@ public class Itinerario {
         sb.append(", duracion=").append(duracion);
         sb.append(", longitud=").append(longitud);
         sb.append(", visitantes Maximos=").append(visitantesMaximos);
-        sb.append(", dias=").append(dias);
-        sb.append(", horas=").append(horas);
+//        sb.append(", dias=").append(dias);
+//        sb.append(", horas=").append(horas);
         sb.append('}');
         return sb.toString();
     }
