@@ -9,6 +9,7 @@ import daos.FabricaDAO;
 import daos.HabitatsDAO;
 import daos.ItinerariosDAO;
 import daos.VegetacionesDAO;
+import daos.VisitasGuiadasDAO;
 import daos.ZonasDAO;
 import entidades.Animal;
 import entidades.Clima;
@@ -18,6 +19,7 @@ import entidades.Especie;
 import entidades.Habitat;
 import entidades.Itinerario;
 import entidades.Vegetacion;
+import entidades.VisitaGuiada;
 import entidades.Zona;
 import interfaces.IDatos;
 import java.util.List;
@@ -39,6 +41,7 @@ public class FacadeDatos implements IDatos{
     private CuidadoresDAO cuidadores;
     private AnimalesDAO animales;
     private EspeciesDAO especies;
+    private VisitasGuiadasDAO visitasGuiadas;
     
     public FacadeDatos(){
         fabrica = new FabricaDAO();
@@ -231,6 +234,11 @@ public class FacadeDatos implements IDatos{
             System.err.print(e);
             return null;
         }
+    }
+
+    @Override
+    public List<VisitaGuiada> consultarMes() {
+        return visitasGuiadas.consultarMes();
     }
     
 }

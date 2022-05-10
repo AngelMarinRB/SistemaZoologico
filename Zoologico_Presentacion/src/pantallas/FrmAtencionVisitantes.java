@@ -4,6 +4,8 @@
  */
 package pantallas;
 
+import interfaces.INegocio;
+
 /**
  *
  * @author alanf
@@ -16,6 +18,8 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
     public FrmAtencionVisitantes() {
         initComponents();
     }
+    
+    private INegocio negocio;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,7 +48,7 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         tblHoras = new javax.swing.JTable();
         lblQueja = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        campoQueja = new javax.swing.JTextArea();
         jSeparator2 = new javax.swing.JSeparator();
         lblDATOS = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
@@ -54,6 +58,7 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         lblNombre = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         btnEnviarQueja = new javax.swing.JButton();
+        btnRegistrarQueja = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -181,10 +186,10 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         lblQueja.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblQueja.setText("Escribe tu queja aquí");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        campoQueja.setColumns(20);
+        campoQueja.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        campoQueja.setRows(5);
+        jScrollPane1.setViewportView(campoQueja);
 
         lblDATOS.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblDATOS.setText("Tus datos:");
@@ -199,6 +204,13 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         lblNombre.setText("Nombre: (op)");
 
         btnEnviarQueja.setText("Enviar queja");
+
+        btnRegistrarQueja.setText("Registrar queja");
+        btnRegistrarQueja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarQuejaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PnlAtencionVisitantesLayout = new javax.swing.GroupLayout(PnlAtencionVisitantes);
         PnlAtencionVisitantes.setLayout(PnlAtencionVisitantesLayout);
@@ -248,12 +260,14 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                                     .addComponent(lblEmail)
                                     .addComponent(lblNombre))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnEnviarQueja)
-                                    .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtEmail)
-                                        .addComponent(txtTelefono)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtEmail)
+                                    .addComponent(txtTelefono)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlAtencionVisitantesLayout.createSequentialGroup()
+                                .addComponent(btnRegistrarQueja)
+                                .addGap(66, 66, 66)
+                                .addComponent(btnEnviarQueja)))
                         .addGap(63, 63, 63))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlAtencionVisitantesLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -307,9 +321,11 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombre)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEnviarQueja)
-                        .addGap(28, 28, 28))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEnviarQueja)
+                            .addComponent(btnRegistrarQueja))
+                        .addGap(38, 38, 38))))
         );
 
         javax.swing.GroupLayout pnlAtencionVisitantesLayout = new javax.swing.GroupLayout(pnlAtencionVisitantes);
@@ -352,12 +368,33 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Metodos
+    public void consultarVisitasGuiadasMes(){
+        negocio.consultarMes();
+    }
+    
+    public void limpiarFormulario(){
+        this.campoQueja.setText("");
+        this.txtEmail.setText("");
+        this.txtGuia.setText("");
+        this.txtNombre.setText("");
+        this.txtTelefono.setText("");
+    }
+    
+    
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         FrmPrincipal principal = new FrmPrincipal();
         principal.setVisible(true);
     }//GEN-LAST:event_btnMenuActionPerformed
+
+    
+    
+    private void btnRegistrarQuejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarQuejaActionPerformed
+        // TODO add your handling code here:
+        this.consultarVisitasGuiadasMes();
+    }//GEN-LAST:event_btnRegistrarQuejaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -368,10 +405,11 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
     private javax.swing.JPanel PnlAtencionVisitantes;
     private javax.swing.JButton btnEnviarQueja;
     private javax.swing.JButton btnMenu;
+    private javax.swing.JButton btnRegistrarQueja;
+    private javax.swing.JTextArea campoQueja;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblDATOS;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblGuia;

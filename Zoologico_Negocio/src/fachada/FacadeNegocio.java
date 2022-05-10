@@ -8,6 +8,7 @@ import controles.ControlEspecies;
 import controles.ControlHabitats;
 import controles.ControlItinerarios;
 import controles.ControlVegetaciones;
+import controles.ControlVisitasGuiadas;
 import controles.ControlZonas;
 import controles.FabricaControles;
 import entidades.Animal;
@@ -18,6 +19,7 @@ import entidades.Especie;
 import entidades.Habitat;
 import entidades.Itinerario;
 import entidades.Vegetacion;
+import entidades.VisitaGuiada;
 import entidades.Zona;
 import interfaces.INegocio;
 import java.util.List;
@@ -38,6 +40,7 @@ public class FacadeNegocio implements INegocio{
     private ControlCuidadores cuidadores;
     private ControlAnimales animales;
     private ControlEspecies especies;
+    private ControlVisitasGuiadas visitasGuiadas;
     
     
     public FacadeNegocio(){
@@ -128,5 +131,12 @@ public class FacadeNegocio implements INegocio{
     public boolean guardarEspecie(Especie especie) {
         return especies.guardarEspecie(especie);
     }
+
+    @Override
+    public List<VisitaGuiada> consultarMes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
     
 }

@@ -51,4 +51,8 @@ public class FabricaControles {
     public ControlEspecies crearControlEspecies(){
         return new ControlEspecies(datos);
     }
+    
+    public ControlVisitasGuiadas crearVisitaGuiada(){
+        return new ControlVisitasGuiadas(datos);
+    }
 }
