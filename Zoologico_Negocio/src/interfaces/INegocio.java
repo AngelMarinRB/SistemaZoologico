@@ -8,6 +8,7 @@ import entidades.Especie;
 import entidades.Habitat;
 import entidades.Itinerario;
 import entidades.Vegetacion;
+import entidades.VisitaGuiada;
 import entidades.Zona;
 import java.util.List;
 
@@ -33,6 +34,8 @@ public interface INegocio {
     Itinerario verificarExistenciaItinerario(String nombre);
     
     List<Zona> consultarZonas();
+    
+    List <VisitaGuiada> consultarMes();
     
     /**
      * Devuelve una lista de todos los habitats registrados en el sistema.

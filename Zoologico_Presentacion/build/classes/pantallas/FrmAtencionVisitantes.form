@@ -134,14 +134,16 @@
                                           <Component id="lblNombre" alignment="1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnEnviarQueja" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="txtTelefono" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="txtNombre" alignment="0" min="-2" pref="212" max="-2" attributes="0"/>
-                                          </Group>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtTelefono" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtNombre" alignment="0" min="-2" pref="212" max="-2" attributes="0"/>
                                       </Group>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="btnRegistrarQueja" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                                      <Component id="btnEnviarQueja" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
@@ -213,9 +215,12 @@
                                   <Component id="lblNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnEnviarQueja" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <EmptySpace pref="42" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnEnviarQueja" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnRegistrarQueja" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -374,7 +379,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="jTextArea1">
+                <Component class="javax.swing.JTextArea" name="campoQueja">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -429,6 +434,14 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Enviar queja"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnRegistrarQueja">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Registrar queja"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarQuejaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

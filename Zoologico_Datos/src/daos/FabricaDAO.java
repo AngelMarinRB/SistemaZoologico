@@ -7,6 +7,7 @@ import interfaces.IConexionBD;
  * 
  * @author Marin
  */
+
 public class FabricaDAO {
     
     private IConexionBD conexion;
@@ -49,5 +50,9 @@ public class FabricaDAO {
     
     public EspeciesDAO crearEspeciesDAO(){
         return new EspeciesDAO(conexion);
+    }
+    
+    public VisitasGuiadasDAO crearVisitaGuiadaDAO(){
+        return new VisitasGuiadasDAO(conexion);
     }
 }

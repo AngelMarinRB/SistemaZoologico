@@ -8,6 +8,7 @@ import entidades.Especie;
 import entidades.Habitat;
 import entidades.Itinerario;
 import entidades.Vegetacion;
+import entidades.VisitaGuiada;
 import entidades.Zona;
 import java.util.List;
 
@@ -127,4 +128,10 @@ public interface IDatos {
      * @return Lista de Especies registradas.
      */
     List<Especie> consultarEspecies();
+    
+      /**
+     * Devuelve una lista de las visitas guiadas del ultimo mes.
+     * @return Lista de Visitas guiadas del ultimo mes.
+     */
+    List<VisitaGuiada> consultarMes();
 }
