@@ -1,6 +1,7 @@
 package interfaces;
 
 import entidades.Animal;
+import entidades.CargoEspecie;
 import entidades.Clima;
 import entidades.Continente;
 import entidades.Cuidador;
@@ -88,9 +89,16 @@ public interface IDatos {
     /**
      * Almacena el Animal dado como parámetro.
      * @param animal Animal a guardar.
-     * @return True en caso de guardarse correctamente, Flase en caso contrario.
+     * @return True en caso de guardarse correctamente, False en caso contrario.
      */
     boolean guardarAnimal(Animal animal);
+    
+    /**
+     * Elimina el Animal dado como parámetro.
+     * @param animal Animal a eliminar.
+     * @return True en caso de eliminarse correctamente, False en caso contrario.
+     */
+    boolean eliminarAnimal(Animal animal);
     
     /**
      * Devuelve la lista de todos los Animales que pertenezcan a la especie dada
@@ -134,4 +142,12 @@ public interface IDatos {
      * @return Lista de Visitas guiadas del ultimo mes.
      */
     List<VisitaGuiada> consultarMes();
+    
+    /**
+     * Agrega al cuidador dado como parámetro, la ficha de cargo dada como parámetro.
+     * @param cuidador Cuidador a agregar ficha de cargo.
+     * @param fichaCargo Ficha de cargo a agregar.
+     * @return True si se agregó, False en caso contrario.
+     */
+    boolean agregarFichaCargoCuidador(Cuidador cuidador, CargoEspecie fichaCargo);
 }

@@ -51,6 +51,18 @@ public class AnimalesDAO {
             return false;
         }
     }
+    
+    public boolean eliminar(Animal animal){
+        try {
+            MongoCollection<Animal> coleccion = this.getColeccion();
+            Bson query = eq("_id" , animal.getId());
+            coleccion.deleteOne(query);
+            return true;
+        } catch (Exception e) {
+            System.err.println(e);
+            return false;
+        }
+    }
 
     /**
      * Devuelve una lista de todos los animales registrados que pertenezcan a la
@@ -63,7 +75,7 @@ public class AnimalesDAO {
         
         MongoCollection<Animal> coleccion = this.getColeccion();
 
-        Bson query = eq("idEspecie", especie.getId());
+        Bson query = eq("especie._id", especie.getId());
         
         FindIterable<Animal> iterable = coleccion.find(query);
         

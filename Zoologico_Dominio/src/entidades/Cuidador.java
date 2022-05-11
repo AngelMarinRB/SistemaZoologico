@@ -1,5 +1,6 @@
 package entidades;
 
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.bson.types.ObjectId;
@@ -14,8 +15,12 @@ public class Cuidador extends Empleado{
     private List<Especie> especiesExperto;
     private List<Especie> especiesBasico;
     private List<CargoEspecie> especiesCargo;
+
+    public Cuidador() {
+        super();
+    }
     
-    public Cuidador(String nombre, String direccion, String telefono, GregorianCalendar fechaInicio){
+    public Cuidador(String nombre, String direccion, String telefono, Date fechaInicio){
         super(nombre, direccion, telefono, fechaInicio);
     }
 
@@ -25,14 +30,14 @@ public class Cuidador extends Empleado{
         this.especiesCargo = especiesCargo;
     }
 
-    public Cuidador(List<Especie> especiesExperto, List<Especie> especiesBasico, List<CargoEspecie> especiesCargo, String nombre, String direccion, String telefono, GregorianCalendar fechaInicio) {
+    public Cuidador(List<Especie> especiesExperto, List<Especie> especiesBasico, List<CargoEspecie> especiesCargo, String nombre, String direccion, String telefono, Date fechaInicio) {
         super(nombre, direccion, telefono, fechaInicio);
         this.especiesExperto = especiesExperto;
         this.especiesBasico = especiesBasico;
         this.especiesCargo = especiesCargo;
     }
 
-    public Cuidador(List<Especie> especiesExperto, List<Especie> especiesBasico, List<CargoEspecie> especiesCargo, ObjectId id, String nombre, String direccion, String telefono, GregorianCalendar fechaInicio) {
+    public Cuidador(List<Especie> especiesExperto, List<Especie> especiesBasico, List<CargoEspecie> especiesCargo, ObjectId id, String nombre, String direccion, String telefono, Date fechaInicio) {
         super(id, nombre, direccion, telefono, fechaInicio);
         this.especiesExperto = especiesExperto;
         this.especiesBasico = especiesBasico;

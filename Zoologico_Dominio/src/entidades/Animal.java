@@ -25,6 +25,12 @@ public class Animal {
         this.edad = edad;
         this.sexo = sexo;
     }
+    
+    public Animal(String nombre, int edad, String sexo) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.sexo = sexo;
+    }
 
     public Animal(ObjectId id, Especie especie, String nombre, int edad, String sexo) {
         this.id = id;
@@ -73,11 +79,16 @@ public class Animal {
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
+    
+    public void generarId(){
+        this.id = new ObjectId();
+    }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.id);
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.especie);
         return hash;
     }
 
@@ -93,19 +104,15 @@ public class Animal {
             return false;
         }
         final Animal other = (Animal) obj;
-        return Objects.equals(this.id, other.id);
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return Objects.equals(this.especie, other.especie);
     }
+
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Animal{");
-        sb.append("id=").append(id);
-        sb.append(", especie=").append(especie);
-        sb.append(", nombre=").append(nombre);
-        sb.append(", edad=").append(edad);
-        sb.append(", sexo=").append(sexo);
-        sb.append('}');
-        return sb.toString();
+        return nombre;
     }
 }

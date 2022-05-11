@@ -22,6 +22,10 @@ public class ControlAnimales {
         return datos.guardarAnimal(animal);
     }
     
+    public boolean eliminarAnimal(Animal animal) {
+        return datos.eliminarAnimal(animal);
+    }
+    
     public List<Animal> consultarAnimalesEspecie(Especie especie){
         return datos.consultarAnimalesEspecie(especie);
     }

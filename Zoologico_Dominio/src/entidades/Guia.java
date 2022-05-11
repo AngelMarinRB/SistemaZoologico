@@ -1,6 +1,7 @@
 
 package entidades;
 
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.bson.types.ObjectId;
@@ -15,7 +16,7 @@ public class Guia extends Empleado{
  }
  
  
- public Guia(String nombre, String direccion, String telefono, GregorianCalendar fechaInicio){
+ public Guia(String nombre, String direccion, String telefono, Date fechaInicio){
      super(nombre, direccion, telefono, fechaInicio);
  }
 
@@ -24,13 +25,13 @@ public class Guia extends Empleado{
         this.idVisita = idVisita;
     }
 
-    public Guia(List<Itinerario> itinerarios, ObjectId idVisita, String nombre, String direccion, String telefono, GregorianCalendar fechaInicio) {
+    public Guia(List<Itinerario> itinerarios, ObjectId idVisita, String nombre, String direccion, String telefono, Date fechaInicio) {
         super(nombre, direccion, telefono, fechaInicio);
         this.itinerarios = itinerarios;
         this.idVisita = idVisita;
     }
 
-    public Guia(List<Itinerario> itinerarios, ObjectId idVisita, ObjectId id, String nombre, String direccion, String telefono, GregorianCalendar fechaInicio) {
+    public Guia(List<Itinerario> itinerarios, ObjectId idVisita, ObjectId id, String nombre, String direccion, String telefono, Date fechaInicio) {
         super(id, nombre, direccion, telefono, fechaInicio);
         this.itinerarios = itinerarios;
         this.idVisita = idVisita;

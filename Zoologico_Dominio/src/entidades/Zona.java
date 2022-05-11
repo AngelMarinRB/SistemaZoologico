@@ -80,13 +80,7 @@ public class Zona {
     
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Zona{");
-        sb.append("id=").append(id);
-        sb.append(", nombre=").append(nombre);
-        sb.append(", extension=").append(extension);
-        sb.append('}');
-        return sb.toString();
+        return nombre;
     }
     
             

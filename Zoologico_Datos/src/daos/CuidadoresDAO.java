@@ -3,12 +3,18 @@ package daos;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.UpdateResult;
+import entidades.CargoEspecie;
 import entidades.Cuidador;
-import entidades.Habitat;
+import entidades.Especie;
 import interfaces.IConexionBD;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import org.bson.conversions.Bson;
 
 /**
  * Clase de Acceso a Datos para los Cuidados del Zoológico
@@ -34,6 +40,24 @@ public class CuidadoresDAO {
         return this.baseDatos.getCollection("cuidadores", Cuidador.class);
     }
     
+    public boolean agregarFichaCargo(Cuidador cuidador, CargoEspecie fichaCargo) {
+
+        //Document query = new Document("$eq", new Document().append("_id", cuidador.getId()));
+        
+        Bson query = Filters.eq("_id" , cuidador.getId());
+
+        Bson updates = Updates.combine(Updates.addToSet("especiesCargo", fichaCargo));
+
+        UpdateOptions options = new UpdateOptions().upsert(true);
+
+        UpdateResult result = getColeccion().updateOne(query, updates, options);
+        
+        if(result.getModifiedCount() != 0)
+            return true;
+
+        return false;
+    }
+
     public List<Cuidador> consultarTodos(){
         
         FindIterable<Cuidador> registros = this.getColeccion().find();

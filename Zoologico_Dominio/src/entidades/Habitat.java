@@ -163,15 +163,7 @@ public class Habitat {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Habitat{");
-        sb.append("id=").append(id);
-        sb.append(", nombre=").append(nombre);
-        sb.append(", clima=").append(clima);
-        sb.append(", vegetacion=").append(vegetacion);
-        sb.append(", continentes=").append(continentes);
-        sb.append('}');
-        return sb.toString();
+        return nombre;
     }
 
 }

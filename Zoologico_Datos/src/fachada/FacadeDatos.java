@@ -12,6 +12,7 @@ import daos.VegetacionesDAO;
 import daos.VisitasGuiadasDAO;
 import daos.ZonasDAO;
 import entidades.Animal;
+import entidades.CargoEspecie;
 import entidades.Clima;
 import entidades.Continente;
 import entidades.Cuidador;
@@ -239,6 +240,16 @@ public class FacadeDatos implements IDatos{
     @Override
     public List<VisitaGuiada> consultarMes() {
         return visitasGuiadas.consultarMes();
+    }
+
+    @Override
+    public boolean agregarFichaCargoCuidador(Cuidador cuidador, CargoEspecie fichaCargo) {
+        return cuidadores.agregarFichaCargo(cuidador, fichaCargo);
+    }
+
+    @Override
+    public boolean eliminarAnimal(Animal animal) {
+        return animales.eliminar(animal);
     }
     
 }
