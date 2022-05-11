@@ -1,6 +1,5 @@
 package entidades;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import org.bson.types.ObjectId;
 
@@ -14,26 +13,26 @@ public class Especie {
     private String nombreVulgar;
     private String nombreCientifico;
     private String descripcion;
-    private ArrayList<Habitat> habitats;
+    private Habitat habitat;
     private Zona zona;
 
     public Especie() {
     }
 
-    public Especie(String nombreVulgar, String nombreCientifico, String descripcion, ArrayList<Habitat> habitats, Zona zona) {
+    public Especie(String nombreVulgar, String nombreCientifico, String descripcion, Habitat habitats, Zona zona) {
         this.nombreVulgar = nombreVulgar;
         this.nombreCientifico = nombreCientifico;
         this.descripcion = descripcion;
-        this.habitats = habitats;
+        this.habitat = habitats;
         this.zona = zona;
     }
 
-    public Especie(ObjectId id, String nombreVulgar, String nombreCientifico, String descripcion, ArrayList<Habitat> habitats, Zona zona) {
+    public Especie(ObjectId id, String nombreVulgar, String nombreCientifico, String descripcion, Habitat habitats, Zona zona) {
         this.id = id;
         this.nombreVulgar = nombreVulgar;
         this.nombreCientifico = nombreCientifico;
         this.descripcion = descripcion;
-        this.habitats = habitats;
+        this.habitat = habitats;
         this.zona = zona;
     }
 
@@ -69,12 +68,12 @@ public class Especie {
         this.descripcion = descripcion;
     }
 
-    public ArrayList<Habitat> getHabitat() {
-        return habitats;
+    public Habitat getHabitat() {
+        return habitat;
     }
 
-    public void setHabitat(ArrayList<Habitat> habitats) {
-        this.habitats = habitats;
+    public void setHabitat(Habitat habitats) {
+        this.habitat = habitats;
     }
 
     public Zona getZona() {
@@ -83,6 +82,10 @@ public class Especie {
 
     public void setZona(Zona zona) {
         this.zona = zona;
+    }
+    
+    public void generarId(){
+        this.id = new ObjectId();
     }
 
     @Override
@@ -109,7 +112,7 @@ public class Especie {
 
     @Override
     public String toString() {
-        return "Especie{" + "id=" + id + ", nombreVulgar=" + nombreVulgar + ", nombreCientifico=" + nombreCientifico + ", descripcion=" + descripcion + ", habitat=" + habitats + ", zona=" + zona + '}';
+        return "Especie{" + "id=" + id + ", nombreVulgar=" + nombreVulgar + ", nombreCientifico=" + nombreCientifico + ", descripcion=" + descripcion + ", habitat=" + habitat + ", zona=" + zona + '}';
     }
     
     

@@ -113,24 +113,44 @@ public class FrmItinerarios extends javax.swing.JPanel {
         
         if(!this.checkLunes.isSelected()){
             this.txtLunes.setEditable(false);
+        }else{
+            this.txtLunes.setEditable(true);
         }
+        
         if(!this.checkMartes.isSelected()){
             this.txtMartes.setEditable(false);
+        }else{
+            this.txtMartes.setEditable(true);
         }
+        
         if(!this.checkMiercoles.isSelected()){
             this.txtMiercoles.setEditable(false);
+        }else{
+            this.txtMiercoles.setEditable(true);
         }
+        
         if(!this.checkJueves.isSelected()){
             this.txtJueves.setEditable(false);
+        }else{
+            this.txtJueves.setEditable(true);
         }
+        
         if(!this.checkViernes.isSelected()){
             this.txtViernes.setEditable(false);
+        }else{
+            this.txtViernes.setEditable(true);
         }
+        
         if(!this.checkSabado.isSelected()){
             this.txtSabado.setEditable(false);
+        }else{
+            this.txtSabado.setEditable(true);
         }
+        
         if(!this.checkDomingo.isSelected()){
             this.txtDomingo.setEditable(false);
+        }else{
+            this.txtDomingo.setEditable(true);
         }
         
         this.btnContinuar.setEnabled(false);
@@ -312,6 +332,8 @@ public class FrmItinerarios extends javax.swing.JPanel {
         itinerario.setRecorrido(this.buscarZonasSeleccionadas());
         negocio.guardarItinerario(itinerario);
         
+        JOptionPane.showMessageDialog(this,"Itinerario guardado con exito","informacion",JOptionPane.INFORMATION_MESSAGE);
+        
         this.reiniciarFrm();
     }
     
@@ -490,8 +512,8 @@ public class FrmItinerarios extends javax.swing.JPanel {
         
         try{
             
-        split[0]= verificar.substring(0, 1);
-        split[1]= verificar.substring(3, 4);    
+        split[0]= verificar.substring(0, 2);
+        split[1]= verificar.substring(3, 5);    
             
         if(Integer.valueOf(split[0])>23 || Integer.valueOf(split[1])>59 ||
                 Integer.valueOf(split[0])<0 || Integer.valueOf(split[1])<0 ){
@@ -848,31 +870,29 @@ public class FrmItinerarios extends javax.swing.JPanel {
                             .addComponent(lblLunes)
                             .addComponent(lblMartes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
-                        .addGroup(pnlHorarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtMartes, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtLunes, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(pnlHorarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtLunes)
+                            .addComponent(txtMartes)))
+                    .addGroup(pnlHorarioLayout.createSequentialGroup()
+                        .addComponent(lblHorario)
+                        .addContainerGap(74, Short.MAX_VALUE))
                     .addGroup(pnlHorarioLayout.createSequentialGroup()
                         .addGroup(pnlHorarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlHorarioLayout.createSequentialGroup()
-                                .addComponent(lblDomingo)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtDomingo, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblHorario)
-                            .addGroup(pnlHorarioLayout.createSequentialGroup()
-                                .addGroup(pnlHorarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblMiercoles)
-                                    .addComponent(lblSabado)
-                                    .addGroup(pnlHorarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(lblJueves)
-                                        .addComponent(lblViernes)))
-                                .addGap(18, 18, 18)
-                                .addGroup(pnlHorarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtSabado, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                                    .addComponent(txtViernes)
-                                    .addComponent(txtJueves)
-                                    .addComponent(txtMiercoles))))
-                        .addContainerGap(21, Short.MAX_VALUE))))
+                            .addComponent(lblMiercoles)
+                            .addComponent(lblSabado)
+                            .addGroup(pnlHorarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblJueves)
+                                .addComponent(lblViernes)))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlHorarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSabado, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                            .addComponent(txtViernes)
+                            .addComponent(txtJueves)
+                            .addComponent(txtMiercoles)))
+                    .addGroup(pnlHorarioLayout.createSequentialGroup()
+                        .addComponent(lblDomingo)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDomingo))))
         );
         pnlHorarioLayout.setVerticalGroup(
             pnlHorarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1043,24 +1063,21 @@ public class FrmItinerarios extends javax.swing.JPanel {
                             .addComponent(pnlVerNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(pnlHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(26, 26, 26)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblFormatoHoras)
-                                            .addComponent(txtHorarioAviso))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(btnGuardar))
-                                    .addComponent(pnlZonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(pnlHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addComponent(btnLimpiar))))
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblFormatoHoras)
+                                    .addComponent(txtHorarioAviso))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlZonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnRegresarMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1084,13 +1101,13 @@ public class FrmItinerarios extends javax.swing.JPanel {
                         .addGap(7, 7, 7)
                         .addComponent(lblFormatoHoras)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtHorarioAviso)
-                        .addGap(96, 96, 96)
-                        .addComponent(btnLimpiar))
+                        .addComponent(txtHorarioAviso))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlZonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnGuardar)))
+                        .addComponent(btnGuardar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

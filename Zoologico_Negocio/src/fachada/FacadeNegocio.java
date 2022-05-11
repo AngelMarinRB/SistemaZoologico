@@ -12,6 +12,7 @@ import controles.ControlVisitasGuiadas;
 import controles.ControlZonas;
 import controles.FabricaControles;
 import entidades.Animal;
+import entidades.CargoEspecie;
 import entidades.Clima;
 import entidades.Continente;
 import entidades.Cuidador;
@@ -137,6 +138,14 @@ public class FacadeNegocio implements INegocio{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    
-    
+    @Override
+    public boolean agregarFichaCargoCuidador(Cuidador cuidador, CargoEspecie fichaCargo) {
+        return cuidadores.agregarFichaCargoCuidador(cuidador, fichaCargo);
+    }
+
+    @Override
+    public boolean eliminarAnimal(Animal animal) {
+        return animales.eliminarAnimal(animal);
+    }
+
 }

@@ -165,8 +165,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         CardLayout cl = (CardLayout) (this.getContentPane().getLayout());
         cl.show(this.getContentPane(), "App");
 
+        especiesForm.cargarRecursos();
+        
         cl = (CardLayout) (pnlContenido.getLayout());
         cl.show(pnlContenido, "Especies");
+        
     }//GEN-LAST:event_clickBtnRegistrarEspecie
 
 

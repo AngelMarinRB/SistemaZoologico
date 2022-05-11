@@ -1,6 +1,6 @@
 package entidades;
 
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.Objects;
 import org.bson.types.ObjectId;
 
@@ -15,19 +15,20 @@ public class Empleado {
     String nombre;
     String direccion;
     String telefono;
-    GregorianCalendar fechaInicio;
+    Date fechaInicio;
 
     public Empleado() {
+        
     }
 
-    public Empleado(String nombre, String direccion, String telefono, GregorianCalendar fechaInicio) {
+    public Empleado(String nombre, String direccion, String telefono, Date fechaInicio) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.fechaInicio = fechaInicio;
     }
 
-    public Empleado(ObjectId id, String nombre, String direccion, String telefono, GregorianCalendar fechaInicio) {
+    public Empleado(ObjectId id, String nombre, String direccion, String telefono, Date fechaInicio) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -67,11 +68,11 @@ public class Empleado {
         this.telefono = telefono;
     }
 
-    public GregorianCalendar getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(GregorianCalendar fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
@@ -99,7 +100,7 @@ public class Empleado {
 
     @Override
     public String toString() {
-        return "Empleado{" + "id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono + ", fechaInicio=" + fechaInicio + '}';
+        return nombre;
     }
     
 }

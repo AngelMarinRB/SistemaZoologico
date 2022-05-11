@@ -1,6 +1,6 @@
 package entidades;
 
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.Objects;
 import org.bson.types.ObjectId;
 
@@ -13,19 +13,19 @@ public class CargoEspecie {
     
     private ObjectId id;
     private Especie especie;
-    private GregorianCalendar fecha;
+    private Date fecha;
     private ObjectId idCuidador;
 
     public CargoEspecie() {
     }
 
-    public CargoEspecie(Especie especie, GregorianCalendar fecha, ObjectId idCuidador) {
+    public CargoEspecie(Especie especie, Date fecha, ObjectId idCuidador) {
         this.especie = especie;
         this.fecha = fecha;
         this.idCuidador = idCuidador;
     }
 
-    public CargoEspecie(ObjectId id, Especie especie, GregorianCalendar fecha, ObjectId idCuidador) {
+    public CargoEspecie(ObjectId id, Especie especie, Date fecha, ObjectId idCuidador) {
         this.id = id;
         this.especie = especie;
         this.fecha = fecha;
@@ -48,11 +48,11 @@ public class CargoEspecie {
         this.especie = especie;
     }
 
-    public GregorianCalendar getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(GregorianCalendar fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
