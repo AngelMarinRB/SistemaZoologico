@@ -4,7 +4,6 @@ import entidades.Clima;
 import entidades.Continente;
 import entidades.Habitat;
 import entidades.Vegetacion;
-import fachada.FacadeNegocio;
 import interfaces.INegocio;
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -21,7 +20,7 @@ import pantallas.util.JButtonCellEditor;
 import pantallas.util.JButtonRenderer;
 
 /**
- * Pantalla que permite el registro de los habitats en el sistema
+ * Pantalla de registro de Hábitats para el sistema.
  * 
  * @author Marin
  */
@@ -33,10 +32,13 @@ public class FrmHabitats extends javax.swing.JPanel {
     private List<Continente> continentes;
     
     /**
-     * Creates new form frmHabitats
+     * Crea e inicializa los objetos dentro del formulario de Hábitats.
+     * @param negocio Objeto Negocio para el acceso a datos.
      */
-    public FrmHabitats() {
+    public FrmHabitats(INegocio negocio) {
         initComponents();
+        
+        this.negocio = negocio;
         
         // Prevenir que las tablas sean re-organizadas
         tblClimas.getTableHeader().setReorderingAllowed(false);
@@ -44,13 +46,18 @@ public class FrmHabitats extends javax.swing.JPanel {
         tblContinentesSeleccionados.getTableHeader().setReorderingAllowed(false);
         tblVegetaciones.getTableHeader().setReorderingAllowed(false);
         
-        this.negocio = new FacadeNegocio();
-        
         desactivarFormulario();
         
         cargarRecursos();
     }
     
+    /**
+     * Consulta las entidades que requiere el formulario para registrar Hábitats.
+     * Búsca todos los registros de:
+     * - Climas
+     * - Vegetaciones
+     * - Continentes
+     */
     public void cargarRecursos(){
         
         climas = negocio.consultarClimas();
@@ -58,17 +65,30 @@ public class FrmHabitats extends javax.swing.JPanel {
         continentes = negocio.consultarContinentes();
     }
     
-    public void mostrarRecursos(List<Clima> climas , List<Vegetacion> vegetacion , List<Continente> continentes){
+    /**
+     * Muestra las listas de entidades dadas como parámetros dentro de las tablas
+     * correspondientes a cada entidad y habilita los botones correspondientes a
+     * agregar y eliminar de las tablas de continentes.
+     * 
+     * @param climas Lista de Climas.
+     * @param vegetaciones Lista de Vegetaciones.
+     * @param continentes Lista de continentes.
+     */
+    private void mostrarRecursos(List<Clima> climas , List<Vegetacion> vegetaciones , List<Continente> continentes){
         
         llenarTablaClimas(climas);
-        llenarTablaVegetacion(vegetacion);
+        llenarTablaVegetacion(vegetaciones);
         
         llenarTablaContinentes(continentes);
         initBotonesContinentesLista();
         initBotonesContinentesSeleccionados();
     }
     
-    public void activarFormulario(){
+    /**
+     * Activa todos los campos del formulario para el registro de Hábitats.
+     * (El apartado de verificación de nombre no se contempla en este método)
+     */
+    private void activarFormulario(){
         cargarRecursos();
         mostrarRecursos(climas, vegetaciones , continentes);
         pnlClimas.setVisible(true);
@@ -82,7 +102,11 @@ public class FrmHabitats extends javax.swing.JPanel {
         jSeparator4.setVisible(true);
     }
     
-    public void desactivarFormulario(){
+    /**
+     * Desactiva todos los campos del formulario a excepción del apartado de verificación
+     * del nombre de un hábitat.
+     */
+    private void desactivarFormulario(){
         pnlClimas.setVisible(false);
         pnlContinentes.setVisible(false);
         pnlVegetaciones.setVisible(false);
@@ -94,7 +118,10 @@ public class FrmHabitats extends javax.swing.JPanel {
         txtNombre.setText("");
     }
     
-    public void limpiarFormulario(){
+    /**
+     * Limpia todos los campos y las selecciones de las tablas del formulario.
+     */
+    private void limpiarFormulario(){
         txtClimaDatos.setText("");
         txtContinentesDatos.setText("");
         txtNombreDatos.setText("");
@@ -103,10 +130,18 @@ public class FrmHabitats extends javax.swing.JPanel {
         tablaContinentesSeleccionados.setRowCount(0);
     }
     
-    public boolean verificarFormulario(){        
+    /**
+     * Valida que todo el formulario sea válido (Se toma como válido si todos los campos tienen información).
+     * @return True en caso de ser válido, False en caso contrario.
+     */
+    private boolean verificarFormulario(){        
         return !(txtClimaDatos.getText().isEmpty()|| txtContinentesDatos.getText().isEmpty() || txtVegetacionDatos.getText().isEmpty());
     }
     
+    /**
+     * Llena la tabla de climas con la lista de climas dada como parámetro.
+     * @param climas Lista de Climas.
+     */
     private void llenarTablaClimas(List<Clima> climas) {
 
         List<Clima> listaClimas = climas;
@@ -122,6 +157,10 @@ public class FrmHabitats extends javax.swing.JPanel {
         });
     }
     
+    /**
+     * Llena la tabla de vegetacion con la lista de vegetaciones dada como parámetro.
+     * @param vegetaciones Lista de Vegetaciones.
+     */
     private void llenarTablaVegetacion(List<Vegetacion> vegetaciones) {
 
         List<Vegetacion> listaVegetaciones = vegetaciones;
@@ -137,6 +176,10 @@ public class FrmHabitats extends javax.swing.JPanel {
         });
     }
     
+    /**
+     * Llena la tabla de continentes disponibles con la lista de continentes dada como parámetro.
+     * @param continentes Lista de continentes.
+     */
     private void llenarTablaContinentes(List<Continente> continentes) {
 
         List<Continente> listaContinentes = continentes;
@@ -153,6 +196,11 @@ public class FrmHabitats extends javax.swing.JPanel {
         });
     }
     
+    /**
+     * Llena la tabla de continentes seleccionados con la lista de continentes dada como parámetro.
+     * Todos los continentes que se encuentren en esta tabla serán utilizados para registrar el hábitat.
+     * @param continentes Lista de continenets.
+     */
     private void llenarTablaContinentesSeleccionados(List<Continente> continentes) {
         
         List<Continente> listaContinentes = continentes;
@@ -171,6 +219,11 @@ public class FrmHabitats extends javax.swing.JPanel {
         actualizarTextoContinentes(continentes);
     }
     
+    /**
+     * Actualiza el texto dentro del campo de texto "Continentes" de la interáz a
+     * el nombre de todos los continentes dados como parámetro.
+     * @param continentes Lista de Continentes a mostrar.
+     */
     private void actualizarTextoContinentes(List<Continente> continentes){
         if(continentes.size() != 0){
             txtContinentesDatos.setText(Arrays.toString(continentes.toArray()));
@@ -179,8 +232,19 @@ public class FrmHabitats extends javax.swing.JPanel {
         }
     }
     
+    /**
+     * Inicializa los botones de "Agregar" de la tabla "Continentes Disponibles"
+     * de la interfáz.
+     */
     private void initBotonesContinentesLista(){
         ActionListener onEditarClickListener = new ActionListener() {
+            
+            /**
+             * Elimina de la tabla "Continentes Disponibles" el continente que
+             * se encuentra en el renglón donde el botón fue presionado y pasa
+             * este mismo continente a la tabla de "Continentes Seleccionados"
+             * @param e Click al botón "Agregar" de la tabla.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -204,6 +268,10 @@ public class FrmHabitats extends javax.swing.JPanel {
                 agregar(continente);
             }
             
+            /**
+             * Agrega a la tabla de "Continentes Seleccionados" el continente
+             * dado como parámetro.
+             */
             public void agregar(Continente continente){
 
                 List<Continente> continentes = obtenerContinentesSeleccionados();
@@ -227,8 +295,19 @@ public class FrmHabitats extends javax.swing.JPanel {
                 .setCellEditor(new JButtonCellEditor(new JTextField(), onEditarClickListener));
     }
     
+    /**
+     * Inicializa los botones de "Eliminar" de la tabla "Continentes Seleccionados"
+     * de la interfáz.
+     */
     private void initBotonesContinentesSeleccionados(){
         ActionListener onEditarClickListener = new ActionListener() {
+            
+            /**
+             * Elimina de la tabla "Continentes Seleccionados" el continente que
+             * se encuentra en el renglón donde el botón fue presionado y pasa
+             * este mismo continente a la tabla de "Continentes Disponibles"
+             * @param e Click al botón "Eliminar" de la tabla.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -249,10 +328,14 @@ public class FrmHabitats extends javax.swing.JPanel {
                 }
                 
                 llenarTablaContinentesSeleccionados(continentes);
-                eliminar(continente);
+                agregar(continente);
             }
             
-            public void eliminar(Continente continente){
+            /**
+             * Agrega a la tabla de "Continentes Disponibles" el continente
+             * dado como parámetro.
+             */
+            public void agregar(Continente continente){
                 DefaultTableModel modeloTabla = (DefaultTableModel) tblContinentesLista.getModel();
                 
                 List<Continente> continentes = new ArrayList<>();
@@ -283,10 +366,19 @@ public class FrmHabitats extends javax.swing.JPanel {
                 .setCellEditor(new JButtonCellEditor(new JTextField(), onEditarClickListener));
     }
     
+    /**
+     * Despliega a manera de error dentro de un JOptionPane el mensaje dado
+     * como parámetro.
+     * @param mensaje Mensjae a mostrar.
+     */
     private void mostrarError(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje , "Error", JOptionPane.ERROR_MESSAGE);
     }
     
+    /**
+     * Llena todo el formulario con los datos del Hábitat dado como parámetro.
+     * @param habitat Habitat a utilizar.
+     */
     private void llenarFormulario(Habitat habitat){
         
         txtNombreDatos.setText(habitat.getNombre());
@@ -295,6 +387,11 @@ public class FrmHabitats extends javax.swing.JPanel {
         txtContinentesDatos.setText(Arrays.toString(habitat.getContinentes().toArray()));
     }
     
+    /**
+     * Obtiene de la tabla "Continentes Seleccionados" todos los continentes que
+     * se encuentren dentro de la misma.
+     * @return Lista de Continentes.
+     */
     private List<Continente> obtenerContinentesSeleccionados(){
         DefaultTableModel modeloTabla = (DefaultTableModel) tblContinentesSeleccionados.getModel();
 
@@ -590,7 +687,7 @@ public class FrmHabitats extends javax.swing.JPanel {
                     .addGroup(pnlContinentesLayout.createSequentialGroup()
                         .addGap(89, 89, 89)
                         .addComponent(lblListaContinentes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
                         .addComponent(lblContinentesSeleccionados)
                         .addGap(102, 102, 102))))
             .addGroup(pnlContinentesLayout.createSequentialGroup()
@@ -608,7 +705,7 @@ public class FrmHabitats extends javax.swing.JPanel {
                     .addComponent(lblContinentesSeleccionados))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlContinentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spnlVegetaciones1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                    .addComponent(spnlVegetaciones1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                     .addComponent(spnlVegetaciones2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -738,6 +835,14 @@ public class FrmHabitats extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Verifica que el nombr del Hábitat dado sea válido y no se encuentre registrado.
+     * 
+     * En caso de que el Hábitat no se encuentre registrado, activa el formulario para su registro.
+     * En caso de que el Hábitat ya se encuentre registrado, la interfáz mostrará sus datos.
+     * En caso de que no ingrese un nombre, se mostrará un mensaje advirtiendo de ello.
+     * @param evt Botón "Verificar" seleccionado.
+     */
     private void clickBtnVerificarHabitat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnVerificarHabitat
         
         String nombreHabitat = txtNombre.getText();
@@ -757,6 +862,12 @@ public class FrmHabitats extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_clickBtnVerificarHabitat
 
+    /**
+     * Guarda un Hábitat dentro de la aplicación con los datos que se encuentren
+     * en el formulario, en caso de haber un error se mostrará y no se hará ninguna
+     * acción.
+     * @param evt Botón "Guardar" seleccionado. 
+     */
     private void btnGuardarclickBtnVerificarHabitat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarclickBtnVerificarHabitat
         boolean formValido = verificarFormulario();
         
@@ -783,17 +894,31 @@ public class FrmHabitats extends javax.swing.JPanel {
         desactivarFormulario();
     }//GEN-LAST:event_btnGuardarclickBtnVerificarHabitat
 
+    /**
+     * Verifica que elemento dentro de la tabla de climas fue seleccionado y muestra
+     * sus datos dentro del formulario de registro en el campo de Clima.
+     * @param evt Click a un elemento de la tabla Climas.
+     */
     private void tblClimasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClimasMouseClicked
         
         Clima clima = (Clima) tblClimas.getValueAt(tblClimas.getSelectedRow(), 0);
         txtClimaDatos.setText(clima.getTipo());
     }//GEN-LAST:event_tblClimasMouseClicked
 
+    /**
+     * Verifica que elemento dentro de la tabla de vegetaciones fue seleccionado y muestra
+     * sus datos dentro del formulario de registro en el campo de Vegetacion.
+     * @param evt Click en un elemento de la tabla Vegetaciones.
+     */
     private void tblVegetacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVegetacionesMouseClicked
         Vegetacion vegetacion = (Vegetacion) tblVegetaciones.getValueAt(tblVegetaciones.getSelectedRow(), 0);
         txtVegetacionDatos.setText(vegetacion.getTipo());
     }//GEN-LAST:event_tblVegetacionesMouseClicked
 
+    /**
+     * Desactiva el formulario y devuelve la aplicación al menú principal.
+     * @param evt Click al botón "Menú"
+     */
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         
         desactivarFormulario();

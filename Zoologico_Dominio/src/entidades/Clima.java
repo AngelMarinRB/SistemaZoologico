@@ -97,6 +97,10 @@ public class Clima {
         this.descripcion = descripcion;
     }
 
+    /**
+     * Genera un hash del objeto.
+     * @return Hash.
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -104,6 +108,12 @@ public class Clima {
         return hash;
     }
 
+    /**
+     * Verifica si el clima dado como parámetro es igual al objeto.
+     * Dos climas son iguales si tienen el mismo id.
+     * @param obj Clima a comparar.
+     * @return True si son iguales, False en caso contrario.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -119,6 +129,10 @@ public class Clima {
         return Objects.equals(this.id, other.id);
     }
 
+    /**
+     * Devuelve un String en representación del objeto.
+     * @return String
+     */
     @Override
     public String toString() {
         return tipo;

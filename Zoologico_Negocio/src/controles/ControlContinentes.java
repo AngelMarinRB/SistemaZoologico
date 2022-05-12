@@ -17,6 +17,10 @@ public class ControlContinentes {
         this.datos = datos;
     }
     
+    /**
+     * Devuelve una lista de todos los continentes registrados.
+     * @return Continentes.
+     */
     public List<Continente> consultarContinentes(){
         return datos.consultarContinentes();
     }

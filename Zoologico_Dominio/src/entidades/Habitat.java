@@ -139,6 +139,10 @@ public class Habitat {
         this.continentes = continentes;
     }
 
+    /**
+     * Genera un Hash del objeto.
+     * @return Hash.
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -146,6 +150,12 @@ public class Habitat {
         return hash;
     }
 
+    /**
+     * Verifica si el hábitat dado como parámetro es igual.
+     * Dos hábitats son iguales si tienen el mismo id.
+     * @param obj Hábitat a comparar.
+     * @return True si son iguales, False en caso contrario.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -161,6 +171,10 @@ public class Habitat {
         return Objects.equals(this.id, other.id);
     }
 
+    /**
+     * Devuelve el nombre en representación dle objeto.
+     * @return String
+     */
     @Override
     public String toString() {
         return nombre;

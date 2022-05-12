@@ -45,6 +45,7 @@ public class FacadeNegocio implements INegocio{
     
     
     public FacadeNegocio(){
+
         FabricaControles controles = new FabricaControles();
         
         this.habitats = controles.crearControlHabitats();

@@ -12,7 +12,7 @@ import entidades.Itinerario;
 import interfaces.IConexionBD;
 
 /**
- *
+ * DAO del objeto itinerario
  * @author ricardosn saavedra
  */
 public class ItinerariosDAO {
@@ -44,6 +44,11 @@ public class ItinerariosDAO {
         coleccion.insertOne(itinerario);
     }
     
+    /**
+     * Devuelve un itinerario que coincida con el nombre
+     * @param nombre nombre con el que comparar
+     * @return itinerario
+     */
     public Itinerario consultarNombre(String nombre){
         
         FindIterable<Itinerario> registros = this.getColeccion().find(regex("nombre" ,"^" + nombre + "$" ,"i"));

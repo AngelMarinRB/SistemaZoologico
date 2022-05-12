@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- *
+ * DAO del objeto zona
  * @author ricardosn saavedra
  */
 public class ZonasDAO {

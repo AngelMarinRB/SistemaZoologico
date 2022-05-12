@@ -6,7 +6,6 @@ import entidades.Cuidador;
 import entidades.Especie;
 import entidades.Habitat;
 import entidades.Zona;
-import fachada.FacadeNegocio;
 import interfaces.INegocio;
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -24,7 +23,7 @@ import pantallas.util.JButtonCellEditor;
 import pantallas.util.JButtonRenderer;
 
 /**
- * Interfáz gráfica de usuario para el registro de Especies en el sistema.
+ * Pantalla de Registro par Especies y Animales en el sistema.
  * 
  * @author Marin
  */
@@ -45,13 +44,17 @@ public class FrmEspecies extends javax.swing.JPanel {
     
     private Especie especie = null;
     
+    //Especifica el Estatus del formulario
+    //Modo UPDATE : Todos los animales agregados y eliminados se reflejan al instante en la base de datos.
+    //Modo NEWENTRY : Todos los animales pre-registrados se registran hasta que se guarde la especie.
     private String status = null;
     
     /**
-     * Creates new form frmEspecies
+     * Crea e inicializa los objetos dentro del formulario Especies.
+     * @param negocio Objeto Negocio para el acceso a datos.
      */
-    public FrmEspecies() {
-        this.negocio = new FacadeNegocio();
+    public FrmEspecies(INegocio negocio) {
+        this.negocio = negocio;
         
         animales = new ArrayList();
         
@@ -66,6 +69,13 @@ public class FrmEspecies extends javax.swing.JPanel {
         desactivarFormulario();
     }
 
+    /**
+     * Consulta las entidades que requiere el formulario para registra Especies.
+     * Busca todos los registros de:
+     * - Habitats
+     * - Cuidadores
+     * - Zonas
+     */
     public void cargarRecursos(){
         habitats = negocio.consultarHabitats();
         cuidadores = negocio.consultarCuidadores();
@@ -73,22 +83,38 @@ public class FrmEspecies extends javax.swing.JPanel {
         mostrarRecursos();
     }
     
-    public void cargarAnimales(){
+    /**
+     * Busca todos los animales registrados con la misma especie, la especie
+     * a buscar se obtiene una vez que el usuario intenta registrar una especie existente.
+     * Este método solo debería utilizarse en el STATUS : UPDATE.
+     */
+    private void cargarAnimales(){
         animales = negocio.consultarAnimalesEspecie(especie);
     }
     
-    public void mostrarRecursos(){
+    /**
+     * Muestra todas las entidades cargadas en el formulario dentro de comboBoxes
+     * para que puedan ser utilizados.
+     */
+    private void mostrarRecursos(){
         llenarCBoxHabitats(habitats);
         llenarCBoxCuidadores(cuidadores);
         llenarCBoxZonas(zonas);
     }
     
-    public void actualizarTablaAnimales(){
+    /**
+     * Actualiza la tabla de Animales registrados, mostrando los últimos cambios hechos.
+     * Método para llamarse de manera interna.
+     */
+    private void actualizarTablaAnimales(){
         llenarTablaAnimales(animales);
         initBotonesAnimales();
     }
     
-    public void activarFormulario(){
+    /**
+     * Activa todos las secciones y campos del formulario para poder registrar una nueva especie.
+     */
+    private void activarFormulario(){
         pnlAnimales.setVisible(true);
         pnlDatos.setVisible(true);
         txtNombreEspecie.setEditable(false);
@@ -101,7 +127,12 @@ public class FrmEspecies extends javax.swing.JPanel {
         pnlAnimales.setVisible(true);
     }
     
-    public void activarFormularioActualizacion(){
+    /**
+     * Activa todas las secciones del formulario, pero no permite la interacción
+     * con ninguno de los campos de registro, excepto con la edición de Animales.
+     * Este método se debe de utilizar en STATUS : UPDATE.
+     */
+    private void activarFormularioActualizacion(){
         pnlAnimales.setVisible(true);
         pnlDatos.setVisible(true);
         txtNombreEspecie.setEditable(true);
@@ -115,7 +146,13 @@ public class FrmEspecies extends javax.swing.JPanel {
         pnlAnimales.setVisible(true);
     }
     
-    public void llenarFormulario(Especie especie){
+    /**
+     * Llena el formulario con los datos de la Especie dada como parámetro, además
+     * consulta y muestra dentro de la tabla de Animales, los animales que se encuentren
+     * registrados bajo esta especie.
+     * @param especie 
+     */
+    private void llenarFormulario(Especie especie){
 
         txtNombreCientifico.setText(especie.getNombreCientifico());
         txtNombreEspaniol.setText(especie.getNombreVulgar());
@@ -131,7 +168,13 @@ public class FrmEspecies extends javax.swing.JPanel {
         
     }
     
-    public Cuidador buscarCuidador(Especie especie){
+    /**
+     * Busca dentro de los cuidadores registrados en el sistema, el cuidador que está
+     * a cargo de la Especie dada como parámetro.
+     * @param especie Especie a buscar.
+     * @return Cuidador a cargo de la Especie.
+     */
+    private Cuidador buscarCuidador(Especie especie){
     
         for(int i = 0 ; i < cuidadores.size(); i++){
 
@@ -145,7 +188,11 @@ public class FrmEspecies extends javax.swing.JPanel {
         return null;
     }
     
-    public void llenarCBoxHabitats(List<Habitat> habitats){
+    /**
+     * Llena la comboBox de hábitats con la lista de hábitats dada como parámetro.
+     * @param habitats Lista de habitats.
+     */
+    private void llenarCBoxHabitats(List<Habitat> habitats){
         if (listaHabitats == null) {
             listaHabitats = new DefaultComboBoxModel();
         }
@@ -160,6 +207,10 @@ public class FrmEspecies extends javax.swing.JPanel {
         listaHabitats.setSelectedItem(null);
     }
     
+    /**
+     * Llena la comboBox de cuidadores con la lista de cuidadores dada como parámetro.
+     * @param cuidadores Lista de cuidadores.
+     */
     private void llenarCBoxCuidadores(List<Cuidador> cuidadores){
         if (listaCuidadores == null) {
             listaCuidadores = new DefaultComboBoxModel();
@@ -175,6 +226,10 @@ public class FrmEspecies extends javax.swing.JPanel {
         listaCuidadores.setSelectedItem(null);
     }
     
+    /**
+     * Llena la comboBox de zonas con la lista de zonas dada como parámetro.
+     * @param zonas Lista de zonas.
+     */
     private void llenarCBoxZonas(List<Zona> zonas){
         if (listaZonas == null) {
             listaZonas = new DefaultComboBoxModel();
@@ -190,7 +245,11 @@ public class FrmEspecies extends javax.swing.JPanel {
         listaZonas.setSelectedItem(null);
     }
     
-    public void desactivarFormulario(){
+    /**
+     * Desactiva todas las secciones y campos del formulario además de limpiar cada
+     * una de ellas de cualquier dato que puedan contener.
+     */
+    private void desactivarFormulario(){
         txtNombreEspecie.setEditable(true);
         pnlAnimales.setVisible(false);
         pnlDatos.setVisible(false);
@@ -204,7 +263,10 @@ public class FrmEspecies extends javax.swing.JPanel {
         limpiarFormulario();
     }
     
-    public void limpiarFormulario(){
+    /**
+     * Vacía cada uno de los campos del formulario.
+     */
+    private void limpiarFormulario(){
         
         txtNombreEspecie.setText("");
         txtDescripcion.setText("");
@@ -214,7 +276,19 @@ public class FrmEspecies extends javax.swing.JPanel {
         txtNombreEspaniol.setText("");
     }
     
-    public boolean verificarFormulario(){
+    /**
+     * Verifica que el formulario de Especies esté válido.
+     * 
+     * El formulario es válido si contiene
+     * - Nombre científico
+     * - Descripción
+     * - Seleccionó un cuidador
+     * - Seleccionó un hábitat
+     * - Seleccionó una zona
+     * 
+     * @return True si es válido, False en caso contrario.
+     */
+    private boolean verificarFormulario(){
         
         if(txtNombreCientifico.getText().isEmpty())
             return false;
@@ -234,24 +308,32 @@ public class FrmEspecies extends javax.swing.JPanel {
         return true;
     }
     
-    public void limpiarFormularioAnimales(){
+    /**
+     * Vacía los campos del formulario de animales.
+     */
+    private void limpiarFormularioAnimales(){
         txtNombreAnimal.setText("");
         txtEdadAnimal.setText("");
         rBtnHembra.setSelected(false);
         rBtnMacho.setSelected(false);
     }
     
+    /**
+     * Verifica que el formulario de animales sea válido.
+     * 
+     * El formulario es válido si:
+     * - Contiene un nombre
+     * - La edad del animal se encuentra entre 0 a 128
+     * - Se haya seleccionado un sexo
+     * @return True en caso de ser válido, False en caso contrario.
+     */
     private boolean verificarFormularioAnimal(){
         
         if(txtNombreAnimal.getText().isEmpty())
             return false;
         
-        System.out.println("Nombre valido");
-        
         if(txtEdadAnimal.getText().isEmpty())
             return false;
-        
-        System.out.println("Edad Valida");
         
         int edadAnimal = -1;
         
@@ -260,13 +342,9 @@ public class FrmEspecies extends javax.swing.JPanel {
         }catch(Exception e){
             return false;
         }
-        
-        System.out.println("Edad Integer");
-        
+
         if(edadAnimal < 1 || edadAnimal > 150)
             return false;
-        
-        System.out.println("Edad en rango");
         
         if(!rBtnHembra.isSelected() && !rBtnMacho.isSelected())
             return false;
@@ -274,6 +352,13 @@ public class FrmEspecies extends javax.swing.JPanel {
         return true;
     }
     
+    /**
+     * Crea una ficha de cargo de especie al cuidador dado como parámetro.
+     * Este método se debe de llamar después de registrar una Especie, siempre y cuando
+     * el registro se haya completado con éxito.
+     * @param cuidador Cuidador a crear ficha de cargo.
+     * @return True si fue creada y guardada exitosamente, False en caso contrario.
+     */
     private boolean crearFichaCargoEspecie(Cuidador cuidador){
         
         Especie especie = negocio.verificarEspecieNombre(txtNombreEspaniol.getText());
@@ -285,6 +370,12 @@ public class FrmEspecies extends javax.swing.JPanel {
         return negocio.agregarFichaCargoCuidador(cuidador, fichaCargo);
     }
     
+    /**
+     * Guarda cada uno de los animales que se encuentran dentro de la tabla de animales
+     * Este método se debe usar únicamente cuando se están registrando animales junto
+     * con una nueva especie.
+     * @param especie 
+     */
     private void guardarAnimales(Especie especie){
         
         for(int i = 0 ; i < animales.size() ; i++){
@@ -294,6 +385,10 @@ public class FrmEspecies extends javax.swing.JPanel {
         }
     }
     
+    /**
+     * Llena la tabla de animales con la lista de animales dada como parámetro.
+     * @param animales Lista de animales.
+     */
     private void llenarTablaAnimales(List<Animal> animales) {
 
         List<Animal> listaAnimales = animales;
@@ -312,8 +407,18 @@ public class FrmEspecies extends javax.swing.JPanel {
         });
     }
     
+    /**
+     * Inicializa los botones de "Eliminar" dentro de la tabla de animales.
+     */
     private void initBotonesAnimales(){
         ActionListener onEditarClickListener = new ActionListener() {
+            
+            /**
+             * Elimina de la tabla el animal que se encuentre en el renglón donde el botón fue presionado.
+             * 
+             * El método elimina de la tabla el animal si el formulario se encuentra en Status : NUEVOREGISTRO
+             * El método elimina de la aplicación el animal si el formulario se enceuntra en Status : UPDATE
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -354,19 +459,39 @@ public class FrmEspecies extends javax.swing.JPanel {
                 .setCellEditor(new JButtonCellEditor(new JTextField(), onEditarClickListener));
     }
     
+    /**
+     * Vacía la tabla de animales.
+     */
     private void limpiarTablaAnimales(){
         DefaultTableModel modeloTabla = (DefaultTableModel) tblAnimales.getModel();
         modeloTabla.setRowCount(0);
     }
     
+    /**
+     * Muestra un mensaje de error dentro un JOptionPane.
+     * @param mensaje Mensaje a mostrar.
+     */
     private void mostrarError(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje , "Error", JOptionPane.ERROR_MESSAGE);
     }
     
+    /**
+     * Elimina de la aplicación el animal dado como parámetro.
+     * @param animal Animal a eliminar.
+     */
     private void eliminarAnimal(Animal animal){
         negocio.eliminarAnimal(animal);
     }
     
+    /**
+     * Agrega al animal dado como parámetro, siempre y cuando no exista uno en la tabla con el mismo nombre.
+     * 
+     * Si el status del formulario es : NUEVORGISTRO, sólo se almacenará temporalmente en la tabla
+     * y se guardará hasta que se guarda la Especie.
+     * 
+     * Si el status del formulario es : ACTUALIZACIÓN, se guardará automáticamente en la aplicación.
+     * @param animal 
+     */
     private void agregarAnimal(Animal animal){
         
             
@@ -386,26 +511,20 @@ public class FrmEspecies extends javax.swing.JPanel {
 
     }
     
-    
-    private void registrarNuevosAnimales(Especie especie){
-
-        DefaultTableModel modeloTabla = (DefaultTableModel) tblAnimales.getModel();
-
-        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
-
-            Animal animalTabla = (Animal) modeloTabla.getValueAt(i, 0);
-
-            if(animalTabla.getId() == null){
-                animalTabla.setEspecie(especie);
-                agregarAnimal(animalTabla);
-            }
-        }
-    }
-    
+    /**
+     * Establece la lista de animales al atributo de animales del formulario.
+     * Este funciona como almacenamiento temporal para las consutlas de animales.
+     * @param animales 
+     */
     private void setAnimales(List<Animal> animales){
         this.animales = animales;
     }
     
+    /**
+     * Actualiza el status del formulario al dado como parámetro.
+     * Sólo son validos : NUEVORGISTRO y ACTUALIZACION
+     * @param status 
+     */
     private void cambiarStatus(String status){
         this.status = status;
     }
@@ -665,7 +784,7 @@ public class FrmEspecies extends javax.swing.JPanel {
                     .addComponent(cboxZonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addComponent(btnGuardar)
-                .addContainerGap(162, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         pnlDatos.add(pnlRegistroEspecie, "Especie");
@@ -762,7 +881,7 @@ public class FrmEspecies extends javax.swing.JPanel {
                 .addComponent(btnConfirmacionAnimal)
                 .addGap(75, 75, 75)
                 .addComponent(btnRegresar)
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
 
         pnlDatos.add(pnlRegistroAnimales, "Animales");
@@ -822,6 +941,10 @@ public class FrmEspecies extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Desactiva el formulario y regresa la aplicación al menú principal
+     * @param evt Botón "Menú" seleccionado
+     */
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
 
         desactivarFormulario();
@@ -837,6 +960,14 @@ public class FrmEspecies extends javax.swing.JPanel {
         cl.show(frame, "Menu");
     }//GEN-LAST:event_btnMenuActionPerformed
 
+    /**
+     * Verifica si ya fue registrada una Especie con el nombre dado.
+     * 
+     * Si ya se encuentra una especie, despliega sus datos y permite agregar o eliminar animales de la especie.
+     * Si no se encuentra una sepecie, activa los campos necesarios para su registro y permite agregar animales
+     * junto con el registro.
+     * @param evt Botón "Validar" seleccionado
+     */
     private void clickBtnValidarEspecie(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnValidarEspecie
         String nombreEspecie = txtNombreEspecie.getText();
         
@@ -860,6 +991,11 @@ public class FrmEspecies extends javax.swing.JPanel {
         
     }//GEN-LAST:event_clickBtnValidarEspecie
 
+    /**
+     * Guarda dentro de la aplicación la Especie con todos los datos dados en el formulario,
+     * adicionalmente guarda todos los animales que se encuentren en la tabla de animales.
+     * @param evt Botón "Guardar" seleccionado
+     */
     private void clickBtnGuardar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnGuardar
         
         if(!verificarFormulario()){
@@ -904,6 +1040,10 @@ public class FrmEspecies extends javax.swing.JPanel {
         limpiarTablaAnimales();
     }//GEN-LAST:event_clickBtnGuardar
 
+    /**
+     * Muestra el formulario de registro para Animales.
+     * @param evt Botón "Editar Animales" seleccionado.
+     */
     private void clickBtnEditarAnimales(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnEditarAnimales
         CardLayout cl = (CardLayout) (pnlDatos.getLayout());
         cl.show(pnlDatos, "Animales");
@@ -912,19 +1052,40 @@ public class FrmEspecies extends javax.swing.JPanel {
 
     }//GEN-LAST:event_clickBtnEditarAnimales
 
+    /**
+     * Vuelve a mostrar el formulario de Especies.
+     * @param evt Botón "Regresar" seleccionado.
+     */
     private void clickBtnRegresar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnRegresar
         CardLayout cl = (CardLayout) (pnlDatos.getLayout());
         cl.show(pnlDatos, "Especie");
     }//GEN-LAST:event_clickBtnRegresar
 
+    /**
+     * Verifica si el botón de "Macho" fue seleccionado, si lo fue, desactiva la
+     * selección del botón hembra, si estaba seleccionado.
+     * @param evt Botón "Macho" seleccionado.
+     */
     private void rBtnMachoSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rBtnMachoSelected
         rBtnHembra.setSelected(false);
     }//GEN-LAST:event_rBtnMachoSelected
 
+    /**
+     * Verifica si el botón "Hembra" fue seleccionado, si lo fue, desactiva la
+     * la selección del botón "Macho", si estaba seleccionado.
+     * @param evt Botón "Hembra" seleccionado.
+     */
     private void rBtnHembraSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rBtnHembraSelected
         rBtnMacho.setSelected(false);
     }//GEN-LAST:event_rBtnHembraSelected
 
+    /**
+     * Guarda un animal con los datos del formulario.
+     * 
+     * Si el status es NUEVOREGISTRO, el animal será almacenado temporalmente en la tabla hasta que se guarde la Especie.
+     * Sie lstatus es ACTUALIACIÓN, el animal será almacenado en la aplicación inmediatamente.
+     * @param evt Botón "Agregar" seleccionado.
+     */
     private void clickBtnAgregarAnimal(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnAgregarAnimal
 
         if (!verificarFormularioAnimal()) {
