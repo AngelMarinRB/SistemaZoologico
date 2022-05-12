@@ -20,14 +20,36 @@ import java.util.List;
  */
 public interface INegocio {
     
+    /**
+     * Almacena el hábitat dado como parámetro.
+     * @param habitat Habitat a guardar.
+     * @return True si se guardó, False en caso contrairo.
+     */
     boolean guardarHabitat(Habitat habitat);
     
+    /**
+     * Verifica si ya se encuentra registrado un habitat con el mismo nombre.
+     * @param nombre Nombre a buscar.
+     * @return False si no existe, True en caso contrario
+     */
     Habitat verificarExistenciaHabitat(String nombre);
     
+    /**
+     * Devuelve una lista de todos los continentes registrados.
+     * @return Continentes.
+     */
     List<Continente> consultarContinentes();
     
+    /**
+     * Devuelve una lista de todas las vegetaciones registradas en el sistema.
+     * @return Lista de vegetaciones.
+     */
     List<Vegetacion> consultarVegetaciones();
     
+    /**
+     * Devuelve una lista de todos los climas registrados en el sistema.
+     * @return Lista de climas.
+     */
     List<Clima> consultarClimas();
     
     boolean guardarItinerario(Itinerario itinerario);

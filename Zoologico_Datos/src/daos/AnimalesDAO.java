@@ -41,6 +41,12 @@ public class AnimalesDAO {
         return this.baseDatos.getCollection("animales", Animal.class);
     }
     
+    /**
+     * Guarda en la base de datos el animal dado como parámetro.
+     * 
+     * @param animal Animal a guardar.
+     * @return True si se guardó, False en caso contrario.
+     */
     public boolean guardar(Animal animal){
         try {
             MongoCollection<Animal> coleccion = this.getColeccion();
@@ -52,6 +58,12 @@ public class AnimalesDAO {
         }
     }
     
+    /**
+     * Elimina de la base de datos el animal dado como parámetro.
+     * 
+     * @param animal Animal a eliminar.
+     * @return True si se eliminó, False en caso contrario.
+     */
     public boolean eliminar(Animal animal){
         try {
             MongoCollection<Animal> coleccion = this.getColeccion();

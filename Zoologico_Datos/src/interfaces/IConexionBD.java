@@ -9,6 +9,10 @@ import com.mongodb.client.MongoDatabase;
  */
 public interface IConexionBD {
     
+    /**
+     * Devuelve una conexión a la base de datos.
+     * @return Connection
+     */
     public MongoDatabase getConnection();
     
 }

@@ -17,6 +17,11 @@ public class ControlVegetaciones {
         this.datos = datos;
     }
     
+    /**
+     * Devuelve una lista de todas las vegetaciones registradas en la base de datos.
+     * 
+     * @return Lista de vegetaciones. 
+     */
     public List<Vegetacion> consultarVegetaciones(){
         return datos.consultarVegetaciones();
     }

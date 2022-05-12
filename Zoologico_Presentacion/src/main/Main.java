@@ -3,8 +3,13 @@ package main;
 import pantallas.FrmPrincipal;
 
 /**
- *
- * @author Marin
+ * MAIN
+ * Proyecto Zoológico
+ * 
+ * Creado por:
+ * Luis Angel Marín Figueroa        - 00000228968
+ * Ricardo Javier Saavedra Negrete  - 00000229351
+ * Alan Francisco Gonzalez Angulo   - 00000228779
  */
 public class Main {
     

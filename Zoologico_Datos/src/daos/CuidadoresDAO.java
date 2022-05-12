@@ -40,6 +40,12 @@ public class CuidadoresDAO {
         return this.baseDatos.getCollection("cuidadores", Cuidador.class);
     }
     
+    /**
+     * Agrega al cuidador dado como parámetro, la ficha de cargo dada como parámetro.
+     * @param cuidador Cuidador a agregar ficha de cargo.
+     * @param fichaCargo Ficha de cargo a agregar.
+     * @return True si se agregó, False en caso contrario.
+     */
     public boolean agregarFichaCargo(Cuidador cuidador, CargoEspecie fichaCargo) {
 
         //Document query = new Document("$eq", new Document().append("_id", cuidador.getId()));
@@ -58,6 +64,10 @@ public class CuidadoresDAO {
         return false;
     }
 
+    /**
+     * Devuelve una lista de todos los cuidadores registrados.
+     * @return Lista de cuidadores.
+     */
     public List<Cuidador> consultarTodos(){
         
         FindIterable<Cuidador> registros = this.getColeccion().find();

@@ -40,6 +40,11 @@ public class EspeciesDAO {
         return this.baseDatos.getCollection("especies", Especie.class);
     }
     
+    /**
+     * Guarda en la base de datos la especie dada como parámetro
+     * @param especie Especie a gaurdar
+     * @return True si se guardó, False en caso contrario.
+     */
     public boolean guardar(Especie especie) {
 
         try {
@@ -52,6 +57,12 @@ public class EspeciesDAO {
         }
     }
     
+    /**
+     * Devuelve la Especie que tenga el nombre igual al dado como parámetro.
+     * 
+     * @param nombre Nombre de Especie a buscar.
+     * @return Especie si encuntra una, Null si no existe.
+     */
     public Especie consultarNombre(String nombre){
         
         FindIterable<Especie> registros = this.getColeccion().find(regex("nombreVulgar" ,"^" + nombre + "$" ,"i"));
@@ -61,6 +72,12 @@ public class EspeciesDAO {
         return especie;
     }
     
+    /**
+     * Devuelve la Especie que tenga el nombre científico igual al dado como parámetro.
+     * 
+     * @param nombre Nombre científico de la especie a buscar.
+     * @return Especie si enceuntra una, Null si no existe.
+     */
     public Especie consultarNombreCientifico(String nombre){
         
         FindIterable<Especie> registros = this.getColeccion().find(regex("nombreCientifico" ,"^" + nombre + "$" ,"i"));
@@ -70,6 +87,10 @@ public class EspeciesDAO {
         return especie;
     }
     
+    /**
+     * Devuelve una lista de todas las especies registradas en la base de datos.
+     * @return Lista de especies.
+     */
     public List<Especie> consultarTodos(){
         
         FindIterable<Especie> registros = this.getColeccion().find();

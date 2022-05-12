@@ -73,6 +73,10 @@ public class Continente {
         this.nombre = nombre;
     }
 
+    /**
+     * Genera un Hash del objeto.
+     * @return Hash.
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -80,6 +84,12 @@ public class Continente {
         return hash;
     }
 
+    /**
+     * Verifica si el Continente dado como parámetro es igual.
+     * Dos continentes son iguales si tienen el mismo nombre.
+     * @param obj Continente a comparar.
+     * @return True si son iguales, False en caso contrario.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -95,6 +105,10 @@ public class Continente {
         return Objects.equals(this.nombre, other.nombre);
     }
 
+    /**
+     * Devuelve el nombre en representación del objeto.
+     * @return String.
+     */
     @Override
     public String toString() {
         return nombre;

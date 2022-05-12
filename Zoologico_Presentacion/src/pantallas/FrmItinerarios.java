@@ -29,10 +29,12 @@ public class FrmItinerarios extends javax.swing.JPanel {
     private List<Zona> zonas;
     private List<String> zonatblSeleccionada;
     private ArrayList<DiasHorario> dhArray;
+    
     /**
-     * Creates new form FrmItinerarios
+     * Crea e inicializa los objetos del formulario de Itinerarios.
+     * @param negocio Objeto Negocio para el acceso a datos.
      */
-    public FrmItinerarios() {
+    public FrmItinerarios(INegocio negocio) {
         initComponents();
         this.pnlHorario.setVisible(false);
         this.pnlZonas.setVisible(false);
@@ -42,7 +44,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
         this.btnLimpiar.setVisible(false);
         this.lblFormatoHoras.setVisible(false);
         
-        this.negocio = new FacadeNegocio();
+        this.negocio = negocio;
         
         this.cargarRecursos();
         this.zonatblSeleccionada = new ArrayList<>();

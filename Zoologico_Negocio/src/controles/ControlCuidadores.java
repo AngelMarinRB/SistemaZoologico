@@ -18,6 +18,10 @@ public class ControlCuidadores {
         this.datos = datos;
     }
     
+    /**
+     * Devuelve una lista de todos los cuidadores registrados.
+     * @return Lista de cuidadores.
+     */
     public List<Cuidador> consultarCuidadores(){
         return datos.consultarCuidadores();
     }
