@@ -9,12 +9,19 @@ import entidades.Itinerario;
 import interfaces.IDatos;
 
 /**
- *
+ * Control de itinerarios
  * @author ricardosn saavedra
  */
 public class ControlItinerarios {
+    /**
+     * objeto que permite usar metodos de las dao
+     */
     private IDatos datos;
     
+    /**
+     * metodo constructor que inicializa un objeto IDatos
+     * @param datos parametro para la creacion del objeto
+     */
     protected ControlItinerarios(IDatos datos){
         this.datos = datos;
     }
