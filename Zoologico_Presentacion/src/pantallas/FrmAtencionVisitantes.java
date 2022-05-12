@@ -4,7 +4,12 @@
  */
 package pantallas;
 
+import entidades.VisitaGuiada;
+import fachada.FacadeNegocio;
 import interfaces.INegocio;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,6 +22,7 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
      */
     public FrmAtencionVisitantes() {
         initComponents();
+        this.negocio = new FacadeNegocio();
     }
     
     private INegocio negocio;
@@ -36,7 +42,7 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         btnMenu = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        tblItinerarios = new javax.swing.JScrollPane();
+        pnlItinerarios = new javax.swing.JScrollPane();
         tblNombreItinerario = new javax.swing.JTable();
         lblItinerario = new javax.swing.JLabel();
         lblVisitas = new javax.swing.JLabel();
@@ -110,22 +116,15 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                 "Nombre"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class
-            };
             boolean[] canEdit = new boolean [] {
                 false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblItinerarios.setViewportView(tblNombreItinerario);
+        pnlItinerarios.setViewportView(tblNombreItinerario);
 
         lblItinerario.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblItinerario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -223,7 +222,7 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                         .addComponent(lblItinerario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(tblItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(pnlItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -285,7 +284,7 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                             .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
                                 .addComponent(lblItinerario)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tblItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(pnlItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
                                 .addComponent(lblVisitas, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -369,9 +368,11 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     //Metodos
-    public void consultarVisitasGuiadasMes(){
-        negocio.consultarMes();
+    public List<VisitaGuiada> consultarVisitasGuiadasMes(){
+       return negocio.consultarMes();
     }
+    
+
     
     public void limpiarFormulario(){
         this.campoQueja.setText("");
@@ -379,6 +380,21 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         this.txtGuia.setText("");
         this.txtNombre.setText("");
         this.txtTelefono.setText("");
+    }
+    
+    public void llenarTablaNombreItinerario(List <VisitaGuiada> itinerarios){
+        
+        List<VisitaGuiada> listaVisitas = itinerarios;
+        
+         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblNombreItinerario.getModel();
+         modeloTabla.setRowCount(0);
+         
+         listaVisitas.forEach(visita->{
+         String nombre = visita.getItinerario().get(0).getNombre();
+         Object[] fila = new Object[1];
+         fila[0] = nombre;
+         modeloTabla.addRow(fila);
+         });
     }
     
     
@@ -393,7 +409,7 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
     
     private void btnRegistrarQuejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarQuejaActionPerformed
         // TODO add your handling code here:
-        this.consultarVisitasGuiadasMes();
+        this.llenarTablaNombreItinerario(this.consultarVisitasGuiadasMes());
     }//GEN-LAST:event_btnRegistrarQuejaActionPerformed
 
     /**
@@ -422,9 +438,9 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
     private javax.swing.JPanel pnlAtencionVisitantes;
     private javax.swing.JPanel pnlEncabezado;
     private javax.swing.JScrollPane pnlHoras;
+    private javax.swing.JScrollPane pnlItinerarios;
     private javax.swing.JScrollPane tblDetallesVisita;
     private javax.swing.JTable tblHoras;
-    private javax.swing.JScrollPane tblItinerarios;
     private javax.swing.JTable tblNombreItinerario;
     private javax.swing.JTable tblVisitas;
     private javax.swing.JTextField txtEmail;

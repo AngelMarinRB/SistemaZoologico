@@ -57,8 +57,20 @@ public class FacadeDatos implements IDatos{
         this.cuidadores = fabrica.crearCuidadoresDAO();
         this.animales = fabrica.crearAnimalesDAO();
         this.especies = fabrica.crearEspeciesDAO();
+        this.visitasGuiadas = fabrica.crearVisitaGuiadaDAO();
     }
 
+    
+    @Override
+    public List<VisitaGuiada> consultarMes(){
+        try{
+            return visitasGuiadas.consultarMes();
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    
     @Override
     public boolean guardarHabitat(Habitat habitat) {
         
@@ -237,10 +249,6 @@ public class FacadeDatos implements IDatos{
         }
     }
 
-    @Override
-    public List<VisitaGuiada> consultarMes() {
-        return visitasGuiadas.consultarMes();
-    }
 
     @Override
     public boolean agregarFichaCargoCuidador(Cuidador cuidador, CargoEspecie fichaCargo) {

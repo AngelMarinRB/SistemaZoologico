@@ -54,6 +54,7 @@ public class FacadeNegocio implements INegocio{
         this.itinerarios = controles.crearControlItinerarios();
         this.zonas = controles.crearControlZonas();
         this.cuidadores = controles.crearControlCuidadores();
+        this.visitasGuiadas = controles.crearVisitaGuiada();
         this.animales = controles.crearControlAnimales();
         this.especies = controles.crearControlEspecies();
     }
@@ -135,7 +136,7 @@ public class FacadeNegocio implements INegocio{
 
     @Override
     public List<VisitaGuiada> consultarMes() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return visitasGuiadas.consultarMes();
     }
 
     @Override

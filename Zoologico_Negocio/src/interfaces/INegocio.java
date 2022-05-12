@@ -36,6 +36,11 @@ public interface INegocio {
     
     List<Zona> consultarZonas();
     
+    
+     /**
+     * Devuelve una lista de las visitas guiadas del ultmo mes registrados en el sistema.
+     * @return Lista de visitasGuiadas.
+     */
     List <VisitaGuiada> consultarMes();
     
     /**

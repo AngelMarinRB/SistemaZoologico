@@ -1,6 +1,7 @@
 
 package entidades;
 
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
@@ -10,22 +11,22 @@ import org.bson.types.ObjectId;
 public class VisitaGuiada {
     
     private ObjectId id;
-    GregorianCalendar inicio;
-    GregorianCalendar fin;
+    Date inicio;
+    Date fin;
     List<Itinerario> itinerario;
     Guia guia;
     
     public VisitaGuiada(){
     }
     
-    public VisitaGuiada(GregorianCalendar inicio, GregorianCalendar fin, List<Itinerario> itinerario, Guia guia){
+    public VisitaGuiada(Date inicio, Date fin, List<Itinerario> itinerario, Guia guia){
         this.inicio = inicio;
         this.fin = fin;
         this.itinerario= itinerario;
         this.guia = guia;
     }
 
-    public VisitaGuiada(ObjectId id, GregorianCalendar inicio, GregorianCalendar fin, List<Itinerario> itinerario, Guia guia) {
+    public VisitaGuiada(ObjectId id, Date inicio, Date fin, List<Itinerario> itinerario, Guia guia) {
         this.id = id;
         this.inicio = inicio;
         this.fin = fin;
@@ -42,19 +43,19 @@ public class VisitaGuiada {
         this.id = id;
     }
 
-    public GregorianCalendar getInicio() {
+    public Date getInicio() {
         return inicio;
     }
 
-    public void setInicio(GregorianCalendar inicio) {
+    public void setInicio(Date inicio) {
         this.inicio = inicio;
     }
 
-    public GregorianCalendar getFin() {
+    public Date getFin() {
         return fin;
     }
 
-    public void setFin(GregorianCalendar fin) {
+    public void setFin(Date fin) {
         this.fin = fin;
     }
 

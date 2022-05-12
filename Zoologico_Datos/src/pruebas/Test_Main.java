@@ -70,7 +70,7 @@ public class Test_Main {
           List<VisitaGuiada> registroVisitas = visitas.consultarMes();
           
           registroVisitas.forEach(visit ->{
-              System.out.println(visit);
+              System.out.println(visit.getItinerario().get(0).getDiasHorario());
           });
     }
 
