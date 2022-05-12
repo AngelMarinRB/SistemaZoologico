@@ -20,17 +20,30 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * frama para guardar un itinerario
  * @author ricardosn saavedra
  */
 public class FrmItinerarios extends javax.swing.JPanel {
-
+    /**
+     * objetos de negocio
+     */
     private INegocio negocio;
+    /**
+     * lista que guarda zonas que ya esten en el sistema
+     */
     private List<Zona> zonas;
+    /**
+     * Lista que almacena las zonas seleccionadas para el itinerario
+     */
     private List<String> zonatblSeleccionada;
+    /**
+     * lista de arreglos que almacena objetos diasHorario usados para la creacion
+     * de itinerario
+     */
     private ArrayList<DiasHorario> dhArray;
     /**
-     * Creates new form FrmItinerarios
+     * constructor vacio que inicializa los componentes principales asi como
+     * negocio y carga recursos a usar
      */
     public FrmItinerarios() {
         initComponents();
@@ -48,10 +61,15 @@ public class FrmItinerarios extends javax.swing.JPanel {
         this.zonatblSeleccionada = new ArrayList<>();
     }
     
+    /**
+     * metodo que carga recursos a usar en el frm de la base de datos
+     */
     public void cargarRecursos(){
         zonas= negocio.consultarZonas();
     }
-    
+     /**
+      * metodo que busca el itinerario ingresado en la verificacion
+      */
     public void buscarItinerario(){
       
         if(!this.txtVerificarNombre.getText().equalsIgnoreCase("")){
@@ -70,7 +88,10 @@ public class FrmItinerarios extends javax.swing.JPanel {
         }
     }
     
-    //metodo que verifica antes de mostrar zonas y horarios
+    /**
+     * metodo que verifica los valores de los campos de texto que se encuentran
+     * en el panel de datos
+     */
     public void registraDatosItinerario(){
         if(this.txtDisponibilidad.getText().equalsIgnoreCase("") || 
                 this.txtDuracion.getText().equalsIgnoreCase("") || 
@@ -82,7 +103,10 @@ public class FrmItinerarios extends javax.swing.JPanel {
     }
     
     
-    
+    /**
+     * metodo que verifica si por lo menos un dia se encuentra seleccionado
+     * @return true si es verdad que por lo menos uno lo esta, false de lo contrario
+     */
     public boolean diasSeleccionados(){
         if(this.checkLunes.isSelected() ||
            this.checkMartes.isSelected() ||
@@ -97,12 +121,21 @@ public class FrmItinerarios extends javax.swing.JPanel {
         return false;
     }
     
+    /**
+     * metodo que hace visible el panel de datos
+     * si el nombre del itinerario no esta repetido
+     */
     public void continuarDatos(){
         this.pnlFormPrincipal.setVisible(true);
         this.txtNombre.setText(this.txtVerificarNombre.getText());
         
     }
     
+    /**
+     * metodo que activa los campos una vez que estan
+     * seleccionados los dias asi como activar los paneles
+     * correspondientes asi como los de zona
+     */
     public void activarCampos(){
         
         
@@ -171,7 +204,11 @@ public class FrmItinerarios extends javax.swing.JPanel {
 
     }
     
- 
+    /**
+     * metodo que obtiene el nombre de la zona seleccionada
+     * en la tabla
+     * @return nombre de la zona si es un valor valido de lo contrario null
+     */
     private String getNombreZonaSeleccionado(){
         int indiceFilaSeleccionada = this.tblZonas.getSelectedRow();
         if (indiceFilaSeleccionada != -1) {
@@ -185,6 +222,11 @@ public class FrmItinerarios extends javax.swing.JPanel {
         }       
     }
     
+    /**
+     * metodo que obtiene el nombre seleccionado de la tabla
+     * de zonas seleccionadas para eliminarlo
+     * @return el nombre si se encuentra, null de lo contrario
+     */
      private String getNombreEliminarZonaSeleccionada(){
         int indiceFilaSeleccionada = this.tblZonasSeleccionadas.getSelectedRow();
         if (indiceFilaSeleccionada != -1) {
@@ -197,7 +239,12 @@ public class FrmItinerarios extends javax.swing.JPanel {
             return null;
         }       
     }
-    
+     
+    /**
+     * metodo que obtiene el string del nombre de la zona y lo agrega a 
+     * la lista de zonas seleccionadas si no se encuentra
+     * @param nombre String con el nombre de la zona a agregar
+     */
     public void agregarZonaSeleccionada(String nombre){
         for(String xx:zonatblSeleccionada){
             if(nombre.equalsIgnoreCase(xx)){
@@ -209,6 +256,10 @@ public class FrmItinerarios extends javax.swing.JPanel {
         
     }
       
+    /**
+     * metodo que llena la tabla de zonas seleccionadas 
+     * con la lista de zonas seleccionadas
+     */
     private void llenarTablaZonasSeleccionadas(){
         List<String> listaZonas = zonatblSeleccionada;
         
@@ -223,6 +274,11 @@ public class FrmItinerarios extends javax.swing.JPanel {
         });
     }
     
+    /**
+     * metodo que llena la tabla de zonas con
+     * las zonas cargadas de la base de datos anteriormente
+     * @param zonas lista de zonas 
+     */
     private void llenarTablaZonas(List<Zona> zonas) {
 
         List<Zona> listaZonas = zonas;
@@ -239,10 +295,18 @@ public class FrmItinerarios extends javax.swing.JPanel {
         });
     }
     
+    /**
+     * metodo que muestra un error con el string enviado
+     * @param mensaje mensaje a mostrar
+     */
     private void mostrarError(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje , "Error", JOptionPane.ERROR_MESSAGE);
     }
     
+    /**
+     * metodo que regresa todos los componentes del frm
+     * a su estado inicial
+     */
     private void reiniciarFrm(){
        this.pnlFormPrincipal.setVisible(false);
        this.pnlHorario.setVisible(false);
@@ -291,6 +355,10 @@ public class FrmItinerarios extends javax.swing.JPanel {
        this.cargarRecursos();
     }
     
+    /**
+     * metodo que verifica los datos ingresado en los campos
+     * @return true si los datos son correctos, false de lo contrario
+     */
     public boolean verificarDatos(){
         
         
@@ -306,6 +374,10 @@ public class FrmItinerarios extends javax.swing.JPanel {
         return false;
     }
     
+    /**
+     * metodo que verifica los campos del panel de datos
+     * @return true si son correctos, false de lo contrario
+     */
     public boolean verificarCamposDatos(){
         try{
         int longitud,visitantes,duracion;
@@ -321,7 +393,10 @@ public class FrmItinerarios extends javax.swing.JPanel {
         return true;
     }
         
-    
+    /**
+     * metodo que construye un objeto itinerario
+     * y lo guarda en la base de datos
+     */
     public void guardarItinerario(){
         Itinerario itinerario = new Itinerario();
         itinerario.setNombre(this.txtNombre.getText());
@@ -337,7 +412,11 @@ public class FrmItinerarios extends javax.swing.JPanel {
         this.reiniciarFrm();
     }
     
-    //regresa las zonas que se encuentren seleccionadas
+    /**
+     * metodo que regresa una lista de objetos de zona
+     * con la lista de zonas seleccionadas
+     * @return lista de zonas 
+     */
     public List<Zona> buscarZonasSeleccionadas(){
        
         List<Zona> listaZonaSeleccionada = new ArrayList<>();
@@ -353,7 +432,10 @@ public class FrmItinerarios extends javax.swing.JPanel {
     }
     
     
-    
+    /**
+     * metodo que verificado los campos de las horas esten ingresados correctamente
+     * @return true si tienen valores validos, false de lo contrario
+     */
     public boolean verificarHora(){
         //verifica campo de las horas
         
@@ -504,7 +586,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
      * tiene un valor correcto vease que no esten fuera de los rangos como
      * 24 am o 59 minutos
      * @param verificar
-     * @return 
+     * @return true si tienen un valor correcto, false si ocurre lo contrario
      */
     public boolean verificarValorHora(String verificar){
         String[] split = new String[2];
