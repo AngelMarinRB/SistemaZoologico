@@ -7,6 +7,7 @@ import controles.ControlContinentes;
 import controles.ControlEspecies;
 import controles.ControlHabitats;
 import controles.ControlItinerarios;
+import controles.ControlQuejas;
 import controles.ControlVegetaciones;
 import controles.ControlVisitasGuiadas;
 import controles.ControlZonas;
@@ -19,6 +20,7 @@ import entidades.Cuidador;
 import entidades.Especie;
 import entidades.Habitat;
 import entidades.Itinerario;
+import entidades.Queja;
 import entidades.Vegetacion;
 import entidades.VisitaGuiada;
 import entidades.Zona;
@@ -42,6 +44,7 @@ public class FacadeNegocio implements INegocio{
     private ControlAnimales animales;
     private ControlEspecies especies;
     private ControlVisitasGuiadas visitasGuiadas;
+    private ControlQuejas quejas;
     
     
     public FacadeNegocio(){
@@ -55,9 +58,10 @@ public class FacadeNegocio implements INegocio{
         this.itinerarios = controles.crearControlItinerarios();
         this.zonas = controles.crearControlZonas();
         this.cuidadores = controles.crearControlCuidadores();
-        this.visitasGuiadas = controles.crearVisitaGuiada();
+        this.visitasGuiadas = controles.crearControlVisitaGuiada();
         this.animales = controles.crearControlAnimales();
         this.especies = controles.crearControlEspecies();
+        this.quejas = controles.crearControlQuejas();
     }
     
     @Override
@@ -148,6 +152,11 @@ public class FacadeNegocio implements INegocio{
     @Override
     public boolean eliminarAnimal(Animal animal) {
         return animales.eliminarAnimal(animal);
+    }
+
+    @Override
+    public boolean guardarQueja(Queja queja) {
+        return quejas.guardarQueja(queja);
     }
 
 }

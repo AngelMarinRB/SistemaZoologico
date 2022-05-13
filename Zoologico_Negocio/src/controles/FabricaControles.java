@@ -92,7 +92,15 @@ public class FabricaControles {
      * Construye y devuelve un objeto de tipo ControlVisitasGuiadas
      * @return ControlVisitasGuiadas
      */
-    public ControlVisitasGuiadas crearVisitaGuiada(){
+    public ControlVisitasGuiadas crearControlVisitaGuiada(){
         return new ControlVisitasGuiadas(datos);
+    }
+    
+    /**
+     * Construye y devuelve un objeto de tipo ControlQuejas
+     * @return ControlQuejas
+     */
+    public ControlQuejas crearControlQuejas(){
+        return new ControlQuejas(datos);
     }
 }

@@ -97,7 +97,7 @@ public class DiasHorario {
      */
     @Override
     public String toString() {
-        return "DiasHorario{" + "dia=" + dia + ", horas=" + horas + '}';
+        return  "Dia=" + dia + ", horas=" + horas ;
     }
     
     

@@ -8,6 +8,7 @@ import daos.EspeciesDAO;
 import daos.FabricaDAO;
 import daos.HabitatsDAO;
 import daos.ItinerariosDAO;
+import daos.QuejasDAO;
 import daos.VegetacionesDAO;
 import daos.VisitasGuiadasDAO;
 import daos.ZonasDAO;
@@ -19,6 +20,7 @@ import entidades.Cuidador;
 import entidades.Especie;
 import entidades.Habitat;
 import entidades.Itinerario;
+import entidades.Queja;
 import entidades.Vegetacion;
 import entidades.VisitaGuiada;
 import entidades.Zona;
@@ -43,6 +45,7 @@ public class FacadeDatos implements IDatos{
     private AnimalesDAO animales;
     private EspeciesDAO especies;
     private VisitasGuiadasDAO visitasGuiadas;
+    private QuejasDAO quejas;
     
     public FacadeDatos(){
         fabrica = new FabricaDAO();
@@ -58,8 +61,20 @@ public class FacadeDatos implements IDatos{
         this.animales = fabrica.crearAnimalesDAO();
         this.especies = fabrica.crearEspeciesDAO();
         this.visitasGuiadas = fabrica.crearVisitaGuiadaDAO();
+        this.quejas= fabrica.crearQuejasDAO();
     }
 
+    @Override
+    public boolean guardarQueja(Queja queja){
+        try{
+            quejas.guardar(queja);
+            return true;
+        }catch(Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+    
     
     @Override
     public List<VisitaGuiada> consultarMes(){

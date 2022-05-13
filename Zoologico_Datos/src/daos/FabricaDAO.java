@@ -27,6 +27,14 @@ public class FabricaDAO {
         return new HabitatsDAO(conexion);
     }
     
+     /**
+     * Crea y devuelve un objeto QuejasDAO.
+     * @return QuejasDAO.
+     */
+    public QuejasDAO crearQuejasDAO(){
+    return new QuejasDAO(conexion);
+    }
+    
     /**
      * Crea y devuelve un objeto VegetacionesDAO.
      * @return VegetacionesDAO.

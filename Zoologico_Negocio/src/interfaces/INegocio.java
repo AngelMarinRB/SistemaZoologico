@@ -8,6 +8,7 @@ import entidades.Cuidador;
 import entidades.Especie;
 import entidades.Habitat;
 import entidades.Itinerario;
+import entidades.Queja;
 import entidades.Vegetacion;
 import entidades.VisitaGuiada;
 import entidades.Zona;
@@ -26,6 +27,13 @@ public interface INegocio {
      * @return True si se guardó, False en caso contrairo.
      */
     boolean guardarHabitat(Habitat habitat);
+    
+     /**
+     * Almacena la queja dada como parámetro.
+     * @param queja Queja a guardar.
+     * @return True si se guardó, False en caso contrairo.
+     */
+    boolean guardarQueja(Queja queja);
     
     /**
      * Verifica si ya se encuentra registrado un habitat con el mismo nombre.
