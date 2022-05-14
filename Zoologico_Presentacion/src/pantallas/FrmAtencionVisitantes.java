@@ -381,7 +381,7 @@ public void guardarQueja(){
     }
     
     /**
-     * metodo que veriifca el email en su formato
+     * metodo que llena la tabla con la informacion del itinerario al cual se le hará una queja
      *  @param  itinerarios itinerarios de la base de datos que llenara en la tabla
      */
     public void llenarTablaNombreItinerario(List <VisitaGuiada> itinerarios){
