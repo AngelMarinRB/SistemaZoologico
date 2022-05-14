@@ -1,6 +1,15 @@
 package pantallas;
 
+import entidades.Queja;
+import entidades.VisitaGuiada;
+import fachada.FacadeNegocio;
 import interfaces.INegocio;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,7 +22,11 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
      */
     public FrmAtencionVisitantes() {
         initComponents();
+<<<<<<< HEAD
         this.setName("Registro Quejas");
+=======
+        this.negocio = new FacadeNegocio();
+>>>>>>> b734c375591426acd5960a54a3d306cc4790e239
     }
     
     private INegocio negocio;
@@ -32,17 +45,9 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         pnlEncabezado = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         btnMenu = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        tblItinerarios = new javax.swing.JScrollPane();
-        tblNombreItinerario = new javax.swing.JTable();
+        pnlItinerarios = new javax.swing.JScrollPane();
+        tbltinerario = new javax.swing.JTable();
         lblItinerario = new javax.swing.JLabel();
-        lblVisitas = new javax.swing.JLabel();
-        tblDetallesVisita = new javax.swing.JScrollPane();
-        tblVisitas = new javax.swing.JTable();
-        lblGuia = new javax.swing.JLabel();
-        txtGuia = new javax.swing.JTextField();
-        pnlHoras = new javax.swing.JScrollPane();
-        tblHoras = new javax.swing.JTable();
         lblQueja = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         campoQueja = new javax.swing.JTextArea();
@@ -97,21 +102,19 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        tblNombreItinerario.setModel(new javax.swing.table.DefaultTableModel(
+        tbltinerario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre"
+                "Nombre", "Horario", "Duracion", "Guia", "Fecha"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -122,63 +125,16 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblItinerarios.setViewportView(tblNombreItinerario);
+        tbltinerario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbltinerarioMousePressed(evt);
+            }
+        });
+        pnlItinerarios.setViewportView(tbltinerario);
 
         lblItinerario.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblItinerario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblItinerario.setText("Itinerario");
-
-        lblVisitas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblVisitas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblVisitas.setText("Visitas");
-
-        tblVisitas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Fecha"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblDetallesVisita.setViewportView(tblVisitas);
-
-        lblGuia.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblGuia.setText("Guía");
-
-        txtGuia.setEditable(false);
-
-        tblHoras.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Horas"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        pnlHoras.setViewportView(tblHoras);
 
         lblQueja.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblQueja.setText("Escribe tu queja aquí");
@@ -194,13 +150,36 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         lblEmail.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblEmail.setText("E-mail: (*)");
 
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
+            }
+        });
+
         lblTelefono.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblTelefono.setText("Telefono: (*)");
+
+        txtTelefono.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyReleased(evt);
+            }
+        });
 
         lblNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblNombre.setText("Nombre: (op)");
 
         btnEnviarQueja.setText("Enviar queja");
+        btnEnviarQueja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarQuejaActionPerformed(evt);
+            }
+        });
 
         btnRegistrarQueja.setText("Registrar queja");
         btnRegistrarQueja.addActionListener(new java.awt.event.ActionListener() {
@@ -214,30 +193,6 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         PnlAtencionVisitantesLayout.setHorizontalGroup(
             PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
-                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addComponent(lblItinerario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(tblItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PnlAtencionVisitantesLayout.createSequentialGroup()
-                        .addGap(179, 179, 179)
-                        .addComponent(lblVisitas, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(192, 192, 192))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PnlAtencionVisitantesLayout.createSequentialGroup()
-                        .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtGuia, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblGuia))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tblDetallesVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17))
-            .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
@@ -246,104 +201,95 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                     .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblQueja)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
+                                .addComponent(lblQueja)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1))
+                        .addGap(18, 18, 18)
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblDATOS)
                             .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
-                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblTelefono)
-                                    .addComponent(lblEmail)
-                                    .addComponent(lblNombre))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtEmail)
-                                    .addComponent(txtTelefono)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlAtencionVisitantesLayout.createSequentialGroup()
+                                .addGap(32, 32, 32)
                                 .addComponent(btnRegistrarQueja)
-                                .addGap(66, 66, 66)
-                                .addComponent(btnEnviarQueja)))
-                        .addGap(63, 63, 63))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEnviarQueja))
+                            .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
+                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNombre)
+                                    .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addComponent(lblEmail))
+                                    .addComponent(lblTelefono))
+                                .addGap(18, 18, 18)
+                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                                    .addComponent(txtTelefono)
+                                    .addComponent(txtEmail))))
+                        .addGap(57, 57, 57))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlAtencionVisitantesLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(pnlEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
+                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(pnlItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
+                        .addGap(422, 422, 422)
+                        .addComponent(lblItinerario, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PnlAtencionVisitantesLayout.setVerticalGroup(
             PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
                 .addComponent(pnlEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
-                        .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
-                                .addComponent(lblItinerario)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tblItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
-                                .addComponent(lblVisitas, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tblDetallesVisita, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
-                                        .addComponent(lblGuia)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtGuia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(pnlHoras, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))))
-                        .addGap(10, 10, 10)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
+                .addComponent(lblItinerario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
                         .addComponent(lblQueja)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
                         .addComponent(lblDATOS)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(24, 24, 24)
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblEmail)
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTelefono)
                             .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombre)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEnviarQueja)
-                            .addComponent(btnRegistrarQueja))
-                        .addGap(38, 38, 38))))
+                            .addComponent(btnRegistrarQueja)
+                            .addComponent(btnEnviarQueja))))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlAtencionVisitantesLayout = new javax.swing.GroupLayout(pnlAtencionVisitantes);
         pnlAtencionVisitantes.setLayout(pnlAtencionVisitantesLayout);
         pnlAtencionVisitantesLayout.setHorizontalGroup(
             pnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1026, Short.MAX_VALUE)
-            .addGroup(pnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlAtencionVisitantesLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(PnlAtencionVisitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 995, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAtencionVisitantesLayout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addComponent(PnlAtencionVisitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 995, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pnlAtencionVisitantesLayout.setVerticalGroup(
             pnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 830, Short.MAX_VALUE)
-            .addGroup(pnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlAtencionVisitantesLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(PnlAtencionVisitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAtencionVisitantesLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(PnlAtencionVisitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -366,16 +312,101 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     //Metodos
-    public void consultarVisitasGuiadasMes(){
-        negocio.consultarMes();
+    
+    /**
+     * metodo que veriifca el email en su formato
+     * @return regresa regresa la lista de las visitas que se realizaron en el ultimo mes
+     */
+    public List<VisitaGuiada> consultarVisitasGuiadasMes(){
+       return negocio.consultarMes();
     }
     
+    /**
+     * metodo que veriifca el email en su formato
+     * @return regresa la informacion 
+     */
+public String getItinerarioSeleccionado(){
+String itinerarioSeleccionado ="";
+int indiceFila = this.tbltinerario.getSelectedRow();
+if (indiceFila != -1) {
+            int indiceColumnaNombre = 0;
+            int indiceColumnaGuia = 3;
+            int indiceColumnaFecha = 4;
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.tbltinerario.getModel();
+            String nombre = (String) modeloTabla.getValueAt(indiceFila, indiceColumnaNombre);
+            String guia = (String) modeloTabla.getValueAt(indiceFila, indiceColumnaGuia);
+            String fecha = (String) modeloTabla.getValueAt(indiceFila, indiceColumnaFecha);
+            itinerarioSeleccionado = nombre+ ", "+guia+", "+fecha; 
+            
+            return itinerarioSeleccionado;
+        } else {
+            return null;
+        }
+}
+
+/**
+     * metodo que construye y guarda una queja
+     */
+public void guardarQueja(){
+    Queja queja = new Queja();
+    String itinerario = this.getItinerarioSeleccionado();
+    String textoQueja = this.campoQueja.getText();
+    String email = this.txtEmail.getText();
+    String numeroTelefonico = this.txtTelefono.getText();
+    String nombre = this.txtNombre.getText();
+    
+    queja.setItinerario(itinerario);
+    queja.setQueja(textoQueja);
+    queja.setEmail(email);
+    queja.setNumeroTelefonico(numeroTelefonico);
+    queja.setNombre(nombre);
+    
+    boolean seGuardo =negocio.guardarQueja(queja);
+    if(seGuardo){
+        JOptionPane.showMessageDialog(this, "La queja se a enviado con exito, sera leida y atendida a la brevedad.", "información", JOptionPane.INFORMATION_MESSAGE);
+        this.limpiarFormulario();
+    }
+}
+
+    /**
+     * metodo que limpia el formulario
+     */
     public void limpiarFormulario(){
         this.campoQueja.setText("");
         this.txtEmail.setText("");
-        this.txtGuia.setText("");
         this.txtNombre.setText("");
         this.txtTelefono.setText("");
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tbltinerario.getModel();
+         modeloTabla.setRowCount(0);
+    }
+    
+    /**
+     * metodo que llena la tabla con la informacion del itinerario al cual se le hará una queja
+     *  @param  itinerarios itinerarios de la base de datos que llenara en la tabla
+     */
+    public void llenarTablaNombreItinerario(List <VisitaGuiada> itinerarios){
+        
+        List<VisitaGuiada> listaVisitas = itinerarios;
+        
+         DefaultTableModel modeloTabla = (DefaultTableModel) this.tbltinerario.getModel();
+         modeloTabla.setRowCount(0);
+         
+         listaVisitas.forEach(visita->{
+          
+         Date fechaVisita = visita.getInicio();
+         int anio = fechaVisita.getYear()+1900;
+         int mes = fechaVisita.getMonth()+1;
+         int dia= fechaVisita.getDate();    
+         String fechaFormato = anio+"/"+mes+"/"+dia;
+             
+         Object[] fila = new Object[5];
+         fila[0] = visita.getItinerario().get(0).getNombre();
+         fila[1] = visita.getItinerario().get(0).getDiasHorario();
+         fila[2] = visita.getItinerario().get(0).getDuracion();
+         fila[3] = visita.getGuia().getNombre();
+         fila[4] = fechaFormato;
+         modeloTabla.addRow(fila);
+         });
     }
     
     
@@ -390,9 +421,86 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
     
     private void btnRegistrarQuejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarQuejaActionPerformed
         // TODO add your handling code here:
-        this.consultarVisitasGuiadasMes();
+        this.llenarTablaNombreItinerario(this.consultarVisitasGuiadasMes());
     }//GEN-LAST:event_btnRegistrarQuejaActionPerformed
 
+    private void tbltinerarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbltinerarioMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbltinerarioMousePressed
+
+    private void btnEnviarQuejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarQuejaActionPerformed
+        // TODO add your handling code here:
+        if(verificarFormulario())
+        this.guardarQueja();
+      
+    }//GEN-LAST:event_btnEnviarQuejaActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        
+    }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoKeyReleased
+
+    /**
+     * metodo que veriifca los campos de los formularios 
+     * @return regresa verdadero en caso que todos los campos sean correctos
+     */
+    public boolean verificarFormulario(){
+        
+        if(this.txtEmail.getText().isEmpty() || this.txtTelefono.getText().isEmpty() || this.tbltinerario.getSelectedRow()<=-1){
+            JOptionPane.showMessageDialog(this, "Favor de llenar los campos oblogatorios (E-mail, correo electronico, queja) y de seleccionar un itinerario.", "información", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        if(!verificarEmail(this.txtEmail.getText())){
+        this.mostrarError("Favor de escribir su correo en el formato: correoejemplo@ejemplo.com.");
+            return false;
+        } 
+        if(!verificarTelefono(this.txtTelefono.getText())){
+            this.mostrarError("Favor escribir su numero en el formato ### ### ####");
+            return false;
+        }
+        return true;
+    }
+    
+        /**
+     * metodo que muestra un error con el string enviado
+     * @param mensaje mensaje a mostrar
+     */
+    private void mostrarError(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje , "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+     /**
+     * metodo que veriifca el email en su formato
+     *  @param  correo  correo por validar
+     * @return regresa verdadero en caso de encontrar coincidencia con  el formato especificado
+     */
+    public boolean verificarEmail(String correo){
+    Pattern patron = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+    
+    Matcher mat = patron.matcher(correo);
+    return mat.find();
+    }
+    
+     /**
+     * metodo que veriifca el email en su formato
+     *  @param  telefono  telefono por validar
+     * @return regresa verdadero en caso de encontrar coincidencia con  el formato especificado
+     */
+    public boolean verificarTelefono(String telefono){
+    Pattern patron = Pattern.compile("^[\\d]{3}[\\s][\\d]{3}[\\s][\\d]{4}");
+   
+    Matcher mat = patron.matcher(telefono);
+    return mat.find();
+    
+    }
     /**
      * @param args the command line arguments
      */
@@ -405,27 +513,19 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistrarQueja;
     private javax.swing.JTextArea campoQueja;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblDATOS;
     private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblGuia;
     private javax.swing.JLabel lblItinerario;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblQueja;
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblVisitas;
     private javax.swing.JPanel pnlAtencionVisitantes;
     private javax.swing.JPanel pnlEncabezado;
-    private javax.swing.JScrollPane pnlHoras;
-    private javax.swing.JScrollPane tblDetallesVisita;
-    private javax.swing.JTable tblHoras;
-    private javax.swing.JScrollPane tblItinerarios;
-    private javax.swing.JTable tblNombreItinerario;
-    private javax.swing.JTable tblVisitas;
+    private javax.swing.JScrollPane pnlItinerarios;
+    private javax.swing.JTable tbltinerario;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtGuia;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables

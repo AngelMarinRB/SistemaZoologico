@@ -54,7 +54,7 @@ public class VisitasGuiadasDAO {
         Date fechaActual = new Date();
         fechaActual.setDate(1);
         
-        Bson query = gte("inicio.inicio", fechaActual);
+        Bson query = gte("inicio", fechaActual);
         FindIterable<VisitaGuiada> iterable = coleccion.find(query);
         
         List<VisitaGuiada> lista = new LinkedList<>();

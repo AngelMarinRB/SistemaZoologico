@@ -8,6 +8,7 @@ import entidades.Cuidador;
 import entidades.Especie;
 import entidades.Habitat;
 import entidades.Itinerario;
+import entidades.Queja;
 import entidades.Vegetacion;
 import entidades.VisitaGuiada;
 import entidades.Zona;
@@ -26,6 +27,13 @@ public interface IDatos {
      * @return True si se almacena, False en caso contrario.
      */
     boolean guardarHabitat(Habitat habitat);
+    
+    /**
+     * Almacena la queja dado como parámetro.
+     * @param queja Queja a guardar.
+     * @return True si se almacena, False en caso contrario.
+     */
+    boolean guardarQueja(Queja queja);
     
     /**
      * Devuelve el habitat que coincida con el nombre dado como parámetro

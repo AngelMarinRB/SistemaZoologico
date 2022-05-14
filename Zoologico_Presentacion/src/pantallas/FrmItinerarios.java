@@ -413,7 +413,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
         itinerario.setRecorrido(this.buscarZonasSeleccionadas());
         negocio.guardarItinerario(itinerario);
         
-        JOptionPane.showMessageDialog(this,"Itinerario guardado con exito","informacion",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this,"Itinerario guardado con exito","información",JOptionPane.INFORMATION_MESSAGE);
         
         this.reiniciarFrm();
     }
