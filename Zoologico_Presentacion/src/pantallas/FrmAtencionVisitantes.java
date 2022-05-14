@@ -8,13 +8,12 @@ import entidades.Queja;
 import entidades.VisitaGuiada;
 import fachada.FacadeNegocio;
 import interfaces.INegocio;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.bson.types.ObjectId;
-import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
  *
@@ -151,8 +150,26 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         lblEmail.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblEmail.setText("E-mail: (*)");
 
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
+            }
+        });
+
         lblTelefono.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblTelefono.setText("Telefono: (*)");
+
+        txtTelefono.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyReleased(evt);
+            }
+        });
 
         lblNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblNombre.setText("Nombre: (op)");
@@ -192,20 +209,23 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblDATOS)
                             .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
-                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblTelefono)
-                                    .addComponent(lblEmail)
-                                    .addComponent(lblNombre))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtEmail)
-                                    .addComponent(txtTelefono)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlAtencionVisitantesLayout.createSequentialGroup()
+                                .addGap(32, 32, 32)
                                 .addComponent(btnRegistrarQueja)
-                                .addGap(66, 66, 66)
-                                .addComponent(btnEnviarQueja)))
-                        .addGap(63, 63, 63))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEnviarQueja))
+                            .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
+                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNombre)
+                                    .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addComponent(lblEmail))
+                                    .addComponent(lblTelefono))
+                                .addGap(18, 18, 18)
+                                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                                    .addComponent(txtTelefono)
+                                    .addComponent(txtEmail))))
+                        .addGap(57, 57, 57))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlAtencionVisitantesLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(pnlEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -227,34 +247,33 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                 .addComponent(lblItinerario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlItinerarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
                         .addComponent(lblQueja)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
                         .addComponent(lblDATOS)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(24, 24, 24)
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblEmail)
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTelefono)
                             .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombre)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEnviarQueja)
-                            .addComponent(btnRegistrarQueja))
-                        .addGap(38, 38, 38))))
+                            .addComponent(btnRegistrarQueja)
+                            .addComponent(btnEnviarQueja))))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlAtencionVisitantesLayout = new javax.swing.GroupLayout(pnlAtencionVisitantes);
@@ -293,10 +312,19 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     //Metodos
+    
+    /**
+     * metodo que veriifca el email en su formato
+     * @return regresa regresa la lista de las visitas que se realizaron en el ultimo mes
+     */
     public List<VisitaGuiada> consultarVisitasGuiadasMes(){
        return negocio.consultarMes();
     }
     
+    /**
+     * metodo que veriifca el email en su formato
+     * @return regresa la informacion 
+     */
 public String getItinerarioSeleccionado(){
 String itinerarioSeleccionado ="";
 int indiceFila = this.tbltinerario.getSelectedRow();
@@ -316,6 +344,9 @@ if (indiceFila != -1) {
         }
 }
 
+/**
+     * metodo que construye y guarda una queja
+     */
 public void guardarQueja(){
     Queja queja = new Queja();
     String itinerario = this.getItinerarioSeleccionado();
@@ -337,7 +368,9 @@ public void guardarQueja(){
     }
 }
 
-    
+    /**
+     * metodo que limpia el formulario
+     */
     public void limpiarFormulario(){
         this.campoQueja.setText("");
         this.txtEmail.setText("");
@@ -347,6 +380,10 @@ public void guardarQueja(){
          modeloTabla.setRowCount(0);
     }
     
+    /**
+     * metodo que veriifca el email en su formato
+     *  @param  itinerarios itinerarios de la base de datos que llenara en la tabla
+     */
     public void llenarTablaNombreItinerario(List <VisitaGuiada> itinerarios){
         
         List<VisitaGuiada> listaVisitas = itinerarios;
@@ -393,9 +430,77 @@ public void guardarQueja(){
 
     private void btnEnviarQuejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarQuejaActionPerformed
         // TODO add your handling code here:
+        if(verificarFormulario())
         this.guardarQueja();
+      
     }//GEN-LAST:event_btnEnviarQuejaActionPerformed
 
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        
+    }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void txtTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoKeyReleased
+
+    /**
+     * metodo que veriifca los campos de los formularios 
+     * @return regresa verdadero en caso que todos los campos sean correctos
+     */
+    public boolean verificarFormulario(){
+        
+        if(this.txtEmail.getText().isEmpty() || this.txtTelefono.getText().isEmpty() || this.tbltinerario.getSelectedRow()<=-1){
+            JOptionPane.showMessageDialog(this, "Favor de llenar los campos oblogatorios (E-mail, correo electronico, queja) y de seleccionar un itinerario.", "información", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        if(!verificarEmail(this.txtEmail.getText())){
+        this.mostrarError("Favor de escribir su correo en el formato: correoejemplo@ejemplo.com.");
+            return false;
+        } 
+        if(!verificarTelefono(this.txtTelefono.getText())){
+            this.mostrarError("Favor escribir su numero en el formato ### ### ####");
+            return false;
+        }
+        return true;
+    }
+    
+        /**
+     * metodo que muestra un error con el string enviado
+     * @param mensaje mensaje a mostrar
+     */
+    private void mostrarError(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje , "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+     /**
+     * metodo que veriifca el email en su formato
+     *  @param  correo  correo por validar
+     * @return regresa verdadero en caso de encontrar coincidencia con  el formato especificado
+     */
+    public boolean verificarEmail(String correo){
+    Pattern patron = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+    
+    Matcher mat = patron.matcher(correo);
+    return mat.find();
+    }
+    
+     /**
+     * metodo que veriifca el email en su formato
+     *  @param  telefono  telefono por validar
+     * @return regresa verdadero en caso de encontrar coincidencia con  el formato especificado
+     */
+    public boolean verificarTelefono(String telefono){
+    Pattern patron = Pattern.compile("^[\\d]{3}[\\s][\\d]{3}[\\s][\\d]{4}");
+   
+    Matcher mat = patron.matcher(telefono);
+    return mat.find();
+    
+    }
     /**
      * @param args the command line arguments
      */
