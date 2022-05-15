@@ -4,6 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import entidades.Queja;
 import interfaces.IConexionBD;
+import interfaces.IQuejasDAO;
 
 
 /**
@@ -11,7 +12,7 @@ import interfaces.IConexionBD;
  * 
  * @author alanf
  */
-public class QuejasDAO {
+public class QuejasDAO implements IQuejasDAO{
     private IConexionBD conexion;
     private MongoDatabase baseDatos;
     
@@ -30,7 +31,8 @@ public class QuejasDAO {
      * 
      * @return MongoCollection.
      */
-    private MongoCollection<Queja> getColeccion(){
+    @Override
+    public MongoCollection<Queja> getColeccion(){
         return this.baseDatos.getCollection("quejas", Queja.class);
     } 
    
@@ -40,6 +42,7 @@ public class QuejasDAO {
      * 
      * @param queja Queja a guardar. 
      */
+    @Override
     public void guardar(Queja queja){
         
         MongoCollection<Queja> coleccion = this.getColeccion();

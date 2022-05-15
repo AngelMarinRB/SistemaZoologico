@@ -8,6 +8,7 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.gte;
 import entidades.VisitaGuiada;
 import interfaces.IConexionBD;
+import interfaces.IVisitasGuiadasDAO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,7 +25,7 @@ import org.bson.conversions.Bson;
  * 
  * @author alanf
  */
-public class VisitasGuiadasDAO {
+public class VisitasGuiadasDAO implements IVisitasGuiadasDAO{
     private IConexionBD conexion;
     private MongoDatabase baseDatos;
     
@@ -43,10 +44,18 @@ public class VisitasGuiadasDAO {
      * 
      * @return MongoCollection.
      */
-    private MongoCollection<VisitaGuiada> getColeccion(){
+    @Override
+    public MongoCollection<VisitaGuiada> getColeccion(){
         return this.baseDatos.getCollection("visitasGuiadas", VisitaGuiada.class);
     }
     
+    /**
+     * Devuelve los itinerarios de las visitas guiadas del ultimo mes
+     * 
+     * @return lista de itinerarios de las visitas guiadas del ultimo mes
+     */
+    
+    @Override
     public List<VisitaGuiada> consultarMes(){
 
         MongoCollection<VisitaGuiada> coleccion = this.getColeccion();

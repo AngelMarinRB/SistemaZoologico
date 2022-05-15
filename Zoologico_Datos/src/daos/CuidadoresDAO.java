@@ -9,8 +9,8 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import entidades.CargoEspecie;
 import entidades.Cuidador;
-import entidades.Especie;
 import interfaces.IConexionBD;
+import interfaces.ICuidadoresDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -21,7 +21,7 @@ import org.bson.conversions.Bson;
  * 
  * @author Marin
  */
-public class CuidadoresDAO {
+public class CuidadoresDAO implements ICuidadoresDAO{
     
     private IConexionBD conexion;
     private MongoDatabase baseDatos;
@@ -36,7 +36,8 @@ public class CuidadoresDAO {
      * 
      * @return MongoCollection.
      */
-    private MongoCollection<Cuidador> getColeccion(){
+    @Override
+    public MongoCollection<Cuidador> getColeccion(){
         return this.baseDatos.getCollection("cuidadores", Cuidador.class);
     }
     
@@ -46,6 +47,7 @@ public class CuidadoresDAO {
      * @param fichaCargo Ficha de cargo a agregar.
      * @return True si se agregó, False en caso contrario.
      */
+    @Override
     public boolean agregarFichaCargo(Cuidador cuidador, CargoEspecie fichaCargo) {
 
         //Document query = new Document("$eq", new Document().append("_id", cuidador.getId()));
@@ -68,6 +70,7 @@ public class CuidadoresDAO {
      * Devuelve una lista de todos los cuidadores registrados.
      * @return Lista de cuidadores.
      */
+    @Override
     public List<Cuidador> consultarTodos(){
         
         FindIterable<Cuidador> registros = this.getColeccion().find();

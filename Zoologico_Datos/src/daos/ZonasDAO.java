@@ -7,9 +7,9 @@ package daos;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import entidades.Clima;
 import entidades.Zona;
 import interfaces.IConexionBD;
+import interfaces.IZonasDAO;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -18,7 +18,7 @@ import java.util.function.Consumer;
  * DAO del objeto zona
  * @author ricardosn saavedra
  */
-public class ZonasDAO {
+public class ZonasDAO implements IZonasDAO{
     private IConexionBD conexion;
     private MongoDatabase baseDatos;
 
@@ -37,7 +37,8 @@ public class ZonasDAO {
      * 
      * @return MongoCollection.
      */
-    private MongoCollection<Zona> getColeccion(){
+    @Override
+    public MongoCollection<Zona> getColeccion(){
         return this.baseDatos.getCollection("zonas", Zona.class);
     }
     
@@ -45,6 +46,7 @@ public class ZonasDAO {
      * Devuelve una lista de todas las zonas registradas en la base de datos.
      * @return Zonas.
      */
+    @Override
     public List<Zona> consultarTodos(){
         
         MongoCollection<Zona> coleccion = this.getColeccion();

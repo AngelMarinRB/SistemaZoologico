@@ -11,13 +11,14 @@ import java.util.List;
 import java.util.function.Consumer;
 import org.bson.conversions.Bson;
 import static com.mongodb.client.model.Filters.eq;
+import interfaces.IAnimalesDAO;
 
 /**
  * Clase de acceso a datos para los animales del zoológico
  * 
  * @author Marin
  */
-public class AnimalesDAO {
+public class AnimalesDAO implements IAnimalesDAO{
     
     private IConexionBD conexion;
     private MongoDatabase baseDatos;
@@ -37,7 +38,8 @@ public class AnimalesDAO {
      * 
      * @return MongoCollection.
      */
-    private MongoCollection<Animal> getColeccion(){
+    @Override
+    public MongoCollection<Animal> getColeccion(){
         return this.baseDatos.getCollection("animales", Animal.class);
     }
     
@@ -47,6 +49,7 @@ public class AnimalesDAO {
      * @param animal Animal a guardar.
      * @return True si se guardó, False en caso contrario.
      */
+    @Override
     public boolean guardar(Animal animal){
         try {
             MongoCollection<Animal> coleccion = this.getColeccion();
@@ -64,6 +67,7 @@ public class AnimalesDAO {
      * @param animal Animal a eliminar.
      * @return True si se eliminó, False en caso contrario.
      */
+    @Override
     public boolean eliminar(Animal animal){
         try {
             MongoCollection<Animal> coleccion = this.getColeccion();
@@ -83,6 +87,7 @@ public class AnimalesDAO {
      * @param especie Especie a buscar.
      * @return Lista de Animales de la misma Especie.
      */
+    @Override
     public List<Animal> consultarPorEspecie(Especie especie){
         
         MongoCollection<Animal> coleccion = this.getColeccion();

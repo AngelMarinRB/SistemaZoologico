@@ -5,6 +5,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import entidades.Vegetacion;
 import interfaces.IConexionBD;
+import interfaces.IVegetacionesDAO;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
  * 
  * @author Marin
  */
-public class VegetacionesDAO {
+public class VegetacionesDAO implements IVegetacionesDAO{
     
     private IConexionBD conexion;
     private MongoDatabase baseDatos;
@@ -33,7 +34,8 @@ public class VegetacionesDAO {
      * 
      * @return MongoCollection.
      */
-    private MongoCollection<Vegetacion> getColeccion(){
+    @Override
+    public MongoCollection<Vegetacion> getColeccion(){
         return this.baseDatos.getCollection("vegetaciones", Vegetacion.class);
     }
     
@@ -41,6 +43,7 @@ public class VegetacionesDAO {
      * Devuelve una lista de todos los tipos de vegetacion registrados en la base de datos.
      * @return Vegetaciones.
      */
+    @Override
     public List<Vegetacion> consultarTodos(){
         
         MongoCollection<Vegetacion> coleccion = this.getColeccion();

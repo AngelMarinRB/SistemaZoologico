@@ -1,6 +1,7 @@
 package daos;
 
 import entidades.Continente;
+import interfaces.IContinentesDAO;
 import java.util.ArrayList;
 import java.util.List;
 import utils.Continentes;
@@ -10,7 +11,7 @@ import utils.Continentes;
  * 
  * @author Marin
  */
-public class ContinentesDAO {
+public class ContinentesDAO implements IContinentesDAO{
 
     /**
      * Crea la DAO para los continentes
@@ -22,6 +23,7 @@ public class ContinentesDAO {
      * Devuelve una lista de todos los continentes registrados.
      * @return Continentes.
      */
+    @Override
     public List<Continente> consultarTodos(){
 
         List<Continente> continentes = new ArrayList<>();

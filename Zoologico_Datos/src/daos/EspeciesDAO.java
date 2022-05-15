@@ -5,8 +5,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.regex;
 import entidades.Especie;
-import entidades.Habitat;
 import interfaces.IConexionBD;
+import interfaces.IEspeciesDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -16,7 +16,7 @@ import java.util.function.Consumer;
  * 
  * @author Marin
  */
-public class EspeciesDAO {
+public class EspeciesDAO implements IEspeciesDAO{
     
     private IConexionBD conexion;
     private MongoDatabase baseDatos;
@@ -36,7 +36,8 @@ public class EspeciesDAO {
      * 
      * @return MongoCollection.
      */
-    private MongoCollection<Especie> getColeccion(){
+    @Override
+    public MongoCollection<Especie> getColeccion(){
         return this.baseDatos.getCollection("especies", Especie.class);
     }
     
@@ -45,6 +46,7 @@ public class EspeciesDAO {
      * @param especie Especie a gaurdar
      * @return True si se guardó, False en caso contrario.
      */
+    @Override
     public boolean guardar(Especie especie) {
 
         try {
@@ -63,6 +65,7 @@ public class EspeciesDAO {
      * @param nombre Nombre de Especie a buscar.
      * @return Especie si encuntra una, Null si no existe.
      */
+    @Override
     public Especie consultarNombre(String nombre){
         
         FindIterable<Especie> registros = this.getColeccion().find(regex("nombreVulgar" ,"^" + nombre + "$" ,"i"));
@@ -78,6 +81,7 @@ public class EspeciesDAO {
      * @param nombre Nombre científico de la especie a buscar.
      * @return Especie si enceuntra una, Null si no existe.
      */
+    @Override
     public Especie consultarNombreCientifico(String nombre){
         
         FindIterable<Especie> registros = this.getColeccion().find(regex("nombreCientifico" ,"^" + nombre + "$" ,"i"));
@@ -91,6 +95,7 @@ public class EspeciesDAO {
      * Devuelve una lista de todas las especies registradas en la base de datos.
      * @return Lista de especies.
      */
+    @Override
     public List<Especie> consultarTodos(){
         
         FindIterable<Especie> registros = this.getColeccion().find();

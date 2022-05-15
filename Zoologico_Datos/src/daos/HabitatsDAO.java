@@ -6,6 +6,7 @@ import com.mongodb.client.MongoDatabase;
 import entidades.Habitat;
 import interfaces.IConexionBD;
 import static com.mongodb.client.model.Filters.regex;
+import interfaces.IHabitatsDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -16,7 +17,7 @@ import java.util.function.Consumer;
  * 
  * @author Marin
  */
-public class HabitatsDAO {
+public class HabitatsDAO implements IHabitatsDAO{
     
     private IConexionBD conexion;
     private MongoDatabase baseDatos;
@@ -31,7 +32,8 @@ public class HabitatsDAO {
      * 
      * @return MongoCollection.
      */
-    private MongoCollection<Habitat> getColeccion(){
+    @Override
+    public MongoCollection<Habitat> getColeccion(){
         return this.baseDatos.getCollection("habitats", Habitat.class);
     }
     
@@ -39,7 +41,9 @@ public class HabitatsDAO {
      * Almacena dentro de la base de datos el habitat dado como parámetro.
      * 
      * @param habitat Habitat a guardar. 
+     * @return  regresa verdadero si puede guardar el habitat
      */
+    @Override
     public boolean guardar(Habitat habitat) {
         try {
             MongoCollection<Habitat> coleccion = this.getColeccion();
@@ -51,6 +55,12 @@ public class HabitatsDAO {
         }
     }
     
+    /**
+     * Consulta todos los habitats que se encuentran en la base de datos
+     * 
+     * @return  regresa la lista de los habitats encontrados
+     */
+    @Override
     public List<Habitat> consultarTodos(){
         
         FindIterable<Habitat> registros = this.getColeccion().find();
@@ -64,6 +74,13 @@ public class HabitatsDAO {
         return listaHabitats;
     }
     
+     /**
+     * Consulta todos los habitats por nombre que se encuentran en la base de datos
+     * 
+     * @param nombre nombre para buscar el habitat en la base de datos
+     * @return  regresa la lista de los habitats encontrados
+     */
+    @Override
     public Habitat consultarNombre(String nombre){
         
         FindIterable<Habitat> registros = this.getColeccion().find(regex("nombre" ,"^" + nombre + "$" ,"i"));
