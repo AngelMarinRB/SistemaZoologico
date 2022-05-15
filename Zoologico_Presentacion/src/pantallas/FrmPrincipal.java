@@ -24,12 +24,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         initNegocio();
+        this.setFrmName("Zoologico");
     }
     
+    
+    /**
+     * Establece el nombre del marco principal de la aplicación al dado como parámetro
+     * @param nombre Nombre del marco.
+     */
+    public void setFrmName(String nombre){
+        this.setName(nombre);
+    }
     /**
      * Inicializa el objeto negocio de tipo INegocio para suministrarlo a las interfaces.
      */
-    public void initNegocio(){
+    private void initNegocio(){
         try{
             negocio = new FacadeNegocio();
         }catch(Exception e){
@@ -178,6 +187,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         cl = (CardLayout)(pnlContenido.getLayout());
         cl.show(pnlContenido, "Habitats");
         
+        this.setName("Hábitats");
+        
     }//GEN-LAST:event_clickBtnRegistroHabitats
 
     /**
@@ -197,6 +208,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         
         cl = (CardLayout)(pnlContenido.getLayout());
         cl.show(pnlContenido, "Itinerarios");
+        
+        this.setName("Itinerarios");
     }//GEN-LAST:event_clickBtnRegistroItinerariosActionPerformed
 
     /**

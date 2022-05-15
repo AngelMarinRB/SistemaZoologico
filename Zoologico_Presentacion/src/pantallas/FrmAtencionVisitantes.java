@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package pantallas;
 
 import entidades.Queja;
@@ -26,7 +22,11 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
      */
     public FrmAtencionVisitantes() {
         initComponents();
+<<<<<<< HEAD
+        this.setName("Registro Quejas");
+=======
         this.negocio = new FacadeNegocio();
+>>>>>>> b734c375591426acd5960a54a3d306cc4790e239
     }
     
     private INegocio negocio;
