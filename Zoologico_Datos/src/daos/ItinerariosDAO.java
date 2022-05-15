@@ -10,12 +10,13 @@ import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.regex;
 import entidades.Itinerario;
 import interfaces.IConexionBD;
+import interfaces.IItinerariosDAO;
 
 /**
  * DAO del objeto itinerario
  * @author ricardosn saavedra
  */
-public class ItinerariosDAO {
+public class ItinerariosDAO implements IItinerariosDAO{
     private IConexionBD conexion;
     private MongoDatabase baseDatos;
 
@@ -29,7 +30,8 @@ public class ItinerariosDAO {
      * 
      * @return MongoCollection.
      */
-    private MongoCollection<Itinerario> getColeccion(){
+    @Override
+    public MongoCollection<Itinerario> getColeccion(){
         return this.baseDatos.getCollection("itinerarios", Itinerario.class);
     }
     
@@ -38,6 +40,7 @@ public class ItinerariosDAO {
      * 
      * @param itinerario itinerario a guardar. 
      */
+    @Override
     public void guardar(Itinerario itinerario){
         
         MongoCollection<Itinerario> coleccion = this.getColeccion();
@@ -49,6 +52,7 @@ public class ItinerariosDAO {
      * @param nombre nombre con el que comparar
      * @return itinerario
      */
+    @Override
     public Itinerario consultarNombre(String nombre){
         
         FindIterable<Itinerario> registros = this.getColeccion().find(regex("nombre" ,"^" + nombre + "$" ,"i"));

@@ -4,7 +4,9 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import entidades.Clima;
+import interfaces.IClimasDAO;
 import interfaces.IConexionBD;
+import interfaces.IContinentesDAO;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -14,7 +16,7 @@ import java.util.function.Consumer;
  * 
  * @author Marin
  */
-public class ClimasDAO {
+public class ClimasDAO implements IClimasDAO{
     
     private IConexionBD conexion;
     private MongoDatabase baseDatos;
@@ -34,7 +36,8 @@ public class ClimasDAO {
      * 
      * @return MongoCollection.
      */
-    private MongoCollection<Clima> getColeccion(){
+    @Override
+    public MongoCollection<Clima> getColeccion(){
         return this.baseDatos.getCollection("climas", Clima.class);
     }
     
@@ -42,6 +45,7 @@ public class ClimasDAO {
      * Devuelve una lista de todos los climas registrados en la base de datos.
      * @return Climas.
      */
+    @Override
     public List<Clima> consultarTodos(){
         
         MongoCollection<Clima> coleccion = this.getColeccion();
