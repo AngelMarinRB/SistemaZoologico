@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -30,12 +31,14 @@ public class FrmHabitats extends javax.swing.JPanel {
     private List<Clima> climas;
     private List<Vegetacion> vegetaciones;
     private List<Continente> continentes;
+    private JFrame parent;
     
     /**
      * Crea e inicializa los objetos dentro del formulario de Hábitats.
      * @param negocio Objeto Negocio para el acceso a datos.
      */
-    public FrmHabitats(INegocio negocio) {
+    public FrmHabitats(INegocio negocio, JFrame parent) {
+        this.parent = parent;
         initComponents();
         
         this.negocio = negocio;
@@ -927,6 +930,7 @@ public class FrmHabitats extends javax.swing.JPanel {
         
         CardLayout cl = (CardLayout)(frame.getLayout());
         cl.show(frame, "Menu");
+        parent.setTitle("Zoológico");
     }//GEN-LAST:event_btnMenuActionPerformed
 
 

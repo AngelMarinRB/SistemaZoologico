@@ -1,14 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package pantallas;
 
 import entidades.DiasHorario;
 import entidades.Itinerario;
-import entidades.Vegetacion;
 import entidades.Zona;
-import fachada.FacadeNegocio;
 import interfaces.INegocio;
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -16,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -42,16 +37,13 @@ public class FrmItinerarios extends javax.swing.JPanel {
      */
     private ArrayList<DiasHorario> dhArray;
     
+    private JFrame parent;
+    
     /**
-<<<<<<< HEAD
      * Crea e inicializa los objetos del formulario de Itinerarios.
      * @param negocio Objeto Negocio para el acceso a datos.
-=======
-     * constructor vacio que inicializa los componentes principales asi como
-     * negocio y carga recursos a usar
->>>>>>> 1572c4a47cb909feb63995ac2877be219bcecfb3
      */
-    public FrmItinerarios(INegocio negocio) {
+    public FrmItinerarios(INegocio negocio , JFrame parent) {
         initComponents();
         this.pnlHorario.setVisible(false);
         this.pnlZonas.setVisible(false);
@@ -63,6 +55,8 @@ public class FrmItinerarios extends javax.swing.JPanel {
         
         this.negocio = negocio;
         
+        this.parent = parent;
+        
         this.cargarRecursos();
         this.zonatblSeleccionada = new ArrayList<>();
     }
@@ -73,6 +67,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
     public void cargarRecursos(){
         zonas= negocio.consultarZonas();
     }
+    
      /**
       * metodo que busca el itinerario ingresado en la verificacion
       */
@@ -1231,15 +1226,15 @@ public class FrmItinerarios extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarMenuActionPerformed
-        // TODO add your handling code here:
-        
+
         this.reiniciarFrm();
-        
+
         Container frame = this.getParent().getParent().getParent();
-        
-        CardLayout cl = (CardLayout)(frame.getLayout());
+
+        CardLayout cl = (CardLayout) (frame.getLayout());
         cl.show(frame, "Menu");
         
+        parent.setTitle("Zoológico");
        
     }//GEN-LAST:event_btnRegresarMenuActionPerformed
 
@@ -1253,26 +1248,22 @@ public class FrmItinerarios extends javax.swing.JPanel {
     }//GEN-LAST:event_txtMiercolesActionPerformed
 
     private void btnBuscarItinerarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarItinerarioActionPerformed
-        // TODO add your handling code here:
         this.buscarItinerario();
         
     }//GEN-LAST:event_btnBuscarItinerarioActionPerformed
 
     private void tblZonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblZonasMouseClicked
-        // TODO add your handling code here:
         String nombre = this.getNombreZonaSeleccionado();
         this.agregarZonaSeleccionada(nombre);
         this.llenarTablaZonasSeleccionadas();
     }//GEN-LAST:event_tblZonasMouseClicked
 
     private void tblZonasSeleccionadasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblZonasSeleccionadasMouseClicked
-        // TODO add your handling code here:
         this.zonatblSeleccionada.remove(this.getNombreEliminarZonaSeleccionada());
         this.llenarTablaZonasSeleccionadas();
     }//GEN-LAST:event_tblZonasSeleccionadasMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
         if(this.verificarDatos()){
            this.guardarItinerario();
         }
@@ -1280,16 +1271,13 @@ public class FrmItinerarios extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        // TODO add your handling code here:
         this.registraDatosItinerario();
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void txtDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuracionActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtDuracionActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // TODO add your handling code here:
         this.reiniciarFrm();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 

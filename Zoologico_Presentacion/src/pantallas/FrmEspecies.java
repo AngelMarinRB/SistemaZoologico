@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +43,8 @@ public class FrmEspecies extends javax.swing.JPanel {
     private DefaultComboBoxModel listaCuidadores;
     private DefaultComboBoxModel listaZonas;
     
+    private JFrame parent;
+    
     private Especie especie = null;
     
     //Especifica el Estatus del formulario
@@ -53,8 +56,10 @@ public class FrmEspecies extends javax.swing.JPanel {
      * Crea e inicializa los objetos dentro del formulario Especies.
      * @param negocio Objeto Negocio para el acceso a datos.
      */
-    public FrmEspecies(INegocio negocio) {
+    public FrmEspecies(INegocio negocio, JFrame parent) {
         this.negocio = negocio;
+        
+        this.parent = parent;
         
         animales = new ArrayList();
         
@@ -958,6 +963,8 @@ public class FrmEspecies extends javax.swing.JPanel {
 
         CardLayout cl = (CardLayout)(frame.getLayout());
         cl.show(frame, "Menu");
+        
+        parent.setTitle("Zoológico");
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**

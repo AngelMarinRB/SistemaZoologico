@@ -133,7 +133,7 @@ public class Zona {
      */
     @Override
     public String toString() {
-        return "Zona{" + "id=" + id + ", nombre=" + nombre + ", extension=" + extension + '}';
+        return nombre;
     }
 
    

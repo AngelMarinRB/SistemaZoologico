@@ -24,17 +24,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         initNegocio();
-        this.setFrmName("Zoologico");
+        this.cambiarTitulo("Zoológico");
     }
     
-    
-    /**
-     * Establece el nombre del marco principal de la aplicación al dado como parámetro
-     * @param nombre Nombre del marco.
-     */
-    public void setFrmName(String nombre){
-        this.setName(nombre);
+    public void cambiarTitulo(String name){
+        this.setTitle(name);
     }
+    
     /**
      * Inicializa el objeto negocio de tipo INegocio para suministrarlo a las interfaces.
      */
@@ -177,7 +173,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void clickBtnRegistroHabitats(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnRegistroHabitats
 
         if (this.habitatsFrom == null) {
-            this.habitatsFrom = new FrmHabitats(negocio);
+            this.habitatsFrom = new FrmHabitats(negocio, this);
             pnlContenido.add(habitatsFrom, "Habitats");
         }
 
@@ -187,7 +183,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         cl = (CardLayout)(pnlContenido.getLayout());
         cl.show(pnlContenido, "Habitats");
         
-        this.setName("Hábitats");
+        this.cambiarTitulo("Hábitats");
         
     }//GEN-LAST:event_clickBtnRegistroHabitats
 
@@ -199,7 +195,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void clickBtnRegistroItinerariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnRegistroItinerariosActionPerformed
 
         if (this.itinerariosForm == null) {
-            this.itinerariosForm = new FrmItinerarios(negocio);
+            this.itinerariosForm = new FrmItinerarios(negocio, this);
             pnlContenido.add(itinerariosForm, "Itinerarios");
         }
         
@@ -209,7 +205,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         cl = (CardLayout)(pnlContenido.getLayout());
         cl.show(pnlContenido, "Itinerarios");
         
-        this.setName("Itinerarios");
+        this.cambiarTitulo("Itinerarios");
     }//GEN-LAST:event_clickBtnRegistroItinerariosActionPerformed
 
     /**
@@ -218,9 +214,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
      * @param evt Botón de Quejas seleccionado.
      */
     private void clickBtnRegistrarQueja(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnRegistrarQueja
-        // TODO add your handling code here:
         this.setVisible(false);
-        new FrmAtencionVisitantes().setVisible(true);
+        new FrmAtencionVisitantes(this).setVisible(true);
     }//GEN-LAST:event_clickBtnRegistrarQueja
 
     /**
@@ -231,7 +226,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void clickBtnRegistrarEspecie(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnRegistrarEspecie
         
         if (this.especiesForm == null) {
-            this.especiesForm = new FrmEspecies(negocio);
+            this.especiesForm = new FrmEspecies(negocio, this);
             pnlContenido.add(especiesForm, "Especies");
         }
         
@@ -242,6 +237,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         
         cl = (CardLayout) (pnlContenido.getLayout());
         cl.show(pnlContenido, "Especies");
+        
+        this.cambiarTitulo("Especies");
         
     }//GEN-LAST:event_clickBtnRegistrarEspecie
 
