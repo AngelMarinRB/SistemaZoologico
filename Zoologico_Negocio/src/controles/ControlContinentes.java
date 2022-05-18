@@ -13,7 +13,7 @@ public class ControlContinentes {
     
     private IDatos datos;
     
-    public ControlContinentes(IDatos datos){
+    protected ControlContinentes(IDatos datos){
         this.datos = datos;
     }
     

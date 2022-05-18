@@ -171,7 +171,7 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
         });
 
         lblNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lblNombre.setText("Nombre: (op)");
+        lblNombre.setText("Nombre:");
 
         btnEnviarQueja.setText("Enviar queja");
         btnEnviarQueja.addActionListener(new java.awt.event.ActionListener() {
@@ -201,16 +201,12 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                             .addComponent(lblQueja))
                         .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
+                                .addGap(30, 30, 30)
                                 .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PnlAtencionVisitantesLayout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblDATOS)
-                                            .addComponent(lblEmail)
-                                            .addComponent(lblTelefono)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlAtencionVisitantesLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblNombre)))
+                                    .addComponent(lblNombre)
+                                    .addComponent(lblDATOS)
+                                    .addComponent(lblEmail)
+                                    .addComponent(lblTelefono))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,7 +254,7 @@ public class FrmAtencionVisitantes extends javax.swing.JFrame {
                             .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblTelefono))
                         .addGap(20, 20, 20)
-                        .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(PnlAtencionVisitantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNombre))
                         .addGap(27, 27, 27)

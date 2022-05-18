@@ -24,6 +24,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         initNegocio();
+        this.setResizable(false);
         this.cambiarTitulo("Zoológico");
     }
     
@@ -248,7 +249,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
      * @param evt Botón "acerca de" seleccionado.
      */
     private void clickBtnAcercaDe(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnAcercaDe
-        JOptionPane.showMessageDialog(this, "Aplicación desarrollada por: \n Luis Angel Marín Figueroa - 00000228968 \n Ricardo Javier Saavedra Negrete - 00000229351 \n Alan Francisco Gonzalez Angulo - 00000228779" , "Acerca De", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Aplicación desarrollada por: \n Luis Angel Marín Figueroa - 00000228968 \n Ricardo Javier Saavedra Negrete - 00000229351 \n Alan Francisco González Angulo - 00000228779" , "Acerca De", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_clickBtnAcercaDe
 
 

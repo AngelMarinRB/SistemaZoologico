@@ -95,6 +95,7 @@ public class FrmHabitats extends javax.swing.JPanel {
         cargarRecursos();
         mostrarRecursos(climas, vegetaciones , continentes);
         pnlClimas.setVisible(true);
+        pnlRegistro.setVisible(true);
         pnlContinentes.setVisible(true);
         pnlVegetaciones.setVisible(true);
         btnGuardar.setVisible(true);
@@ -103,6 +104,7 @@ public class FrmHabitats extends javax.swing.JPanel {
         txtNombreDatos.setText(txtNombre.getText());
         jSeparator3.setVisible(true);
         jSeparator4.setVisible(true);
+        this.btnCancelar.setVisible(true);
     }
     
     /**
@@ -110,6 +112,7 @@ public class FrmHabitats extends javax.swing.JPanel {
      * del nombre de un hábitat.
      */
     private void desactivarFormulario(){
+        pnlRegistro.setVisible(false);
         pnlClimas.setVisible(false);
         pnlContinentes.setVisible(false);
         pnlVegetaciones.setVisible(false);
@@ -118,6 +121,7 @@ public class FrmHabitats extends javax.swing.JPanel {
         jSeparator3.setVisible(false);
         jSeparator4.setVisible(false);
         limpiarFormulario();
+        this.btnCancelar.setVisible(false);
         txtNombre.setText("");
     }
     
@@ -138,7 +142,26 @@ public class FrmHabitats extends javax.swing.JPanel {
      * @return True en caso de ser válido, False en caso contrario.
      */
     private boolean verificarFormulario(){        
-        return !(txtClimaDatos.getText().isEmpty()|| txtContinentesDatos.getText().isEmpty() || txtVegetacionDatos.getText().isEmpty());
+        String error = "";
+        
+        if(txtClimaDatos.getText().isEmpty())
+            error = error + "Seleccione un clima dentro de la tabla climas.\n";
+        
+        
+        if(txtVegetacionDatos.getText().isEmpty())
+            error = error + "Seleccione un tipo de vegetación dentro de la tabla vegetaciones.\n";
+        
+        
+        if(txtContinentesDatos.getText().isEmpty())
+            error = error + "Seleccione al menos un continente.\n";
+        
+        
+        if(!error.isEmpty()){
+            mostrarError(error);
+            return false;
+        }
+        
+        return true;
     }
     
     /**
@@ -388,6 +411,8 @@ public class FrmHabitats extends javax.swing.JPanel {
         txtClimaDatos.setText(habitat.getClima().getTipo());
         txtVegetacionDatos.setText(habitat.getVegetacion().getTipo());
         txtContinentesDatos.setText(Arrays.toString(habitat.getContinentes().toArray()));
+        pnlRegistro.setVisible(true);
+        this.btnCancelar.setVisible(true);
     }
     
     /**
@@ -425,21 +450,10 @@ public class FrmHabitats extends javax.swing.JPanel {
         lblNombre = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         btnVerificarHabitat = new javax.swing.JButton();
-        lblMensaje = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
-        lblDatos = new javax.swing.JLabel();
-        lblNombreDatos = new javax.swing.JLabel();
-        lblClimaDatos = new javax.swing.JLabel();
-        lblVegetacionDatos = new javax.swing.JLabel();
-        lblContinentesDatos = new javax.swing.JLabel();
-        txtNombreDatos = new javax.swing.JTextField();
-        txtClimaDatos = new javax.swing.JTextField();
-        txtVegetacionDatos = new javax.swing.JTextField();
-        txtContinentesDatos = new javax.swing.JTextField();
-        btnGuardar = new javax.swing.JButton();
         pnlClimas = new javax.swing.JPanel();
         spnlClimas = new javax.swing.JScrollPane();
         tblClimas = new javax.swing.JTable();
@@ -456,6 +470,18 @@ public class FrmHabitats extends javax.swing.JPanel {
         lblContinentesSeleccionados = new javax.swing.JLabel();
         lblListaContinentes = new javax.swing.JLabel();
         lblContinentes = new javax.swing.JLabel();
+        pnlRegistro = new javax.swing.JPanel();
+        txtContinentesDatos = new javax.swing.JTextField();
+        txtVegetacionDatos = new javax.swing.JTextField();
+        txtClimaDatos = new javax.swing.JTextField();
+        txtNombreDatos = new javax.swing.JTextField();
+        lblDatos = new javax.swing.JLabel();
+        lblNombreDatos = new javax.swing.JLabel();
+        lblClimaDatos = new javax.swing.JLabel();
+        lblVegetacionDatos = new javax.swing.JLabel();
+        lblContinentesDatos = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         pnlEncabezado.setBackground(new java.awt.Color(33, 47, 69));
 
@@ -477,7 +503,7 @@ public class FrmHabitats extends javax.swing.JPanel {
             pnlEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEncabezadoLayout.createSequentialGroup()
                 .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(238, 238, 238)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -500,45 +526,11 @@ public class FrmHabitats extends javax.swing.JPanel {
             }
         });
 
-        lblMensaje.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        lblDatos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblDatos.setText("Datos");
-
-        lblNombreDatos.setText("Nombre");
-
-        lblClimaDatos.setText("Clima");
-
-        lblVegetacionDatos.setText("Vegetación");
-
-        lblContinentesDatos.setText("Continentes");
-
-        txtNombreDatos.setEditable(false);
-        txtNombreDatos.setToolTipText("");
-        txtNombreDatos.setMaximumSize(new java.awt.Dimension(600, 22));
-
-        txtClimaDatos.setEditable(false);
-        txtClimaDatos.setMaximumSize(new java.awt.Dimension(600, 22));
-
-        txtVegetacionDatos.setEditable(false);
-        txtVegetacionDatos.setMaximumSize(new java.awt.Dimension(600, 22));
-
-        txtContinentesDatos.setEditable(false);
-        txtContinentesDatos.setMaximumSize(new java.awt.Dimension(600, 22));
-
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarclickBtnVerificarHabitat(evt);
-            }
-        });
 
         tblClimas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -690,7 +682,7 @@ public class FrmHabitats extends javax.swing.JPanel {
                     .addGroup(pnlContinentesLayout.createSequentialGroup()
                         .addGap(89, 89, 89)
                         .addComponent(lblListaContinentes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
                         .addComponent(lblContinentesSeleccionados)
                         .addGap(102, 102, 102))))
             .addGroup(pnlContinentesLayout.createSequentialGroup()
@@ -708,9 +700,111 @@ public class FrmHabitats extends javax.swing.JPanel {
                     .addComponent(lblContinentesSeleccionados))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlContinentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spnlVegetaciones1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                    .addComponent(spnlVegetaciones1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                     .addComponent(spnlVegetaciones2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
+        );
+
+        txtContinentesDatos.setEditable(false);
+        txtContinentesDatos.setMaximumSize(new java.awt.Dimension(600, 22));
+
+        txtVegetacionDatos.setEditable(false);
+        txtVegetacionDatos.setMaximumSize(new java.awt.Dimension(600, 22));
+
+        txtClimaDatos.setEditable(false);
+        txtClimaDatos.setMaximumSize(new java.awt.Dimension(600, 22));
+
+        txtNombreDatos.setEditable(false);
+        txtNombreDatos.setToolTipText("");
+        txtNombreDatos.setMaximumSize(new java.awt.Dimension(600, 22));
+
+        lblDatos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblDatos.setText("Registro");
+
+        lblNombreDatos.setText("Nombre");
+
+        lblClimaDatos.setText("Clima");
+
+        lblVegetacionDatos.setText("Vegetación");
+
+        lblContinentesDatos.setText("Continentes");
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarclickBtnVerificarHabitat(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlRegistroLayout = new javax.swing.GroupLayout(pnlRegistro);
+        pnlRegistro.setLayout(pnlRegistroLayout);
+        pnlRegistroLayout.setHorizontalGroup(
+            pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRegistroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRegistroLayout.createSequentialGroup()
+                        .addGroup(pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlRegistroLayout.createSequentialGroup()
+                                .addComponent(lblContinentesDatos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtContinentesDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(pnlRegistroLayout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addGroup(pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblClimaDatos)
+                                    .addComponent(lblNombreDatos)
+                                    .addComponent(lblVegetacionDatos))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombreDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtClimaDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtVegetacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistroLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblDatos)
+                        .addGap(200, 200, 200))))
+            .addGroup(pnlRegistroLayout.createSequentialGroup()
+                .addGap(137, 137, 137)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        pnlRegistroLayout.setVerticalGroup(
+            pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRegistroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblDatos)
+                .addGap(11, 11, 11)
+                .addGroup(pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreDatos)
+                    .addComponent(txtNombreDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblClimaDatos)
+                    .addComponent(txtClimaDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblVegetacionDatos)
+                    .addComponent(txtVegetacionDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblContinentesDatos)
+                    .addComponent(txtContinentesDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -719,49 +813,23 @@ public class FrmHabitats extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addContainerGap()
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnVerificarHabitat, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(202, 202, 202))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblNombre)
-                                .addGap(177, 177, 177)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(185, 185, 185)
+                                .addComponent(lblNombre))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(225, 225, 225)
+                                .addComponent(btnVerificarHabitat, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(177, 177, 177)))
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblContinentesDatos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtContinentesDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblClimaDatos)
-                                    .addComponent(lblNombreDatos)
-                                    .addComponent(lblVegetacionDatos))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombreDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtClimaDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtVegetacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(31, 31, 31))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDatos))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(41, 41, 41)
+                .addComponent(pnlRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(31, 31, 31))
             .addComponent(pnlEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -785,40 +853,19 @@ public class FrmHabitats extends javax.swing.JPanel {
                 .addComponent(pnlEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(lblDatos)
-                                .addGap(11, 11, 11)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblNombreDatos)
-                                    .addComponent(txtNombreDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblClimaDatos)
-                                    .addComponent(txtClimaDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblVegetacionDatos)
-                                    .addComponent(txtVegetacionDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblContinentesDatos)
-                                    .addComponent(txtContinentesDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(lblNombre)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
-                                .addComponent(btnVerificarHabitat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(10, 10, 10)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pnlRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(lblNombre)
+                        .addGap(33, 33, 33)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnVerificarHabitat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -858,7 +905,7 @@ public class FrmHabitats extends javax.swing.JPanel {
         Habitat habitat = negocio.verificarExistenciaHabitat(nombreHabitat);
         
         if(habitat != null){
-            mostrarError("Ya existe un hábitat con ese nombre.");
+            mostrarError("Ya existe un hábitat registrado con ese nombre.");
             llenarFormulario(habitat);
         } else {
             activarFormulario();
@@ -875,7 +922,6 @@ public class FrmHabitats extends javax.swing.JPanel {
         boolean formValido = verificarFormulario();
         
         if(!formValido){
-            mostrarError("Debe llenar todos los datos.");
             return;
         }
         
@@ -933,8 +979,19 @@ public class FrmHabitats extends javax.swing.JPanel {
         parent.setTitle("Zoológico");
     }//GEN-LAST:event_btnMenuActionPerformed
 
+    /**
+     * Devuelve al formulario a su forma original.
+     * @param evt 
+     */
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        
+        this.desactivarFormulario();
+        this.limpiarFormulario();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnVerificarHabitat;
@@ -949,7 +1006,6 @@ public class FrmHabitats extends javax.swing.JPanel {
     private javax.swing.JLabel lblContinentesSeleccionados;
     private javax.swing.JLabel lblDatos;
     private javax.swing.JLabel lblListaContinentes;
-    private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNombreDatos;
     private javax.swing.JLabel lblTitulo;
@@ -958,6 +1014,7 @@ public class FrmHabitats extends javax.swing.JPanel {
     private javax.swing.JPanel pnlClimas;
     private javax.swing.JPanel pnlContinentes;
     private javax.swing.JPanel pnlEncabezado;
+    private javax.swing.JPanel pnlRegistro;
     private javax.swing.JPanel pnlVegetaciones;
     private javax.swing.JScrollPane spnlClimas;
     private javax.swing.JScrollPane spnlVegetaciones;

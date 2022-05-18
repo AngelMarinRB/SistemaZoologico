@@ -13,7 +13,7 @@ public class ControlVegetaciones {
     
     private IDatos datos;
     
-    public ControlVegetaciones(IDatos datos){
+    protected ControlVegetaciones(IDatos datos){
         this.datos = datos;
     }
     

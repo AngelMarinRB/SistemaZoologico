@@ -130,6 +130,7 @@ public class FrmEspecies extends javax.swing.JPanel {
         cboxHabitats.setEnabled(true);
         cboxZonas.setEnabled(true);
         pnlAnimales.setVisible(true);
+        btnCancelar.setVisible(true);
     }
     
     /**
@@ -149,6 +150,7 @@ public class FrmEspecies extends javax.swing.JPanel {
         cboxZonas.setEnabled(false);
         btnGuardar.setEnabled(false);
         pnlAnimales.setVisible(true);
+        btnCancelar.setVisible(true);
     }
     
     /**
@@ -169,6 +171,7 @@ public class FrmEspecies extends javax.swing.JPanel {
         animales = negocio.consultarAnimalesEspecie(especie);
         actualizarTablaAnimales();
         this.especie = especie;
+        btnCancelar.setVisible(true);
         activarFormularioActualizacion();
         
     }
@@ -265,6 +268,7 @@ public class FrmEspecies extends javax.swing.JPanel {
         txtNombreCientifico.setEnabled(false);
         txtNombreEspaniol.setEnabled(false);
         btnValidarEspecie.setEnabled(true);
+        btnCancelar.setVisible(false);
         limpiarFormulario();
     }
     
@@ -279,6 +283,9 @@ public class FrmEspecies extends javax.swing.JPanel {
         txtNombreAnimal.setText("");
         txtNombreCientifico.setText("");
         txtNombreEspaniol.setText("");
+        listaCuidadores.setSelectedItem(null);
+        listaHabitats.setSelectedItem(null);
+        listaZonas.setSelectedItem(null);
     }
     
     /**
@@ -295,20 +302,27 @@ public class FrmEspecies extends javax.swing.JPanel {
      */
     private boolean verificarFormulario(){
         
+        String error = "";
+        
         if(txtNombreCientifico.getText().isEmpty())
-            return false;
+            error = error + "Ingrese el nombre científico de la especie.\n";
             
         if(txtDescripcion.getText().isEmpty())
-            return false;
+            error = error + "Ingrese la descripción de la especie.\n";
         
         if(cboxCuidadores.getSelectedItem() == null)
-            return false;
+            error = error + "Seleccione un cuidador para la especie.\n";
             
         if(cboxHabitats.getSelectedItem() == null)
-            return false;
+            error = error + "Seleccione un hábitat para la especie.\n";
         
         if(cboxZonas.getSelectedItem() == null)
+            error = error + "Seleccione una zona para la especie.\n";
+        
+        if(!error.isEmpty()){
+            mostrarError(error);
             return false;
+        }
         
         return true;
     }
@@ -334,25 +348,37 @@ public class FrmEspecies extends javax.swing.JPanel {
      */
     private boolean verificarFormularioAnimal(){
         
-        if(txtNombreAnimal.getText().isEmpty())
-            return false;
-        
-        if(txtEdadAnimal.getText().isEmpty())
-            return false;
-        
-        int edadAnimal = -1;
-        
-        try{
-            edadAnimal = Integer.parseInt(txtEdadAnimal.getText());
-        }catch(Exception e){
-            return false;
+        String error = "";
+
+        if (txtNombreAnimal.getText().isEmpty()) {
+            error = error + "Debe ingresar un nombre para el animal.\n";
         }
 
-        if(edadAnimal < 1 || edadAnimal > 150)
-            return false;
+        if (txtEdadAnimal.getText().isEmpty()) {
+            error = error + "Debe ingresar la edad del animal.\n";
+            
+        } else {
+
+            int edadAnimal = -1;
+
+            try {
+                edadAnimal = Integer.parseInt(txtEdadAnimal.getText());
+
+                if (edadAnimal < 0 || edadAnimal > 150) 
+                    error = error + "La edad debe estar en el rango de 0 a 150\n";
+
+            } catch (Exception e) {
+                error = error + "La edad debe ser un valor entero.\n";
+            }
+        }
         
         if(!rBtnHembra.isSelected() && !rBtnMacho.isSelected())
+            error = error + "Seleccione el sexo del animal.\n";
+        
+        if(!error.isEmpty()){
+            mostrarError(error);
             return false;
+        }
 
         return true;
     }
@@ -430,6 +456,17 @@ public class FrmEspecies extends javax.swing.JPanel {
                 int fila = tblAnimales.getSelectedRow();
                 Animal animal = (Animal) tblAnimales.getValueAt(fila, 0);
                 
+                //Confirmación de eliminación
+                //Opción seleccionada por default "NO"
+                int opcionSeleccionada = -1;
+
+                opcionSeleccionada = JOptionPane.showConfirmDialog(parent, "¿Seguro que deseas eliminar el animal seleccionado? \n Nombre: " + animal.getNombre() , "Confirmación", JOptionPane.YES_NO_OPTION);
+
+                if (opcionSeleccionada != JOptionPane.YES_OPTION) {
+                    return;
+                }
+                // Confirmación de eliminación
+
                 DefaultTableModel modeloTabla = (DefaultTableModel) tblAnimales.getModel();
                 
                 List<Animal> animales = new ArrayList<>();
@@ -485,7 +522,11 @@ public class FrmEspecies extends javax.swing.JPanel {
      * @param animal Animal a eliminar.
      */
     private void eliminarAnimal(Animal animal){
-        negocio.eliminarAnimal(animal);
+        if (negocio.eliminarAnimal(animal) == true){
+            JOptionPane.showMessageDialog(this, "Animal eliminado correctamente." , "Información", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            mostrarError("No se ha podido eliminar al Animal.");
+        }
     }
     
     /**
@@ -498,21 +539,25 @@ public class FrmEspecies extends javax.swing.JPanel {
      * @param animal 
      */
     private void agregarAnimal(Animal animal){
-        
-            
+
         for (int i = 0; i < animales.size(); i++) {
             if (animales.get(i).getNombre().equalsIgnoreCase(animal.getNombre())) {
                 mostrarError("Ya existe un animal con el mismo nombre");
                 return;
             }
         }
+       
         
-        if(status == NUEVOREGISTRO)
+        if(status == NUEVOREGISTRO){
             animales.add(animal);
+            JOptionPane.showMessageDialog(this, "Animal capturado correctamente. \n\nNOTA:El animal se registrará en el sistema después de que guarde la especie." , "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
         
         
-        if (status == ACTUALIZACION) 
+        if (status == ACTUALIZACION) {
             negocio.guardarAnimal(animal);
+            JOptionPane.showMessageDialog(this, "Animal registrado correctamente" , "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
 
     }
     
@@ -572,6 +617,7 @@ public class FrmEspecies extends javax.swing.JPanel {
         btnGuardar = new javax.swing.JButton();
         lblZona = new javax.swing.JLabel();
         cboxZonas = new javax.swing.JComboBox<>();
+        btnCancelar = new javax.swing.JButton();
         pnlRegistroAnimales = new javax.swing.JPanel();
         lblRegistroAnimal = new javax.swing.JLabel();
         lblNombreAnimal = new javax.swing.JLabel();
@@ -604,7 +650,7 @@ public class FrmEspecies extends javax.swing.JPanel {
             pnlEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEncabezadoLayout.createSequentialGroup()
                 .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(184, 184, 184)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -617,7 +663,7 @@ public class FrmEspecies extends javax.swing.JPanel {
             .addComponent(btnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        lblNombreEspecie.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblNombreEspecie.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblNombreEspecie.setText("Nombre de la Especie");
 
         btnValidarEspecie.setText("Verificar");
@@ -654,6 +700,7 @@ public class FrmEspecies extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblAnimales);
 
+        lblAnimales.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblAnimales.setText("Animales Registrados");
 
         btnEditarAnimales.setText("Editar Animales");
@@ -673,24 +720,24 @@ public class FrmEspecies extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(pnlAnimalesLayout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addComponent(lblAnimales)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(pnlAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlAnimalesLayout.createSequentialGroup()
+                                .addGap(155, 155, 155)
+                                .addComponent(lblAnimales))
+                            .addGroup(pnlAnimalesLayout.createSequentialGroup()
+                                .addGap(169, 169, 169)
+                                .addComponent(btnEditarAnimales)))
+                        .addGap(0, 151, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(pnlAnimalesLayout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addComponent(btnEditarAnimales)
-                .addContainerGap(159, Short.MAX_VALUE))
         );
         pnlAnimalesLayout.setVerticalGroup(
             pnlAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAnimalesLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(lblAnimales)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEditarAnimales)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEditarAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -712,7 +759,7 @@ public class FrmEspecies extends javax.swing.JPanel {
 
         cboxHabitats.setModel(listaHabitats);
 
-        lblRegistro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblRegistro.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblRegistro.setText("Registro");
 
         btnGuardar.setText("Guardar");
@@ -726,18 +773,21 @@ public class FrmEspecies extends javax.swing.JPanel {
 
         cboxZonas.setModel(listaZonas);
 
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickBtnCancelar(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlRegistroEspecieLayout = new javax.swing.GroupLayout(pnlRegistroEspecie);
         pnlRegistroEspecie.setLayout(pnlRegistroEspecieLayout);
         pnlRegistroEspecieLayout.setHorizontalGroup(
             pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistroEspecieLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGuardar)
-                .addGap(276, 276, 276))
             .addGroup(pnlRegistroEspecieLayout.createSequentialGroup()
-                .addGap(68, 68, 68)
                 .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRegistroEspecieLayout.createSequentialGroup()
+                        .addGap(68, 68, 68)
                         .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblNombreCientifico)
                             .addComponent(lblNombreEspaniol)
@@ -754,16 +804,22 @@ public class FrmEspecies extends javax.swing.JPanel {
                             .addComponent(cboxHabitats, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cboxZonas, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlRegistroEspecieLayout.createSequentialGroup()
-                        .addGap(233, 233, 233)
-                        .addComponent(lblRegistro)))
-                .addContainerGap(143, Short.MAX_VALUE))
+                        .addGap(209, 209, 209)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(106, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistroEspecieLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblRegistro)
+                .addGap(241, 241, 241))
         );
         pnlRegistroEspecieLayout.setVerticalGroup(
             pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRegistroEspecieLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(17, 17, 17)
                 .addComponent(lblRegistro)
-                .addGap(36, 36, 36)
+                .addGap(33, 33, 33)
                 .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNombreEspaniol)
                     .addComponent(txtNombreEspaniol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -787,14 +843,16 @@ public class FrmEspecies extends javax.swing.JPanel {
                 .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblZona)
                     .addComponent(cboxZonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addComponent(btnGuardar)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(pnlRegistroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         pnlDatos.add(pnlRegistroEspecie, "Especie");
 
-        lblRegistroAnimal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblRegistroAnimal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblRegistroAnimal.setText("Registro de Animal");
 
         lblNombreAnimal.setText("Nombre");
@@ -836,33 +894,36 @@ public class FrmEspecies extends javax.swing.JPanel {
         pnlRegistroAnimalesLayout.setHorizontalGroup(
             pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
+                .addGap(95, 95, 95)
+                .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblNombreAnimal)
+                    .addComponent(lblEdadAnimal)
+                    .addComponent(lblSexoAnimal))
                 .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
-                        .addGap(95, 95, 95)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombreAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEdadAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
                         .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblNombreAnimal)
-                            .addComponent(lblEdadAnimal)
-                            .addComponent(lblSexoAnimal))
-                        .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombreAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEdadAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(rBtnMacho)
-                                .addGap(56, 56, 56)
-                                .addComponent(rBtnHembra))))
-                    .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
-                        .addGap(244, 244, 244)
-                        .addComponent(lblRegistroAnimal))
-                    .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
-                        .addGap(260, 260, 260)
-                        .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRegresar)
-                            .addComponent(btnConfirmacionAnimal))))
-                .addContainerGap(166, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnConfirmacionAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
+                                    .addGap(137, 137, 137)
+                                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlRegistroAnimalesLayout.createSequentialGroup()
+                                    .addGap(58, 58, 58)
+                                    .addComponent(rBtnMacho))))
+                        .addGap(10, 10, 10)
+                        .addComponent(rBtnHembra)))
+                .addContainerGap(129, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistroAnimalesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblRegistroAnimal)
+                .addGap(201, 201, 201))
         );
         pnlRegistroAnimalesLayout.setVerticalGroup(
             pnlRegistroAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -882,11 +943,11 @@ public class FrmEspecies extends javax.swing.JPanel {
                     .addComponent(rBtnMacho)
                     .addComponent(rBtnHembra)
                     .addComponent(lblSexoAnimal))
-                .addGap(55, 55, 55)
-                .addComponent(btnConfirmacionAnimal)
-                .addGap(75, 75, 75)
-                .addComponent(btnRegresar)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addComponent(btnConfirmacionAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
 
         pnlDatos.add(pnlRegistroAnimales, "Animales");
@@ -899,20 +960,19 @@ public class FrmEspecies extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator2)
-                            .addComponent(txtNombreEspecie, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)))
+                        .addGap(129, 129, 129)
+                        .addComponent(lblNombreEspecie))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(txtNombreEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(pnlAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(175, 175, 175)
-                        .addComponent(btnValidarEspecie))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(lblNombreEspecie)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(177, 177, 177)
+                        .addComponent(btnValidarEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -925,24 +985,22 @@ public class FrmEspecies extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNombreEspecie)
-                                .addGap(33, 33, 33)
-                                .addComponent(txtNombreEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(btnValidarEspecie)
-                                .addGap(44, 44, 44)
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pnlAnimales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNombreEspecie)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNombreEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnValidarEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlAnimales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(pnlDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(pnlDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -979,7 +1037,7 @@ public class FrmEspecies extends javax.swing.JPanel {
         String nombreEspecie = txtNombreEspecie.getText();
         
         if(nombreEspecie.isEmpty()){
-            mostrarError("Ingrese un nombre de la especie");
+            mostrarError("Ingrese un nombre para la especie.");
             return;
         }
         
@@ -987,7 +1045,7 @@ public class FrmEspecies extends javax.swing.JPanel {
         this.especie = especie;
         
         if(especie != null){
-            mostrarError("Ya existe una especie con ese nombre.");
+            mostrarError("Ya existe una especie registrada con ese nombre.");
             llenarFormulario(especie);
             cambiarStatus(ACTUALIZACION);
         }else{
@@ -1006,7 +1064,6 @@ public class FrmEspecies extends javax.swing.JPanel {
     private void clickBtnGuardar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnGuardar
         
         if(!verificarFormulario()){
-            mostrarError("Debe llenar todos los campos.");
             return;
         }
         
@@ -1032,7 +1089,7 @@ public class FrmEspecies extends javax.swing.JPanel {
         }
         
         if(!crearFichaCargoEspecie(cuidador))
-            mostrarError("Error al actualizar el cuidador");
+            mostrarError("Error al crear la ficha de cargo");
         
         
         guardarAnimales(especie);
@@ -1096,7 +1153,6 @@ public class FrmEspecies extends javax.swing.JPanel {
     private void clickBtnAgregarAnimal(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnAgregarAnimal
 
         if (!verificarFormularioAnimal()) {
-            mostrarError("Formulario incompleto y/o edad negativa o mayora 150");
             return;
         }
 
@@ -1126,8 +1182,20 @@ public class FrmEspecies extends javax.swing.JPanel {
         
     }//GEN-LAST:event_clickBtnAgregarAnimal
 
+    /**
+     * Devuelve el formulario a su forma original.
+     * @param evt 
+     */
+    private void clickBtnCancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickBtnCancelar
+        this.limpiarFormulario();
+        this.limpiarFormularioAnimales();
+        this.limpiarTablaAnimales();
+        this.desactivarFormulario();
+    }//GEN-LAST:event_clickBtnCancelar
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConfirmacionAnimal;
     private javax.swing.JButton btnEditarAnimales;
     private javax.swing.JButton btnGuardar;

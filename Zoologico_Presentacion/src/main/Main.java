@@ -9,7 +9,7 @@ import pantallas.FrmPrincipal;
  * Creado por:
  * Luis Angel Marín Figueroa        - 00000228968
  * Ricardo Javier Saavedra Negrete  - 00000229351
- * Alan Francisco Gonzalez Angulo   - 00000228779
+ * Alán Francisco González Angulo   - 00000228779
  */
 public class Main {
     
