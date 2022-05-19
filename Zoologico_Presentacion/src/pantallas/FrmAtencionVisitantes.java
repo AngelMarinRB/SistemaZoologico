@@ -347,7 +347,7 @@ public void guardarQueja(){
     
     boolean seGuardo =negocio.guardarQueja(queja);
     if(seGuardo){
-        JOptionPane.showMessageDialog(this, "La queja se a enviado con exito, sera leida y atendida a la brevedad.", "información", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "La queja se a enviado con éxito, será leída y atendida a la brevedad.", "Información", JOptionPane.INFORMATION_MESSAGE);
         this.limpiarFormulario();
     }
 }
@@ -439,7 +439,7 @@ public void guardarQueja(){
     public boolean verificarFormulario(){
         
         if(this.txtEmail.getText().isEmpty() || this.txtTelefono.getText().isEmpty() || this.tbltinerario.getSelectedRow()<=-1){
-            JOptionPane.showMessageDialog(this, "Favor de llenar los campos oblogatorios (E-mail, correo electronico, queja) y de seleccionar un itinerario.", "información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Favor de llenar los campos oblogatorios (E-mail, correo electronico, queja) y de seleccionar un itinerario en la tabla.", "Información", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         if(!verificarEmail(this.txtEmail.getText())){

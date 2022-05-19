@@ -111,7 +111,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
         }
         
         if(diasSeleccionados()==false){
-            this.mostrarError("No se selecciono ningun día");
+            this.mostrarError("No se selecciono ningún día");
             i=i+1;
         }
         
@@ -1307,7 +1307,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
         Container frame = this.getParent().getParent().getParent();
 
         CardLayout cl = (CardLayout) (frame.getLayout());
-        cl.show(frame, "Menú");
+        cl.show(frame, "Menu");
         
         parent.setTitle("Zoológico");
        
