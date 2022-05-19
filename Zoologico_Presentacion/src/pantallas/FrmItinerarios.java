@@ -94,12 +94,29 @@ public class FrmItinerarios extends javax.swing.JPanel {
      * en el panel de datos
      */
     public void registraDatosItinerario(){
-        if(this.txtDisponibilidad.getText().equalsIgnoreCase("") || 
-                this.txtDuracion.getText().equalsIgnoreCase("") || 
-                this.txtLongitud.getText().equalsIgnoreCase("") || diasSeleccionados()==false ){
-            this.mostrarError("Se ha dejado un espacio vacío");
-        }else{
-            this.activarCampos();
+        int i=0;
+        if(this.txtDisponibilidad.getText().equalsIgnoreCase("")){
+            this.mostrarError("Se ha dejado el campo de visitantes vacío");
+           i=i+1;
+        } 
+
+        if( this.txtDuracion.getText().equalsIgnoreCase("")){
+            this.mostrarError("Se ha dejado el campo de duración vacío");
+            i=i+1;
+        }
+        
+        if(this.txtLongitud.getText().equalsIgnoreCase("")){
+            this.mostrarError("Se ha dejado el campo de longitud vacío");
+            i=i+1;
+        }
+        
+        if(diasSeleccionados()==false){
+            this.mostrarError("No se selecciono ningun día");
+            i=i+1;
+        }
+        
+        if(i==0){
+        this.activarCampos();
         }
     }
     
@@ -380,18 +397,37 @@ public class FrmItinerarios extends javax.swing.JPanel {
      * @return true si son correctos, false de lo contrario
      */
     public boolean verificarCamposDatos(){
-        try{
         int longitud,visitantes,duracion;
+        int i=0;
+        
+        try{
+        
         Float.valueOf(this.txtLongitud.getText());
-        Integer.valueOf(this.txtDisponibilidad.getText());
-        Integer.valueOf(this.txtDuracion.getText());
         
         }catch(Exception e){
-            this.mostrarError("Campo de datos incorrecto, ingrese dato numerico valido");
-            return false;
+            this.mostrarError("Campo de longitud incorrecto, ingrese dato numérico valido");
+            i=i+1;
         }
         
+        try{
+            Integer.valueOf(this.txtDisponibilidad.getText());
+        }catch(Exception e){
+            this.mostrarError("Campo de visitantes incorrecto, ingrese dato numérico valido");
+            i=i+1;
+        }
+        
+        try{
+            Integer.valueOf(this.txtDuracion.getText());
+        }catch(Exception e){
+            this.mostrarError("Campo de duración incorrecto, ingrese dato numérico valido");
+            i=i+1;
+        }
+        
+        if(i==0){
         return true;
+        }else{
+            return false;
+        }
     }
         
     /**
@@ -408,7 +444,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
         itinerario.setRecorrido(this.buscarZonasSeleccionadas());
         negocio.guardarItinerario(itinerario);
         
-        JOptionPane.showMessageDialog(this,"Itinerario guardado con exito","información",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this,"Itinerario guardado con éxito","información",JOptionPane.INFORMATION_MESSAGE);
         
         this.reiniciarFrm();
     }
@@ -445,25 +481,32 @@ public class FrmItinerarios extends javax.swing.JPanel {
         this.dhArray = new ArrayList();
         
         if(this.checkLunes.isSelected()){
+            if(!this.txtLunes.getText().isEmpty()){
             String[] split = this.txtLunes.getText().split(",");
             DiasHorario dh = new DiasHorario("Lunes");
             
             for (int i = 0; i < split.length; i++) {
                 
                 if(!this.verificarValorHora(split[i])){
+                    this.mostrarError("La hora número: "+(i+1)+"  en el campo del día lunes contiene un valor invalido");
                     return false;
                 }
                 
                 matcher = patron.matcher(split[i]);
                 if(!matcher.matches()){
-                this.mostrarError("Formato de hora incorrecto");
+                this.mostrarError("El formato de las horas en el día lunes es incorrecto");
                 return false;
                 }
                 dh.agregarHora(split[i]);
             }  
             dhArray.add(dh);
+            }else{
+                this.mostrarError("Campo de día lunes vacío");
+                return false;
+            }
         }
         if(this.checkMartes.isSelected()){
+            if(!this.txtMartes.getText().isEmpty()){
             String[] split = this.txtMartes.getText().split(",");
             DiasHorario dh = new DiasHorario("Martes");
             
@@ -475,16 +518,21 @@ public class FrmItinerarios extends javax.swing.JPanel {
                 
                 matcher = patron.matcher(split[i]);
                 if(!matcher.matches()){
-                this.mostrarError("Formato de hora incorrecto");
+                this.mostrarError("La hora número: "+(i+1)+"  en el campo del día martes contiene un valor invalido");
                 return false;
                 }
                 dh.agregarHora(split[i]);
             }  
             dhArray.add(dh);
+            }else{
+                this.mostrarError("Campo de día martes vacío");
+                return false;
+            }
         }
         if(this.checkMiercoles.isSelected()){
+            if(!this.txtMiercoles.getText().isEmpty()){
             String[] split = this.txtMiercoles.getText().split(",");
-            DiasHorario dh = new DiasHorario("Miercoles");
+            DiasHorario dh = new DiasHorario("Miércoles");
             
             for (int i = 0; i < split.length; i++) {
                 
@@ -494,88 +542,116 @@ public class FrmItinerarios extends javax.swing.JPanel {
                 
                 matcher = patron.matcher(split[i]);
                 if(!matcher.matches()){
-                this.mostrarError("Formato de hora incorrecto");
+                this.mostrarError("La hora número: "+(i+1)+"  en el campo del día miércoles contiene un valor invalido");
                 return false;
                 }
                 dh.agregarHora(split[i]);
             }  
             dhArray.add(dh);
+            }else{
+                this.mostrarError("Campo de día miércoles vacío");
+                return false;
+            }
         }
         if(this.checkJueves.isSelected()){
+            if(!this.txtJueves.getText().isEmpty()){
             String[] split = this.txtJueves.getText().split(",");
             DiasHorario dh = new DiasHorario("Jueves");
             
             for (int i = 0; i < split.length; i++) {
                 
                 if(!this.verificarValorHora(split[i])){
+                   this.mostrarError("La hora número: "+(i+1)+"  en el campo del día jueves contiene un valor invalido");
                    return false;
                 }
                 
                 matcher = patron.matcher(split[i]);
                 if(!matcher.matches()){
-                this.mostrarError("Formato de hora incorrecto");
+                this.mostrarError("El formato de las horas en el día jueves es incorrecto");
                 return false;
                 }
                 dh.agregarHora(split[i]);
             }  
             dhArray.add(dh);
+            }else{
+                this.mostrarError("Campo de día jueves vacío");
+                return false;
+            }
         }
         if(this.checkViernes.isSelected()){
+            if(!this.txtViernes.getText().isEmpty()){
             String[] split = this.txtViernes.getText().split(",");
             DiasHorario dh = new DiasHorario("Viernes");
             
             for (int i = 0; i < split.length; i++) {
                 
                 if(!this.verificarValorHora(split[i])){
+                    this.mostrarError("La hora número: "+(i+1)+"  en el campo del día viernes contiene un valor invalido");
                     return false;
                 }
                 
                 matcher = patron.matcher(split[i]);
                 if(!matcher.matches()){
-                this.mostrarError("Formato de hora incorrecto");
+                this.mostrarError("El formato de las horas en el día viernes es incorrecto");
                 return false;
                 }
                 dh.agregarHora(split[i]);
             }  
             dhArray.add(dh);
+            }else{
+                this.mostrarError("Campo de día viernes vacío");
+                return false;
+            }
         }
         if(this.checkSabado.isSelected()){
+            if(!this.txtSabado.getText().isEmpty()){
             String[] split = this.txtSabado.getText().split(",");
-            DiasHorario dh = new DiasHorario("Sabado");
+            DiasHorario dh = new DiasHorario("Sábado");
             
             for (int i = 0; i < split.length; i++) {
                 
                 if(!this.verificarValorHora(split[i])){
+                    this.mostrarError("La hora número: "+(i+1)+"  en el campo del día sábado contiene un valor invalido");
                     return false;
                 }
                 
                 matcher = patron.matcher(split[i]);
                 if(!matcher.matches()){
-                this.mostrarError("Formato de hora incorrecto");
+                this.mostrarError("El formato de las horas en el día sábado es incorrecto");
                 return false;
                 }
                 dh.agregarHora(split[i]);
             }  
             dhArray.add(dh);
+            }else{
+                this.mostrarError("Campo de día sábado vacío");
+                return false;
+            }
         }
         if(this.checkDomingo.isSelected()){
+            if(!this.txtDomingo.getText().isEmpty()){
             String[] split = this.txtDomingo.getText().split(",");
             DiasHorario dh = new DiasHorario("Domingo");
             
             for (int i = 0; i < split.length; i++) {
                 
                 if(!this.verificarValorHora(split[i])){
+                    this.mostrarError("La hora número: "+(i+1)+"  en el campo del día domingo contiene un valor invalido");
                     return false;
                 }
                 
                 matcher = patron.matcher(split[i]);
                 if(!matcher.matches()){
-                this.mostrarError("Formato de hora incorrecto");
+                this.mostrarError("El formato de las horas en el día domingo es incorrecto");
                 return false;
                 }
                 dh.agregarHora(split[i]);
             }  
             dhArray.add(dh);
+            }else{
+                this.mostrarError("Campo de día domingo vacío");
+                return false;
+            }
         }
         
         
@@ -600,13 +676,12 @@ public class FrmItinerarios extends javax.swing.JPanel {
             
         if(Integer.valueOf(split[0])>23 || Integer.valueOf(split[1])>59 ||
                 Integer.valueOf(split[0])<0 || Integer.valueOf(split[1])<0 ){
-            this.mostrarError("valor de la hora invalido");
             return false;
         }
         
         }catch(Exception e){
-            this.mostrarError("Una o varias horas no tienen el formato correcto"
-                    + "por favor introducir hora como 01:00 o 01:00,20:00");
+//            this.mostrarError("Una o varias horas no tienen el formato correcto"
+//                    + "por favor introducir hora como 01:00 o 01:00,20:00");
             return false;
         }
         
@@ -993,10 +1068,10 @@ public class FrmItinerarios extends javax.swing.JPanel {
                             .addComponent(txtJueves)
                             .addComponent(txtViernes)))))
             .addGroup(pnlHorarioLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(pnlHorarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtHorarioAviso)
                     .addGroup(pnlHorarioLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addComponent(lblHorario)
                         .addGap(50, 50, 50)))
                 .addContainerGap(67, Short.MAX_VALUE))
@@ -1086,7 +1161,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
 
             },
             new String [] {
-                "nombre", "extension"
+                "nombre", "extensión"
             }
         ) {
             Class[] types = new Class [] {
@@ -1232,7 +1307,7 @@ public class FrmItinerarios extends javax.swing.JPanel {
         Container frame = this.getParent().getParent().getParent();
 
         CardLayout cl = (CardLayout) (frame.getLayout());
-        cl.show(frame, "Menu");
+        cl.show(frame, "Menú");
         
         parent.setTitle("Zoológico");
        
